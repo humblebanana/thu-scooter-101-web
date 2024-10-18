@@ -1,5 +1,8 @@
+import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Bike, Book, Wrench, Shield } from 'lucide-react'
+import AppleStyleChat from '@/components/AppleStyleChat'
 
 export default function Home() {
   const sections = [
@@ -10,23 +13,29 @@ export default function Home() {
   ]
 
   return (
-    <div className="space-y-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-8 space-y-8">
       <section className="text-center space-y-4">
-        <h1 className="text-4xl font-bold">欢迎来到 THU Scooter 101</h1>
-        <p className="text-xl text-muted-foreground">
-          您的清华大学电动车全方位指南，从购买到维护，我们为您提供全面的信息和支持。
+        <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-400 via-gray-550 to-gray-900">
+          在清华骑关于电动车的一切
+        </h1>
+        <p className="text-xl text-gray-600">
+          Empowering with Scooter in Tsinghua
         </p>
       </section>
 
-      <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <section className="max-w-3xl mx-auto">
+        <AppleStyleChat />
+      </section>
+
+      <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {sections.map((item, index) => (
-          <div key={index} className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
-            <item.icon className="w-12 h-12 text-primary mb-4" />
-            <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-            <p className="text-muted-foreground mb-4">{item.description}</p>
+          <div key={index} className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+            <item.icon className="w-10 h-10 text-gray-500 mb-3" />
+            <h2 className="text-lg font-semibold mb-2">{item.title}</h2>
+            <p className="text-gray-600 mb-3 text-sm">{item.description}</p>
             <Link
               href={item.href}
-              className="inline-block bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors"
+              className="inline-block bg-gray-400 text-white px-3 py-1 text-sm rounded-full hover:bg-black transition-colors duration-300"
             >
               了解更多
             </Link>
@@ -34,5 +43,5 @@ export default function Home() {
         ))}
       </section>
     </div>
-  )
+  );
 }

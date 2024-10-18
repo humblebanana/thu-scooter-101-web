@@ -1,7 +1,30 @@
+'use client'
+
 import Image from 'next/image'
 import { MapPin, Battery, User, Shield, AlertTriangle } from 'lucide-react'
+import dynamic from 'next/dynamic';
+import { useState, useEffect } from 'react';
+
+const ImageSlider = dynamic(() => import('../../components/ImageSlider'), { ssr: false });
 
 export default function UsageGuide() {
+  const [typedText, setTypedText] = useState('');
+  const fullText = "不要把电池带进室内充电！ 不要把电动车停在宿舍楼下！ 不要拔别人正在充电的插座！";
+
+  useEffect(() => {
+    let index = 0;
+    const typingInterval = setInterval(() => {
+      if (index < fullText.length) {
+        setTypedText((prev) => prev + fullText.charAt(index));
+        index++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 100);
+
+    return () => clearInterval(typingInterval);
+  }, []);
+
   return (
     <main className="container mx-auto px-4 py-8">
       <div className="space-y-12">
@@ -11,43 +34,62 @@ export default function UsageGuide() {
             了解校园内的停车规则、充电站位置和安全骑行建议
           </p>
         </section>
-        <section id="parking-rules" className="space-y-6">
+
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-8">
+          <p className="text-xl font-bold text-red-700 typing-animation">
+            {typedText}
+          </p>
+        </div>
+
+        <section id="parking-rules" className="space-y-8">
           <h2 className="text-3xl font-bold">停车规则</h2>
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <div className="md:flex">
-              <div className="md:w-1/2 relative">
-                <Image 
-                  src="/images/parking-rules.jpg" 
-                  alt="停车规则示意图" 
-                  layout="fill"
-                  objectFit="cover"
-                  className="absolute top-0 left-0"
-                />
-              </div>
-              <div className="p-6 md:w-1/2">
-                <h3 className="text-xl font-semibold mb-4">允许停车区域</h3>
-                <ul className="list-disc list-inside space-y-2 text-gray-600">
-                  <li>各教学楼指定电动车停车场</li>
-                  <li>宿舍区专用电动车停车位</li>
-                  <li>图书馆周边划定的停车区域</li>
-                </ul>
-                <h3 className="text-xl font-semibold mt-6 mb-4">禁止停车区域</h3>
-                <ul className="list-disc list-inside space-y-2 text-gray-600">
-                  <li>主要道路两侧</li>
-                  <li>建筑物入口处</li>
-                  <li>消防通道</li>
-                  <li>绿化带</li>
-                </ul>
-              </div>
-            </div>
-            <div className="bg-yellow-50 p-6">
-              <h3 className="text-lg font-semibold mb-2">处罚标准</h3>
-              <ul className="list-disc list-inside space-y-2 text-gray-600">
-                <li>首次违规：警告</li>
-                <li>第二次违规：罚款50元</li>
-                <li>第三次违规：罚款100元并暂扣车辆3天</li>
-                <li>多次违规：可能吊销校内电动车使用权</li>
+          
+          {/* 禁止停车区域和处罚标准并排 */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* 禁止停车区域 */}
+            <div className="bg-red-100 rounded-lg shadow-md p-6">
+              <h3 className="text-2xl font-semibold mb-4 text-red-600">禁止停车区域</h3>
+              <ul className="list-disc list-inside space-y-2 text-lg text-red-800">
+                <li>紫荆公寓宿舍楼下及楼外</li>
+                <li>教学楼特定区域</li>
+                <li>古建筑旁（清华学堂，明斋，大礼堂……）</li>
+                <li>路中间</li>
               </ul>
+            </div>
+
+            {/* 处罚标准 */}
+            <div className="bg-yellow-50 rounded-lg shadow-md p-6">
+              <h3 className="text-xl font-semibold mb-4">违规停车处置方式和处罚标准</h3>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                <li>停在违规区域将会被拖走</li>
+                <li>拖走后将要通过学生卡去取车</li>
+                <li>一个人只有一次机会取车的机会</li>
+                <li>第二次再被拖将要收到处罚</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* 允许停车区域 */}
+          <div className="space-y-6">
+            <h3 className="text-2xl font-semibold">允许停车区域</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { name: "各教学楼指定电动车停车场", images: ["/images/parking1.jpg", "/images/parking2.jpg"] },
+                { name: "宿舍区专用电动车停车位", images: ["/images/dorm-parking1.jpg", "/images/dorm-parking2.jpg"] },
+                { name: "图书馆周边划定的停车区域", images: ["/images/library-parking1.jpg", "/images/library-parking2.jpg"] },
+              ].map((area, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+                  <div className="h-48 relative">
+                    <ImageSlider images={area.images} />
+                  </div>
+                  <div className="p-4">
+                    <h4 className="text-lg font-semibold mb-2">{area.name}</h4>
+                    <p className="text-sm text-gray-600">
+                      这里是关于{area.name}的详细说明。您可以在这里停放您的电动车，请遵守相关规定。
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -70,10 +112,10 @@ export default function UsageGuide() {
             <p className="text-gray-600 mb-4">点击地图上的标记可查看充电站详细信息，包括收费标准和实时可用性。</p>
             <h3 className="text-xl font-semibold mb-2">主要充电站位置：</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-600">
-              <li>紫荆公寓充电站</li>
-              <li>清华学堂充电站</li>
-              <li>图书馆北侧充电站</li>
-              <li>综合体育馆充电站</li>
+              <li>北大充电站</li>
+              <li>清华家属区充电桩</li>
+              <li>五道口地铁站充电桩</li>
+              <li>东升大厦充电桩</li>
               <li>清华科技园充电站</li>
             </ul>
           </div>
@@ -83,15 +125,15 @@ export default function UsageGuide() {
           <h2 className="text-3xl font-bold">充电师傅服务信息</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              { name: "张师傅", area: "紫荆公寓", contact: "135-1234-5678", price: "¥5/次", rating: "4.8/5" },
-              { name: "李师傅", area: "清华学堂", contact: "136-2345-6789", price: "¥5/次", rating: "4.7/5" },
-              { name: "王师傅", area: "图书馆", contact: "137-3456-7890", price: "¥6/次", rating: "4.9/5" },
-              { name: "赵师傅", area: "综合体育馆", contact: "138-4567-8901", price: "¥5/次", rating: "4.6/5" },
+              { name: "刑师傅", area: "紫荆公寓及南区", contact: "xing13269096502", price: "¥15/次", rating: "4.9/5" },
+              { name: "李师傅", area: "紫荆公寓及南区", contact: "l1664019171", price: "¥18/次", rating: "4.7/5" },
+              { name: "刘师傅", area: "紫荆公寓及南区", contact: "LPM572689", price: "¥20/次", rating: "4.5/5" },
+              { name: "x师傅", area: "紫荆公寓及南区", contact: "000-4567-0000", price: "¥12/次", rating: "4.6/5" },
             ].map((service, index) => (
               <div key={index} className="bg-white rounded-lg shadow-md p-6">
                 <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
                 <p className="text-gray-600"><MapPin className="inline-block w-4 h-4 mr-1" /> 服务区域: {service.area}</p>
-                <p className="text-gray-600"><User className="inline-block w-4 h-4 mr-1" /> 联系电话: {service.contact}</p>
+                <p className="text-gray-600"><User className="inline-block w-4 h-4 mr-1" /> 联系方式（微信）: {service.contact}</p>
                 <p className="text-gray-600"><Battery className="inline-block w-4 h-4 mr-1" /> 价格: {service.price}</p>
                 <p className="text-gray-600"><span className="inline-block w-4 h-4 mr-1">★</span> 用户评价: {service.rating}</p>
               </div>
@@ -107,7 +149,7 @@ export default function UsageGuide() {
                 <Shield className="w-6 h-6 text-blue-500 mr-2 mt-1" />
                 <div>
                   <h3 className="font-semibold">始终佩戴头盔</h3>
-                  <p className="text-gray-600">头盔可以在发生意外时保护您的头部，大幅降低严重伤害的风险。</p>
+                  <p className="text-gray-600">头盔可以在发生意外时保护您的头部，大降低严重伤害的风险。</p>
                 </div>
               </li>
               <li className="flex items-start">

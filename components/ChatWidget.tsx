@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { MessageCircle, X, Send } from 'lucide-react'
 
 interface Message {
@@ -8,17 +10,42 @@ interface Message {
   isUser: boolean;
 }
 
-export default function ChatWidget() {
+const ChatWidget: React.FC = () => {
+  const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [inputText, setInputText] = useState('')
-
-  const suggestedQuestions = [
+  const [suggestedQuestions] = useState([
     "如何申请电动车牌照?",
     "电动车充电站在哪里?",
     "电动车最高时速是多少?",
     "如何正确保养电动车电池?"
-  ]
+  ])
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const handleRouteChange = () => {
+      // 添加页面过渡效果
+      document.body.classList.add('page-transition');
+      setTimeout(() => {
+        document.body.classList.remove('page-transition');
+      }, 300); // 过渡时间
+    };
+
+    // 注意：Next.js 13+ 的 App Router 不再使用 events
+    // 如果你使用的是 Pages Router，可以保留这些代码
+    // 如果使用 App Router，可以考虑使用其他方式来处理路由变化
+    // router.events.on('routeChangeStart', handleRouteChange);
+    // return () => {
+    //   router.events.off('routeChangeStart', handleRouteChange);
+    // };
+  }, [router, isMounted]);
 
   const handleSendMessage = (text: string) => {
     if (text.trim() === '') return
@@ -30,6 +57,10 @@ export default function ChatWidget() {
     ]
     setMessages(newMessages)
     setInputText('')
+  }
+
+  if (!isMounted) {
+    return null; // 或者返回一个加载指示器
   }
 
   return (
@@ -100,3 +131,5 @@ export default function ChatWidget() {
     </>
   )
 }
+
+export default ChatWidget

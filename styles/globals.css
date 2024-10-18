@@ -1,0 +1,14 @@
+/* 现有的全局样式 */
+
+.page-transition {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.nav-link {
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #007bff; /* 或者您喜欢的任何颜色 */
+}
