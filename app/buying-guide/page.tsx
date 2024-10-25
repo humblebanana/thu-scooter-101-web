@@ -24,18 +24,12 @@ export default function BuyingGuide() {
               { name: "雅迪DT6", brand: "雅迪", price: "¥3,999", range: "50-60km", image: "/scooter-images/yadea-dt6.jpg" },
               { name: "雅迪DT3", brand: "雅迪", price: "¥3,699起", range: "40-60km", image: "/scooter-images/yadea-dt3.jpg" },
             ].map((scooter, index) => (
-              <div key={index} className="bg-white rounded-lg p-6 shadow-md">
+              <div key={index} className="bg-white rounded-lg p-6 shadow-md flex flex-col items-center hover:shadow-lg transition-shadow duration-300 scale-100 hover:scale-105">
                 <Image src={scooter.image} alt={scooter.name} width={200} height={200} className="mb-4 rounded-md" />
-                <h3 className="text-lg font-semibold">{scooter.name}</h3>
-                <p>品牌: {scooter.brand}</p>
-                <p>价格: {scooter.price}</p>
-                <p>续航: {scooter.range}</p>
-                <Link
-                  href={`/scooter-details/${index}`}
-                  className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
-                >
-                  查看详情
-                </Link>
+                <h3 className="text-lg font-semibold text-center">{scooter.name}</h3>
+                <p className="text-center">品牌: {scooter.brand}</p>
+                <p className="text-center">价格: {scooter.price}</p>
+                <p className="text-center">续航: {scooter.range}</p>
               </div>
             ))}
           </div>
