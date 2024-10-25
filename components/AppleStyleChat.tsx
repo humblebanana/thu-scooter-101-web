@@ -201,17 +201,17 @@ export default function AppleStyleChat() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-white rounded-2xl shadow-md transition-all duration-300 hover:shadow-lg">
+    <div className="max-w-2xl mx-auto p-4 bg-transparent rounded-2xl  transition-all duration-300 hover:shadow-lg">
       {isInitialState ? (
         <>
-          <h1 className="text-3xl font-bold text-center mb-8">关于在清华骑电动车，我能帮你什么</h1>
+          <h1 className="text-3xl font-bold text-center mb-8">我是清华老司机，让我跟聊聊清华骑电动车</h1>
           
           <div className="bg-gray-100 rounded-full p-2 flex items-center mb-6 transition-all duration-300 hover:bg-gray-200">
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="给 THU Scooter 老铁发消息"
+              placeholder="🛵给清华老司机发消息"
               className="flex-grow bg-transparent outline-none px-4"
               onKeyPress={handleKeyPress}
             />

@@ -4,11 +4,33 @@ import Image from 'next/image'
 import { MapPin, Battery, User, Shield, AlertTriangle } from 'lucide-react'
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
+import parking1 from '@/public/parking-images/parking-1.jpg';
+import dormParking1 from '@/public/parking-images/dorm-parking-1.jpg';
+import libraryParking1 from '@/public/parking-images/library-parking-1.jpg';
 
-const ImageSlider = dynamic(() => import('../../components/ImageSlider'), { ssr: false });
+const ImageSlider = dynamic(() => import('@/components/ImageSlider'), { ssr: false });
+
+// 定义ChargingMaster类型
+interface ChargingMaster {
+  id: number;
+  name: string;
+  phone: string;
+  area: string;
+  rating: number;
+  price: number;
+  description: string;
+}
+
+const parkingAreas = [
+  { name: "各教学楼指定电动车停车场", image: parking1 },
+  { name: "宿舍区专用电动车停车位", image: dormParking1 },
+  { name: "图书馆周边划定的停车区域", image: libraryParking1 },
+];
 
 export default function UsageGuide() {
   const [typedText, setTypedText] = useState('');
+  const [chargingMasters, setChargingMasters] = useState<ChargingMaster[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const fullText = "不要把电池带进室内充电！ 不要把电动车停在宿舍楼下！ 不要拔别人正在充电的插座！";
 
   useEffect(() => {
@@ -25,13 +47,32 @@ export default function UsageGuide() {
     return () => clearInterval(typingInterval);
   }, []);
 
+  useEffect(() => {
+    async function fetchChargingMasters() {
+      try {
+        const response = await fetch('/api/charging-masters');
+        if (!response.ok) {
+          throw new Error('Failed to fetch charging masters');
+        }
+        const data = await response.json();
+        setChargingMasters(data);
+      } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : '获取充电师傅数据时发生未知错误';
+        setError(errorMessage);
+        console.error('获取充电师傅数据失败:', e);
+      }
+    }
+
+    fetchChargingMasters();
+  }, []);
+
   return (
     <main className="container mx-auto px-4 py-8">
       <div className="space-y-12">
         <section className="text-center space-y-4">
           <h1 className="text-4xl font-bold">电动车使用指南</h1>
           <p className="text-xl text-gray-600">
-            了解校园内的停车规则、充电站位置和安全骑行建议
+            了解校园内的停车规则、充电站位置安全骑行建议
           </p>
         </section>
 
@@ -49,11 +90,11 @@ export default function UsageGuide() {
             {/* 禁止停车区域 */}
             <div className="bg-red-100 rounded-lg shadow-md p-6">
               <h3 className="text-2xl font-semibold mb-4 text-red-600">禁止停车区域</h3>
-              <ul className="list-disc list-inside space-y-2 text-lg text-red-800">
+              <ul className="list-disc list-inside space-y-2 text-lg text-red-800 text-bold">
                 <li>紫荆公寓宿舍楼下及楼外</li>
                 <li>教学楼特定区域</li>
                 <li>古建筑旁（清华学堂，明斋，大礼堂……）</li>
-                <li>路中间</li>
+                <li>马路中间</li>
               </ul>
             </div>
 
@@ -70,28 +111,33 @@ export default function UsageGuide() {
           </div>
 
           {/* 允许停车区域 */}
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold">允许停车区域</h3>
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { name: "各教学楼指定电动车停车场", images: ["/images/parking1.jpg", "/images/parking2.jpg"] },
-                { name: "宿舍区专用电动车停车位", images: ["/images/dorm-parking1.jpg", "/images/dorm-parking2.jpg"] },
-                { name: "图书馆周边划定的停车区域", images: ["/images/library-parking1.jpg", "/images/library-parking2.jpg"] },
-              ].map((area, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-                  <div className="h-48 relative">
-                    <ImageSlider images={area.images} />
+          <section className="space-y-6">
+            <h2 className="text-3xl font-bold">允许停车区域</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {parkingAreas.map((area, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
+                  <div className="relative w-full h-56 md:h-64 lg:h-72">
+                    <img 
+                      src={area.image} 
+                      alt={area.name} 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div className="p-4">
-                    <h4 className="text-lg font-semibold mb-2">{area.name}</h4>
-                    <p className="text-sm text-gray-600">
+                  <div className="p-4 flex-grow">
+                    <h3 className="text-lg font-semibold mb-2">{area.name}</h3>
+                    <p className="text-sm text-gray-600 mb-4">
                       这里是关于{area.name}的详细说明。您可以在这里停放您的电动车，请遵守相关规定。
                     </p>
+                    <ul className="list-disc list-inside text-sm text-gray-600">
+                      <li>停车时请整齐有序排列</li>
+                      <li>注意不要阻碍他人通行</li>
+                      <li>请使用车锁保护您的车辆安全</li>
+                    </ul>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
         </section>
 
         <section id="charging-stations" className="space-y-6">
@@ -123,22 +169,24 @@ export default function UsageGuide() {
 
         <section id="charging-services" className="space-y-6">
           <h2 className="text-3xl font-bold">充电师傅服务信息</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { name: "刑师傅", area: "紫荆公寓及南区", contact: "xing13269096502", price: "¥15/次", rating: "4.9/5" },
-              { name: "李师傅", area: "紫荆公寓及南区", contact: "l1664019171", price: "¥18/次", rating: "4.7/5" },
-              { name: "刘师傅", area: "紫荆公寓及南区", contact: "LPM572689", price: "¥20/次", rating: "4.5/5" },
-              { name: "x师傅", area: "紫荆公寓及南区", contact: "000-4567-0000", price: "¥12/次", rating: "4.6/5" },
-            ].map((service, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold mb-2">{service.name}</h3>
-                <p className="text-gray-600"><MapPin className="inline-block w-4 h-4 mr-1" /> 服务区域: {service.area}</p>
-                <p className="text-gray-600"><User className="inline-block w-4 h-4 mr-1" /> 联系方式（微信）: {service.contact}</p>
-                <p className="text-gray-600"><Battery className="inline-block w-4 h-4 mr-1" /> 价格: {service.price}</p>
-                <p className="text-gray-600"><span className="inline-block w-4 h-4 mr-1">★</span> 用户评价: {service.rating}</p>
-              </div>
-            ))}
-          </div>
+          {error ? (
+            <p className="text-red-500">错误: {error}</p>
+          ) : chargingMasters.length === 0 ? (
+            <p>正在加载充电师傅数据...</p>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-6">
+              {chargingMasters.map((master) => (
+                <div key={master.id} className="bg-white rounded-lg shadow-md p-6">
+                  <h3 className="text-lg font-semibold mb-2">{master.name}</h3>
+                  <p className="text-gray-600"><MapPin className="inline-block w-4 h-4 mr-1" /> 服务区域: {master.area}</p>
+                  <p className="text-gray-600"><User className="inline-block w-4 h-4 mr-1" /> 联系��式: {master.phone}</p>
+                  <p className="text-gray-600"><Battery className="inline-block w-4 h-4 mr-1" /> 价格: ¥{master.price}/次</p>
+                  <p className="text-gray-600"><span className="inline-block w-4 h-4 mr-1">★</span> 用户评价: {master.rating}/5</p>
+                  <p className="text-gray-600">{master.description}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
         <section id="safety-tips" className="space-y-6">
