@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "九号电动A2z",
+    "brand": "九号",
+    "price": 2899,
+    "range": "85km",
+    "image": "ninebot-a2z.jpg",
+    "description": "适合长距离通勤,续航能力强"
+  },
+  {
+    "id": 2,
+    "name": "绿源小果粒",
+    "brand": "绿源",
+    "price": 1500,
+    "range": "45km",
+    "image": "luyuan-xiaoguoli.jpg",
+    "description": "轻便小巧,适合短距离出行"
+  },
+  {
+    "id": 3,
+    "name": "爱玛小坦克",
+    "brand": "爱玛",
+    "price": 1300,
+    "range": "40km",
+    "image": "aima-xiaotank.jpg",
+    "description": "经济实惠,性价比高"
+  },
+  {
+    "id": 4,
+    "name": "爱玛A500",
+    "brand": "爱玛",
+    "price": 3599,
+    "range": "70km",
+    "image": "aima-a500.jpg",
+    "description": "大容量电池,适合长途骑行"
+  },
+  {
+    "id": 5,
+    "name": "雅迪DT6",
+    "brand": "雅迪",
+    "price": 3999,
+    "range": "55km",
+    "image": "yadea-dt6.jpg",
+    "description": "高性能电机超级动力强"
+  },
+  {
+    "id": 6,
+    "name": "雅迪DT3",
+    "brand": "雅迪",
+    "price": 3699,
+    "range": "50km",
+    "image": "yadea-dt3.jpg",
+    "description": "舒适座椅,适合日常通勤"
+  }
+]
