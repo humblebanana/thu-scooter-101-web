@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Send } from 'lucide-react';
+import Image from 'next/image';
 
 // 定义消息类
 interface Message {
@@ -24,7 +25,10 @@ export default function AppleStyleChat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const chatContainer = messagesEndRef.current?.parentElement;
+    if (chatContainer) {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -234,21 +238,40 @@ export default function AppleStyleChat() {
         </>
       ) : (
         <>
-          <div className="h-96 overflow-y-auto mb-4 p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:shadow-inner">
+          <div className="h-[500px] overflow-y-auto mb-4 p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:shadow-inner [scroll-behavior:smooth]">
             {messages.map((message, index) => (
-              <div key={index} className={`mb-2 ${message.isUser ? 'text-right' : 'text-left'}`}>
-                <span className={`inline-block p-2 rounded-lg transition-all duration-300 ${message.isUser ? 'bg-transparent border-gray-200 text-black hover:bg-gray-200' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}>
+              <div key={index} className={`mb-4 flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
+                {!message.isUser && (
+                  <div className="w-8 h-8 rounded-full overflow-hidden mr-2 flex-shrink-0">
+                    <Image
+                      src="/user-avatar.png"
+                      alt="AI Avatar"
+                      width={32}
+                      height={32}
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <span 
+                  className={`inline-block p-2 rounded-lg transition-all duration-300 max-w-[70%] ${
+                    message.isUser 
+                      ? 'bg-gray-200 text-black hover:bg-gray-300' 
+                      : 'bg-transparent text-gray-800 hover:bg-gray-50'
+                  }`}
+                >
                   {message.content}
                 </span>
+                {message.isUser && <div className="w-8 h-8 ml-2" />}
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
           <div className="flex items-center bg-gray-100 rounded-full p-1">
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="输入您的问题..."
+              placeholder="输入您的问题..." 
               className="flex-grow p-2 bg-transparent border-none focus:outline-none"
               onKeyPress={handleKeyPress}
             />

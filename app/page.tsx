@@ -11,8 +11,8 @@ export default function Home() {
   const [showContent, setShowContent] = useState(false);
   const sections = [
     { title: "购买指南", icon: Bike, href: "/buying-guide", description: "找到适合您的电动车和购买渠道" },
-    { title: "使用指南", icon: Book, href: "/usage-guide", description: "了解停车规则和充电站位置" },
-    { title: "维修与保养", icon: Wrench, href: "/repair-maintenance", description: "获取维修点信息和保养建议" },
+    { title: "使用指南", icon: Book, href: "/usage-guide", description: "了解校园的停车规则和如何给电动车" },
+    { title: "维修与保养", icon: Wrench, href: "/repair-maintenance", description: "获取维修点信息和保养电动车的建议" },
     { title: "法规与安全", icon: Shield, href: "/laws-safety", description: "了解校园和北京市的电动车法规" },
     { title: "常见问题", icon: HelpCircle, href: "/faq", description: "获取电动车相关的常见问题解答" },
   ];
