@@ -1,25 +1,18 @@
+"use client"
+
 import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 const LanguageToggle = () => {
-  const [currentLang, setCurrentLang] = useState('zh')
-  const router = useRouter()
-
-  useEffect(() => {
-    // 从 localStorage 获取已保存的语言设置
-    const savedLang = localStorage.getItem('language')
-    if (savedLang) {
-      setCurrentLang(savedLang)
-    }
-  }, [])
+  const { language, setLanguage } = useLanguage()
 
   const toggleLanguage = () => {
-    const newLang = currentLang === 'zh' ? 'en' : 'zh'
-    setCurrentLang(newLang)
+    const newLang = language === 'zh' ? 'en' : 'zh'
+    console.log('Switching language from', language, 'to', newLang)
+    setLanguage(newLang)
     localStorage.setItem('language', newLang)
-    // 这里可以触发语言切换事件
-    window.dispatchEvent(new Event('languageChange'))
   }
 
   return (
@@ -28,7 +21,7 @@ const LanguageToggle = () => {
       variant="ghost"
       className="font-semibold"
     >
-      {currentLang === 'zh' ? 'EN' : '中文'}
+      {language === 'zh' ? 'EN' : '中文'}
     </Button>
   )
 }

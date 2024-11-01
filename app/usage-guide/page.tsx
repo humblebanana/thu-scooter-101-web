@@ -179,7 +179,7 @@ export default function UsageGuide() {
                 <div key={master.id} className="bg-white rounded-lg shadow-md p-6">
                   <h3 className="text-lg font-semibold mb-2">{master.name}</h3>
                   <p className="text-gray-600"><MapPin className="inline-block w-4 h-4 mr-1" /> 服务区域: {master.area}</p>
-                  <p className="text-gray-600"><User className="inline-block w-4 h-4 mr-1" /> 联系方式: {master.phone}</p>
+                  <p className="text-gray-600"><User className="inline-block w-4 h-4 mr-1" /> 联系fang式: {master.phone}</p>
                   <p className="text-gray-600"><Battery className="inline-block w-4 h-4 mr-1" /> 价格: ¥{master.price}/次</p>
                   <p className="text-gray-600"><span className="inline-block w-4 h-4 mr-1">★</span> 用户评价: {master.rating}/5</p>
                   <p className="text-gray-600">{master.description}</p>
