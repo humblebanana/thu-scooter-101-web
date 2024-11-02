@@ -32,7 +32,7 @@ export default function UsageGuide() {
   const [chargingMasters, setChargingMasters] = useState<ChargingMaster[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<number | null>(null);
-  const fullText = "不携带电动车电池进入公寓，不在公寓内给电动车电池充电！";
+  const fullText = " 不携带电动车电池进入公寓！不在公寓内给电动车电池充电！😠";
 
   useEffect(() => {
     let index = 0;
