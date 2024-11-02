@@ -6,6 +6,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Bike, Book, Wrench, Shield, HelpCircle } from 'lucide-react'
 import WelcomeCard from '@/components/WelcomeCard'
+import BlurIn from "@/components/ui/blur-in"
+import { RainbowButton } from "@/components/ui/rainbow-button"
 
 
 
@@ -28,18 +30,17 @@ export default function Home() {
             <WelcomeCard />
             <div className="flex-grow flex items-center justify-center p-8 sm:p-20">
               <div className="text-center">
-                <h1 className="text-5xl sm:text-6xl font-bold mb-4 bg-gradient-to-t from-gray-800 to-gray-400 text-transparent bg-clip-text">
-                  你的下一个代步工具，何必只能脚踏
-                </h1>
-                <p className="text-lg sm:text-xl text-gray-600 mb-8">
-                  Empowering with Scooter in Tsinghua
-                </p>
-                <button
-                  onClick={() => setShowContent(true)}
-                  className="px-6 py-3 bg-gradient-to-t font-bold from-gray-800 to-gray-600 text-white rounded-full hover:bg-gray-700 transition-colors duration-300 mt-4"
-                >
+                <BlurIn
+                  word="你的下一个代步工具，何必只能脚踏"
+                  className="text-2xl sm:text-4xl font-bold mb-6 bg-gradient-to-t from-gray-800 to-gray-400 text-transparent bg-clip-text whitespace-nowrap"
+                />
+                <BlurIn
+                  word="Empowering with Scooter in Tsinghua"
+                  className="text-2xl sm:text-4xl font-bold mb-6 bg-gradient-to-t from-gray-800 to-gray-400 text-transparent bg-clip-text whitespace-nowrap"
+                />
+                <RainbowButton onClick={() => setShowContent(true)}>
                   开始探索
-                </button>
+                </RainbowButton>
               </div>
             </div>
           </>
