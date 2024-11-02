@@ -68,12 +68,18 @@ export default async function BuyingGuide() {
       </section>
 
       <h2 className="text-3xl font-bold mb-6">电动车推荐列表</h2>
+      <p className="text-lg text-gray-600 mb-8 italic">
+        ———看看学长学姐都在骑什么电动车
+      </p>
       {scooters.length === 0 ? (
         <p>暂无电动车数据</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {scooters.map((scooter) => (
-            <div key={scooter.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
+            <div 
+              key={scooter.id} 
+              className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform transition duration-300 hover:scale-105 hover:shadow-xl"
+            >
               <div className="relative w-full h-56 md:h-64 lg:h-72">
                 <Image 
                   src={`/scooter-images/${scooter.image}`} 
@@ -87,7 +93,7 @@ export default async function BuyingGuide() {
                 <p className="text-sm text-gray-600 mb-1">品牌: {scooter.brand}</p>
                 <p className="text-sm text-gray-600 mb-1">价格: ¥{scooter.price}</p>
                 <p className="text-sm text-gray-600 mb-1">续航: {scooter.range}</p>
-                <p className="text-sm text-gray-700">{scooter.description}</p>
+                <p className="text-sm text-gray-700font-bold">学长学姐说：{scooter.description}</p>
               </div>
             </div>
           ))}
@@ -100,7 +106,10 @@ export default async function BuyingGuide() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {purchaseChannels.map((channel, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md p-4">
+            <div 
+              key={index} 
+              className="bg-white rounded-lg shadow-md p-4 transform transition duration-300 hover:scale-105 hover:shadow-xl"
+            >
               <h3 className="text-lg font-semibold mb-2">{channel.name}</h3>
               <p className="text-sm text-gray-600 mb-1"><MapPin className="inline mr-1" size={16} /> {channel.location}</p>
               <p className="text-sm text-gray-600 mb-1"><Phone className="inline mr-1" size={16} /> {channel.contact}</p>

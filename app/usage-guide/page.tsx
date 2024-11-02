@@ -22,9 +22,9 @@ interface ChargingMaster {
 }
 
 const parkingAreas = [
-  { name: "各教学楼指定电动车停车场", image: parking1 },
+  { name: "各教学楼指定电动车停车场", image: dormParking1 },
   { name: "宿舍区专用电动车停车位", image: dormParking1 },
-  { name: "图书馆周边划定的停车区域", image: libraryParking1 },
+  { name: "图书馆周边划定的停车区域", image: dormParking1 },
 ];
 
 export default function UsageGuide() {
@@ -117,10 +117,12 @@ export default function UsageGuide() {
               {parkingAreas.map((area, index) => (
                 <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
                   <div className="relative w-full h-56 md:h-64 lg:h-72">
-                    <img 
-                      src={area.image} 
-                      alt={area.name} 
-                      className="w-full h-full object-cover"
+                    <Image 
+                      src={area.image}
+                      alt={area.name}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   </div>
                   <div className="p-4 flex-grow">
@@ -158,11 +160,10 @@ export default function UsageGuide() {
             <p className="text-gray-600 mb-4">点击地图上的标记可查看充电站详细信息，包括收费标准和实时可用性。</p>
             <h3 className="text-xl font-semibold mb-2">主要充电站位置：</h3>
             <ul className="list-disc list-inside space-y-2 text-gray-600">
-              <li>北大充电站</li>
-              <li>清华家属区充电桩</li>
-              <li>五道口地铁站充电桩</li>
-              <li>东升大厦充电桩</li>
-              <li>清华科技园充电站</li>
+              <li>北京大学内的充电站（地图搜索：北京大学44号楼）</li>
+              <li>西王庄小区充电桩（地图搜索：西王庄小区12号楼）</li>
+              <li>清华家属区充电桩（地图搜索：澜园食堂）</li>
+              <li>五道口地铁站充电桩（地图搜索：五道口地铁站）</li>
             </ul>
           </div>
         </section>
@@ -179,7 +180,7 @@ export default function UsageGuide() {
                 <div key={master.id} className="bg-white rounded-lg shadow-md p-6">
                   <h3 className="text-lg font-semibold mb-2">{master.name}</h3>
                   <p className="text-gray-600"><MapPin className="inline-block w-4 h-4 mr-1" /> 服务区域: {master.area}</p>
-                  <p className="text-gray-600"><User className="inline-block w-4 h-4 mr-1" /> 联系fang式: {master.phone}</p>
+                  <p className="text-gray-600"><User className="inline-block w-4 h-4 mr-1" /> 联系方式: {master.phone}</p>
                   <p className="text-gray-600"><Battery className="inline-block w-4 h-4 mr-1" /> 价格: ¥{master.price}/次</p>
                   <p className="text-gray-600"><span className="inline-block w-4 h-4 mr-1">★</span> 用户评价: {master.rating}/5</p>
                   <p className="text-gray-600">{master.description}</p>

@@ -37,6 +37,11 @@ const Header = () => {
                   {t('nav.lawsSafety')}
                 </Link>
               </li>
+              <li>
+                <Link href="/faq" className="text-gray-600 hover:text-gray-900 transition-colors">
+                  {t('FAQ')}
+                </Link>
+              </li>
             </ul>
             
             <LanguageToggle />

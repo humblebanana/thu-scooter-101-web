@@ -46,9 +46,15 @@ const WelcomeCard = () => {
             "2019年4月30日后不再办理新的电子标签",
             "2021年11月1日起临时标识车辆禁止上路"
           ]
+        },
+        {
+          title: "注意！",
+          items: [
+            "以上仅为部分规定摘要,建议同学们仔细阅读完整的管理办法再做决定。",
+          ]
         }
       ],
-      footer: "以上仅为部分规定摘要,建议同学们仔细阅读完整的管理办法再做决定。"
+      footer: " ",
     },
     en: {
       title: "Tsinghua University E-bike Management Regulations",
