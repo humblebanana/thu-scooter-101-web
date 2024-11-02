@@ -101,6 +101,9 @@ export default async function BuyingGuide() {
       )}
 
       <h2 className="text-3xl font-bold mb-6">购买渠道</h2>
+      <p className="text-lg text-gray-600 mb-8 italic">
+        ———哪里能买到电动车？
+      </p>
       {purchaseChannels.length === 0 ? (
         <p>暂无购买渠道数据</p>
       ) : (
