@@ -7,6 +7,13 @@ import { useState, useEffect } from 'react';
 import parking1 from '@/public/parking-images/parking-1.jpg';
 import dormParking1 from '@/public/parking-images/dorm-parking-1.jpg';
 import libraryParking1 from '@/public/parking-images/library-parking-1.jpg';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 const ImageSlider = dynamic(() => import('@/components/ImageSlider'), { ssr: false });
 
@@ -22,9 +29,21 @@ interface ChargingMaster {
 }
 
 const parkingAreas = [
-  { name: "各教学楼指定电动车停车场", image: dormParking1 },
-  { name: "宿舍区专用电动车停车位", image: dormParking1 },
-  { name: "图书馆周边划定的停车区域", image: dormParking1 },
+  { 
+    name: "教学楼指定电动车停车场", 
+    image: parking1,
+    description: "教学楼附近的停车区域基本参照自行车的停放位置。需要特别注意：六教架空层和靠近楼宇的地方严禁停放电动车。请在指定区域内有序停放。"
+  },
+  { 
+    name: "紫荆宿舍区电动车停车位", 
+    image: dormParking1,
+    description: "目前宿舍区的指定停车点包括：紫荆篮球场旁、紫荆网球场旁，以及紫荆11号楼和8号楼对面的延伸区域。请按照标识停放，保持整齐。"
+  },
+  { 
+    name: "图书馆周边停车区域", 
+    image: libraryParking1,
+    description: "图书馆周边区域目前没有具体限制，可以在周边合适位置停放。但请注意不要影响行人通行，保持整洁有序。"
+  },
 ];
 
 export default function UsageGuide() {
@@ -122,45 +141,53 @@ export default function UsageGuide() {
           </div>
 
           {/* 允许停车区域 */}
-          <section className="space-y-6">
+          <section className="space-y-6 mb-32">
             <h2 className="text-3xl font-bold">允许停车区域</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {parkingAreas.map((area, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
-                  <div className="relative w-full h-56 md:h-64 lg:h-72">
-                    <Image 
-                      src={area.image}
-                      alt={area.name}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </div>
-                  <div className="p-4 flex-grow">
-                    <h3 className="text-lg font-semibold mb-2">{area.name}</h3>
-                    <p className="text-sm text-gray-600 mb-4">
-                      这里是关于{area.name}的详细说明。您可以在这里停放您的电动车，请遵守相关规定。
-                    </p>
-                    <ul className="list-disc list-inside text-sm text-gray-600">
-                      <li>停车时请整齐有序排列</li>
-                      <li>注意不要阻碍他人通行</li>
-                      <li>请使用车锁保护您的车辆安全</li>
-                    </ul>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <Carousel
+              opts={{
+                align: "center",
+                loop: true,
+              }}
+              className="w-full max-w-3xl mx-auto"
+            >
+              <CarouselContent className="-ml-4">
+                {parkingAreas.map((area, index) => (
+                  <CarouselItem key={index} className="pl-4 basis-full">
+                    <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col max-w-lg mx-auto hover:shadow-xl">
+                      <div className="relative w-full h-72 md:h-[420px]">
+                        <Image 
+                          src={area.image}
+                          alt={area.name}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+                      <div className="p-3 flex-grow pb-4">
+                        <h3 className="text-lg font-semibold mb-1">{area.name}</h3>
+                        <p className="text-sm text-gray-600 mb-2">
+                          {area.description}
+                        </p>
+                        <ul className="list-disc list-inside text-sm text-gray-600 mb-2">
+                        </ul>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
           </section>
         </section>
-
         <section id="charging-stations" className="space-y-6">
-          <h2 className="text-3xl font-bold">充电站地图</h2>
+          <h1 className="text-3xl font-bold">充电站位置</h1>
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="aspect-w-16 aspect-h-9 mb-6">
               <iframe
                 src="https://map.baidu.com/@12959238.56,4825347.47,15z"
                 width="100%"
-                height="450"
+                height="700"
                 frameBorder="0"
                 style={{ border: 0 }}
                 allowFullScreen
@@ -182,7 +209,7 @@ export default function UsageGuide() {
                   name: "北京大学家园食堂旁的充电站",
                   location: "北京大学44号楼", 
                   price: "¥0.6-0.9/小时",
-                  rating: "4.8分，推荐，位置特别好找，就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
+                  rating: "4.8分，荐，位置特别好找就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
                 },
                 {
                   name: "清华家属区充电桩",
