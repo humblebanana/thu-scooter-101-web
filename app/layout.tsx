@@ -6,6 +6,7 @@ import WelcomeCard from '@/components/WelcomeCard'
 import './globals.css'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 import FeedbackButton from '@/components/FeedbackButton'
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +34,7 @@ export default function RootLayout({
             <FeedbackButton />
           </div>
         </LanguageProvider>
+        <Toaster />
       </body>
     </html>
   )

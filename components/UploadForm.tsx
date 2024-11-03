@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { toast } from "@/components/ui/toast"
+import { useToast } from "@/hooks/use-toast"
 
 export default function UploadForm() {
   const [formData, setFormData] = useState({
@@ -15,6 +15,7 @@ export default function UploadForm() {
     image: null as File | null,
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
