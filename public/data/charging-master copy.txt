@@ -28,29 +28,12 @@
   },
   {
     "id": 4,
-    "name": "x师傅",
-    "phone": "000-4567-0000",
-    "area": "紫荆公寓及南区",
-    "rating": 4.6,
-    "price": 12,
-    "description": "服务评分：4.6/5"
-  },
-  {
-    "id": 5,
-    "name": "王师傅",
-    "phone": "wang15678901234",
-    "area": "紫荆公寓及南区",
-    "rating": 4.8,
-    "price": 16,
-    "description": "服务评分：4.8/5"
-  },
-  {
-    "id": 6,
-    "name": "张师傅",
-    "phone": "zhang13987654321",
-    "area": "紫荆公寓及南区",
-    "rating": 4.7,
-    "price": 17,
-    "description": "服务评分：4.7/5"
+    "name": "丁师傅",
+    "phone": "15810117987",
+    "area": "全校",
+    "rating": "4.2",
+    "price": "16-20",
+    "description": "服务评分：N/A"
   }
+ 
 ]
