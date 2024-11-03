@@ -1,0 +1,25 @@
+{
+  "feedback": [
+    {
+      "page": "/",
+      "rating": 5,
+      "improvements": "没有，我觉得做的很好",
+      "suggestions": "充电桩我记得那里也有一个",
+      "timestamp": "2024-11-03T11:28:39.460Z"
+    },
+    {
+      "page": "/usage-guide",
+      "rating": 2,
+      "improvements": "那个地图的功能很奇怪",
+      "suggestions": "我觉得需要多一些充电桩的信息",
+      "timestamp": "2024-11-03T11:36:14.122Z"
+    },
+    {
+      "page": "/repair-maintenance",
+      "rating": 5,
+      "improvements": "哈哈哈",
+      "suggestions": "哈哈哈哈",
+      "timestamp": "2024-11-03T12:00:33.252Z"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import WelcomeCard from '@/components/WelcomeCard'
 import './globals.css'
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import FeedbackButton from '@/components/FeedbackButton'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <FeedbackButton />
           </div>
         </LanguageProvider>
       </body>
