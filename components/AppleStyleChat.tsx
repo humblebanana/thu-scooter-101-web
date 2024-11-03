@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send } from 'lucide-react';
+import { Send, StopCircle } from 'lucide-react';
 import Image from 'next/image';
 
 // 定义消息类
@@ -22,6 +22,7 @@ export default function AppleStyleChat() {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isInitialState, setIsInitialState] = useState(true);
+  const [abortController, setAbortController] = useState<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -38,6 +39,10 @@ export default function AppleStyleChat() {
   async function sendMessage(e?: React.FormEvent) {
     if (e) e.preventDefault();
     if (!inputValue.trim() || isLoading) return;
+
+    // 创建新的 AbortController
+    const controller = new AbortController();
+    setAbortController(controller);
 
     try {
       setIsLoading(true);
@@ -66,6 +71,7 @@ export default function AppleStyleChat() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ messages: chatMessages }),
+        signal: controller.signal,
       });
 
       if (!response.ok) {
@@ -102,16 +108,26 @@ export default function AppleStyleChat() {
         }
       }
 
-    } catch (error) {
-      console.error('发送消息时出错:', error);
-      const errorMessage: Message = {
-        id: Date.now() + 1,
-        content: '抱歉，发生了一些错误。请稍后再试。',
-        isUser: false
-      };
-      setMessages(prev => [...prev, errorMessage]);
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        const abortMessage: Message = {
+          id: Date.now() + 1,
+          content: '回答已中止',
+          isUser: false
+        };
+        setMessages(prev => [...prev, abortMessage]);
+      } else {
+        console.error('发送消息时出错:', error);
+        const errorMessage: Message = {
+          id: Date.now() + 1,
+          content: '抱歉，发生了一些错误。请稍后再试。',
+          isUser: false
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      }
     } finally {
       setIsLoading(false);
+      setAbortController(null);
     }
   }
 
@@ -204,6 +220,14 @@ export default function AppleStyleChat() {
     }
   };
 
+  // 添加中止函数
+  const handleAbort = () => {
+    if (abortController) {
+      abortController.abort();
+      setAbortController(null);
+    }
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-4 bg-transparent rounded-2xl  transition-all duration-300 hover:shadow-lg">
       {isInitialState ? (
@@ -275,12 +299,23 @@ export default function AppleStyleChat() {
               className="flex-grow p-2 bg-transparent border-none focus:outline-none"
               onKeyPress={handleKeyPress}
             />
-            <button 
-              onClick={() => sendMessage()}
-              className="bg-transparent text-black-500 p-2 rounded-full transition-all duration-300 transform hover:scale-110"
-            >
-              <Send size={20} />
-            </button>
+            {isLoading ? (
+              <button 
+                onClick={handleAbort}
+                className="bg-transparent text-red-500 p-2 rounded-full transition-all duration-300 transform hover:scale-110"
+                title="点击停止输出"
+                aria-label="停止输出"
+              >
+                <StopCircle size={20} />
+              </button>
+            ) : (
+              <button 
+                onClick={() => sendMessage()}
+                className="bg-transparent text-black-500 p-2 rounded-full transition-all duration-300 transform hover:scale-110"
+              >
+                <Send size={20} />
+              </button>
+            )}
           </div>
         </>
       )}
