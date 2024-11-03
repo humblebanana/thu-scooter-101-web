@@ -1,7 +1,7 @@
 export const translations = {
   zh: {
     nav: {
-      home: "🛵 THU电动车101",
+      home: "THU电动车101",
       buyingGuide: "购买指南",
       usageGuide: "使用指南",
       repairMaintenance: "维修与保养",
@@ -15,7 +15,7 @@ export const translations = {
   },
   en: {
     nav: {
-      home: "🛵 THU Scooter 101",
+      home: "THU Scooter 101",
       buyingGuide: "Buying Guide",
       usageGuide: "Usage Guide",
       repairMaintenance: "Repair & Maintenance",
