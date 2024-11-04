@@ -40,7 +40,7 @@ export default function Home() {
                 />
                 <RainbowButton 
                   onClick={() => setShowContent(true)}
-                  className="hover:scale-105 transition-transform"
+                  className="hover:scale-105"
                 >
                   开始探索
                 </RainbowButton>

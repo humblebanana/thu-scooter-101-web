@@ -132,10 +132,10 @@ export default function AppleStyleChat() {
   }
 
   const recommendedQuestions = [
-    "电动车在哪里买？",
-    "哪里能停车？",
-    "哪里能充电？",
-    "清华现在的电动车政策是什么"
+    "学校对使用电动车的态度是什么？",
+    "在校园内骑行电动车有哪些注意事项？",
+    "在校园内哪里可以给电动车充电？",
+    "如何选择适合我的电动车？"
   ];
 
   const handleQuestionClick = async (question: string) => {
@@ -302,7 +302,7 @@ export default function AppleStyleChat() {
             {isLoading ? (
               <button 
                 onClick={handleAbort}
-                className="bg-transparent text-red-500 p-2 rounded-full transition-all duration-300 transform hover:scale-110"
+                className="bg-transparent text-black p-2 rounded-full transition-all duration-300 transform hover:scale-110"
                 title="点击停止输出"
                 aria-label="停止输出"
               >
