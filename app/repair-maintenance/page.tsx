@@ -15,15 +15,52 @@ export default function RepairMaintenance() {
           <h2 className="text-3xl font-bold">维修点推荐</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              { name: "清芬旁维修点", location: "清芬食堂北侧出口", contact: "暂无", rating: "4.5" },
-              { name: "上门维修张师傅", location: "所有位置，随叫随到", contact: "13730048215", rating: "4.7" },
-              { name: "正在更新ing", location: "N/A", contact: "NA", rating: "N/A" },
+              { 
+                name: "清芬北边维修点1（靠近宿舍）", 
+                location: "清芬食堂北侧出口", 
+                contact: "暂无", 
+                rating: "4.7",
+                reviews: [
+                  { text: "师傅很专业，维修速度快，且价格实惠，还能拖车", date: "2024-10-15" }
+                ]
+              },
+              { 
+                name: "清芬北边维修点2（靠近宿舍）", 
+                location: "清芬食堂北侧出口", 
+                contact: "暂无", 
+                rating: "4.0",
+                reviews: [
+                  { text: "师傅比较敷衍，态度一般，价格也蛮贵的", date: "2024-09-12" }
+                ]
+              },
+              { 
+                name: "上门维修张师傅", 
+                location: "所有位置，随叫随到", 
+                contact: "13730048215", 
+                rating: "4.7",
+                reviews: [
+                  { text: "上门很快，很方便，唯一不好的地方因为是校外的师傅，所以需要帮忙预约", date: "2024-03-14" },
+                ]
+              },
+              { name: "正在更新ing", location: "N/A", contact: "NA", rating: "N/A" ,reviews: [{text: "正在更新ing", date: "2024-11-04"}]},
             ].map((shop, index) => (
               <div key={index} className="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
                 <h3 className="text-lg font-semibold">{shop.name}</h3>
                 <p className="text-gray-600"><MapPin className="inline-block w-4 h-4 mr-1" /> {shop.location}</p>
                 <p className="text-gray-600"><Wrench className="inline-block w-4 h-4 mr-1" /> {shop.contact}</p>
-                <p className="text-gray-600"><span className="inline-block w-4 h-4 mr-1">★</span> {shop.rating}/5</p>
+                <p className="text-gray-600 mb-4"><span className="inline-block w-4 h-4 mr-1">★</span> {shop.rating}/5</p>
+                
+                <div className="mt-4 border-t pt-4">
+                  <h4 className="text-sm font-semibold mb-2">学长姐评价</h4>
+                  <div className="space-y-2">
+                    {shop.reviews?.map((review, idx) => (
+                      <div key={idx} className="text-sm">
+                        <p className="text-gray-700">{review.text}</p>
+                        <p className="text-gray-400 text-xs">{review.date}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -58,7 +95,7 @@ export default function RepairMaintenance() {
                 <Wrench className="w-6 h-6 text-blue-500 mr-2 mt-1" />
                 <div>
                   <h3 className="font-semibold">定期保养</h3>
-                  <p className="text-gray-600">每学期至少做一次全面检修（约300-500元），包括更换刹车片、调整链条松紧度、检查电机等。遇到异响或操控不适要及时去维修点检查。定期给链条上油可以延长使用寿命。</p>
+                  <p className="text-gray-600">每学期���少做一次全面检修（约300-500元），包括更换刹车片、调整链条松紧度、检查电机等。遇到异响或操控不适要及时去维修点检查。定期给链条上油可以延长使用寿命。</p>
                 </div>
               </li>
               <li className="flex items-start">

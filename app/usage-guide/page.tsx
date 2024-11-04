@@ -4,16 +4,6 @@ import Image from 'next/image'
 import { MapPin, Battery, User, Shield, AlertTriangle, Clock, Copy, MessageSquare } from 'lucide-react'
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
-import parking1 from '@/public/parking-images/parking-1.jpg';
-import dormParking1 from '@/public/parking-images/dorm-parking-1.jpg';
-import libraryParking1 from '@/public/parking-images/library-parking-1.jpg';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
 
 const ImageSlider = dynamic(() => import('@/components/ImageSlider'), { ssr: false });
 
@@ -30,20 +20,35 @@ interface ChargingMaster {
 
 const parkingAreas = [
   { 
-    name: "教学楼指定电动车停车场", 
-    image: parking1,
-    description: "教学楼附近的停车区域基本参照自行车的停放位置。需要特别注意：六教架空层和靠近楼宇的地方严禁停放电动车。请在指定区域内有序停放。"
+    name: "教学楼区域",
+    locations: [
+      "一教至五教周边指定区域",
+      "六教（除架空层外）指定区域",
+      "一般院系楼外皆能停车",
+      "待补充……"
+    ],
+    note: "请注意观察每个教学楼附近的停车标识，严格遵守停放规范"
   },
   { 
-    name: "紫荆宿舍区电动车停车位", 
-    image: dormParking1,
-    description: "目前宿舍区的指定停车点包括：紫荆篮球场旁、紫荆网球场旁，以及紫荆11号楼和8号楼对面的延伸区域。请按照标识停放，保持整齐。"
+    name: "宿舍区域",
+    locations: [
+      "紫荆篮球场旁停车带",
+      "紫荆网球场旁停车带",
+      "紫荆34号楼，紫荆8号楼，紫荆11号楼对面停车带（沿着紫操边缘）",
+      "待补充……"
+    ],
+    note: "宿舍区请不要将车停到架空层"
   },
   { 
-    name: "图书馆周边停车区域", 
-    image: libraryParking1,
-    description: "图书馆周边区域目前没有具体限制，可以在周边合适位置停放。但请注意不要影响行人通行，保持整洁有序。"
-  },
+    name: "公共区域",
+    locations: [
+      "图书馆周边皆可停，除李文正馆和逸夫馆有特殊要求外",
+      "综体北体周边暂无特殊规定皆可停车",
+      "食堂周边规划区域",
+      "待补充……"
+    ],
+    note: "公共区域停车需特别注意不要影响行人通行"
+  }
 ];
 
 export default function UsageGuide() {
@@ -51,7 +56,7 @@ export default function UsageGuide() {
   const [chargingMasters, setChargingMasters] = useState<ChargingMaster[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<number | null>(null);
-  const fullText = " 不携带电动车电池进入公寓！不在公寓内给电动车电池充电！😠";
+  const fullText = "请不要携带电动车电池进入公寓！不要在公寓内给电动车电池充电！⚠️😠";
 
   useEffect(() => {
     let index = 0;
@@ -141,43 +146,28 @@ export default function UsageGuide() {
           </div>
 
           {/* 允许停车区域 */}
-          <section className="space-y-6 mb-32">
+          <section className="space-y-6 mb-12">
             <h2 className="text-3xl font-bold">允许停车区域</h2>
-            <Carousel
-              opts={{
-                align: "center",
-                loop: true,
-              }}
-              className="w-full max-w-3xl mx-auto"
-            >
-              <CarouselContent className="-ml-4">
-                {parkingAreas.map((area, index) => (
-                  <CarouselItem key={index} className="pl-4 basis-full">
-                    <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col max-w-lg mx-auto hover:shadow-xl">
-                      <div className="relative w-full h-72 md:h-[420px]">
-                        <Image 
-                          src={area.image}
-                          alt={area.name}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      </div>
-                      <div className="p-3 flex-grow pb-4">
-                        <h3 className="text-lg font-semibold mb-1">{area.name}</h3>
-                        <p className="text-sm text-gray-600 mb-2">
-                          {area.description}
-                        </p>
-                        <ul className="list-disc list-inside text-sm text-gray-600 mb-2">
-                        </ul>
-                      </div>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="hidden md:flex" />
-              <CarouselNext className="hidden md:flex" />
-            </Carousel>
+            <div className="grid md:grid-cols-3 gap-6">
+              {parkingAreas.map((area, index) => (
+                <div key={index} className="bg-transparent rounded-lg p-6 border-l-4 border-gray-500 hover:shadow-lg transition-all duration-300">
+                  <h3 className="text-xl font-bold text-green-700 mb-4">
+                    {area.name}
+                  </h3>
+                  <ul className="space-y-2 mb-4">
+                    {area.locations.map((location, idx) => (
+                      <li key={idx} className="flex items-center text-gray-700">
+                        <span className="w-2 h-2 bg-black rounded-full mr-2"></span>
+                        {location}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-sm text-gray-500 italic">
+                    📌 {area.note}
+                  </p>
+                </div>
+              ))}
+            </div>
           </section>
         </section>
         <section id="charging-stations" className="space-y-6">
