@@ -31,7 +31,6 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
-            <FeedbackButton />
           </div>
         </LanguageProvider>
         <Toaster />

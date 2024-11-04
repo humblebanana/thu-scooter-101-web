@@ -143,7 +143,10 @@ export default function AppleStyleChat() {
       setIsLoading(true);
       setIsInitialState(false);
       
-      // 直接使用问题内容，而不是依赖 inputValue
+      // 创建新的 AbortController
+      const controller = new AbortController();
+      setAbortController(controller);
+
       const userMessage: Message = {
         id: Date.now(),
         content: question,
@@ -165,6 +168,7 @@ export default function AppleStyleChat() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ messages: chatMessages }),
+        signal: controller.signal,
       });
 
       if (!response.ok) {
@@ -201,16 +205,26 @@ export default function AppleStyleChat() {
         }
       }
 
-    } catch (error) {
-      console.error('发送消息时出错:', error);
-      const errorMessage: Message = {
-        id: Date.now() + 1,
-        content: '抱歉，发生了一些错误。请稍后再试。',
-        isUser: false
-      };
-      setMessages(prev => [...prev, errorMessage]);
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        const abortMessage: Message = {
+          id: Date.now() + 1,
+          content: '回答已中止',
+          isUser: false
+        };
+        setMessages(prev => [...prev, abortMessage]);
+      } else {
+        console.error('发送消息时出错:', error);
+        const errorMessage: Message = {
+          id: Date.now() + 1,
+          content: '抱歉，发生了一些错误。请稍后再试。',
+          isUser: false
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      }
     } finally {
       setIsLoading(false);
+      setAbortController(null);
     }
   };
 

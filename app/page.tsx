@@ -38,12 +38,14 @@ export default function Home() {
                   word="Empowering with Scooter in Tsinghua"
                   className="text-2xl sm:text-4xl font-bold mb-6 bg-gradient-to-t from-gray-800 to-gray-400 text-transparent bg-clip-text whitespace-nowrap"
                 />
-                <RainbowButton 
-                  onClick={() => setShowContent(true)}
-                  className="hover:scale-105"
-                >
-                  开始探索
-                </RainbowButton>
+                <div className="opacity-0 animate-fadeIn">
+                  <RainbowButton 
+                    onClick={() => setShowContent(true)}
+                    className="hover:scale-105"
+                  >
+                    开始探索
+                  </RainbowButton>
+                </div>
               </div>
             </div>
           </>
@@ -69,10 +71,6 @@ export default function Home() {
             </section>
           </div>
         )}
-
-        <footer className="bg-gray-100 py-4 text-center text-gray-600 text-sm">
-          © 2024 THU Scooter 101. 版权所有。
-        </footer>
       </div>
     </>
   );

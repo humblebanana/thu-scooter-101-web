@@ -56,13 +56,27 @@ export default function UsageGuide() {
   const [chargingMasters, setChargingMasters] = useState<ChargingMaster[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<number | null>(null);
-  const fullText = "请不要携带电动车电池进入公寓！不要在公寓内给电动车电池充电！⚠️😠";
+  const fullText = "⚠️请不要携带电动车电池进入公寓！不要在公寓内给电动车电池充电！⚠️😠";
+
+  useEffect(() => {
+    // 1. 先移除 URL 中的 hash
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+    
+    // 2. 强制滚动到顶部
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant' // 使用 instant 而不是 smooth 来避免视觉跳动
+    });
+  }, []);
 
   useEffect(() => {
     let index = 0;
     const typingInterval = setInterval(() => {
-      if (index < fullText.length) {
-        setTypedText((prev) => prev + fullText.charAt(index));
+      if (index <= fullText.length) {
+        setTypedText(fullText.slice(0, index));
         index++;
       } else {
         clearInterval(typingInterval);
@@ -151,7 +165,7 @@ export default function UsageGuide() {
             <div className="grid md:grid-cols-3 gap-6">
               {parkingAreas.map((area, index) => (
                 <div key={index} className="bg-transparent rounded-lg p-6 border-l-4 border-gray-500 hover:shadow-lg transition-all duration-300">
-                  <h3 className="text-xl font-bold text-green-700 mb-4">
+                  <h3 className="text-xl font-bold text-gray-700 mb-4">
                     {area.name}
                   </h3>
                   <ul className="space-y-2 mb-4">
