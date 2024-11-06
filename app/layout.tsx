@@ -15,10 +15,13 @@ export const metadata: Metadata = {
   title: 'THU Scooter 101',
   description: '清华电动车指南',
   icons: {
-    icon: '/icon.png',
-    shortcut: '/favicon.ico',
-    apple: '/apple-icon.png',
-  },
+    icon: [
+      { url: '/icon.png', sizes: '180x180', type: 'image/png' }
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }
+    ]
+  }
 }
 
 export default function RootLayout({
@@ -28,6 +31,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh">
+      <head>
+        <link rel="icon" href="/icon.png" type="image/png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+      </head>
       <body className={`${inter.className} min-h-screen flex flex-col bg-gray-50`}>
         <LanguageProvider>
           <div className="min-h-screen flex flex-col bg-gray-50">
