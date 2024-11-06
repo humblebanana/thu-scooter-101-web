@@ -7,6 +7,7 @@ import './globals.css'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 import FeedbackButton from '@/components/FeedbackButton'
 import { Toaster } from "@/components/ui/toaster"
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ subsets: ['latin'] })
 
