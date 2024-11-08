@@ -42,12 +42,16 @@ export default function RootLayout({
             <Header />
             <WelcomeCard />
             <main className="flex-grow container mx-auto px-4 py-8">
-              {children}
+              {children} 
             </main>
             <Footer />
           </div>
         </LanguageProvider>
         <Toaster />
+        <Analytics />
+        {process.env.NODE_ENV === 'production' && (
+          <script defer src="https://hm.baidu.com/hm.js?YOUR_BAIDU_ANALYTICS_ID"></script>
+        )}
       </body>
     </html>
   )
