@@ -36,7 +36,7 @@ export default function Home() {
                 />
                 <BlurIn
                   word="Empowering with Scooter in Tsinghua"
-                  className="text-2xl sm:text-4xl font-bold mb-6 bg-gradient-to-t from-gray-800 to-gray-400 text-transparent bg-clip-text whitespace-nowrap"
+                  className="text-xl sm:text-4xl font-bold mb-6 bg-gradient-to-t from-gray-800 to-gray-400 text-transparent bg-clip-text whitespace-nowrap"
                 />
                 <div className="opacity-0 animate-fadeIn">
                   <RainbowButton 
@@ -54,15 +54,15 @@ export default function Home() {
             <div className="w-full max-w-4xl mx-auto mb-12 pt-[50px]">
               <AppleStyleChat />
             </div>
-            <section className="grid grid-cols-1 md:grid-cols-5 gap-6 w-full max-w-6xl">
+            <section className="grid grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6 w-full max-w-6xl">
               {sections.map((item, index) => (
-                <div key={index} className="bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
-                  <item.icon className="w-10 h-10 text-gray-500 mb-5" />
-                  <h2 className="text-lg font-semibold mb-2">{item.title}</h2>
-                  <p className="text-gray-600 mb-3 text-sm">{item.description}</p>
+                <div key={index} className="bg-white rounded-xl p-3 sm:p-4 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                  <item.icon className="w-8 h-8 sm:w-10 sm:h-10 text-gray-500 mb-3 sm:mb-5" />
+                  <h2 className="text-base sm:text-lg font-semibold mb-1 sm:mb-2">{item.title}</h2>
+                  <p className="text-gray-600 mb-2 sm:mb-3 text-xs sm:text-sm">{item.description}</p>
                   <Link
                     href={item.href}
-                    className="inline-block bg-gray-400 text-white px-3 py-2 text-sm rounded-full hover:bg-black transition-colors duration-300"
+                    className="inline-block bg-gray-400 text-white px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm rounded-full hover:bg-black transition-colors duration-300"
                   >
                     了解更多
                   </Link>

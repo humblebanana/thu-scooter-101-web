@@ -116,67 +116,67 @@ export default function UsageGuide() {
   return (
     <main className="container mx-auto px-4 py-8">
       <div className="space-y-12">
-        <section className="text-center space-y-4">
-          <h1 className="text-4xl font-bold">电动车使用指南</h1>
-          <p className="text-xl text-gray-600">
+        <section className="text-center space-y-2">
+          <h1 className="text-2xl sm:text-4xl font-bold">电动车使用指南</h1>
+          <p className="text-sm sm:text-xl text-gray-600">
             了解校园内的停车规则、充电站位置安全骑行建议
           </p>
         </section>
 
-        <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-8">
-          <p className="text-xl font-bold text-red-700 typing-animation">
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 p-3 sm:p-4 mb-4 sm:mb-8">
+          <p className="text-base sm:text-xl font-bold text-red-700 typing-animation">
             {typedText}
           </p>
         </div>
 
-        <section id="parking-rules" className="space-y-8">
-          <h2 className="text-3xl font-bold">停车规则</h2>
-          <p className="text-lg text-gray-600 mb-4 ">
+        <section id="parking-rules" className="space-y-6">
+          <h2 className="text-lg sm:text-3xl font-bold">停车规则</h2>
+          <p className="text-base sm:text-lg text-gray-600 mb-4 ">
             ———若要在清华内骑电动车，请务必一定要严格遵守以下规则：
           </p>
           {/* 禁止停车区域和处罚标准并排 */}
           <div className="grid md:grid-cols-2 gap-6">
             {/* 禁止停车区域 */}
             <div className="bg-red-100 rounded-lg shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-red-500">
-              <h3 className="text-2xl font-semibold mb-4 text-red-600">⚠️禁止停车区域</h3>
-              <ul className="list-disc list-inside space-y-2 text-lg text-red-800 font-bold">
-                <li>紫荆公寓宿舍楼下及楼外，严禁停车</li>
-                <li>教学楼特定区域(如六教大楼旁不能停车，请在停车时注看告示)</li>
-                <li>古建筑旁（清华学堂，明斋，大礼堂……）</li>
+              <h3 className="text-base sm:text-2xl font-semibold mb-4 text-red-600">⚠️禁止停车区域</h3>
+              <ul className="list-disc list-inside font-semibold space-y-2">
+                <li className="text-sm sm:text-lg text-red-800 font-bold">紫荆公寓宿舍楼下及楼外，严禁停车</li>
+                <li className="text-sm sm:text-lg text-red-800 font-bold">教学楼特定区域(如六教大楼旁不能停车，请在停车时注看告示)</li>
+                <li className="text-sm sm:text-lg text-red-800 font-bold">古建筑旁（清华学堂，明斋，大礼堂……）</li>
               </ul>
             </div>
 
             {/* 处罚标准 */}
             <div className="bg-yellow-50 rounded-lg shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-yellow-200">
-              <h3 className="text-xl font-semibold mb-4">👮违规停车处置方式和处罚标准</h3>
-              <ul className="list-disc list-inside space-y-2 text-gray-700 font-bold">
-                <li>停在违规区域的电动车将被拖走</li>
-                <li>第一次被拖走：需要持生活卡签取车单并签署承诺书</li>
-                <li>第二次被拖走：需要签署违纪单并递交情况说明</li>
-                <li>重要提醒：违规次数是累计的，不会重置</li>
-                <li>为避免处罚，请务必将电动车停放在指定区域 💪</li>
+              <h3 className="text-base sm:text-xl font-semibold mb-4">👮违规停车处置方式和处罚标准</h3>
+              <ul className="list-disc list-inside space-y-2">
+                <li className="text-sm sm:text-base text-gray-700 font-bold">停在违规区域的电动车将被拖走</li>
+                <li className="text-sm sm:text-base text-gray-700 font-bold">第一次被拖走：需要持生活卡签取车单并签署承诺书</li>
+                <li className="text-sm sm:text-base text-gray-700 font-bold">第二次被拖走：需要签署违纪单并递交情况说明</li>
+                <li className="text-sm sm:text-base text-gray-700 font-bold">重要提醒：违规次数是累计的，不会重置</li>
+                <li className="text-sm sm:text-base text-gray-700 font-bold">为避免处罚，请务必将电动车停放在指定区域 💪</li>
               </ul>
             </div>
           </div>
 
           {/* 允许停车区域 */}
-          <section className="space-y-6 mb-12">
-            <h2 className="text-3xl font-bold">允许停车区域</h2>
-            <div className="grid md:grid-cols-3 gap-6">
+          <section className="space-y-4 sm:space-y-6 mb-8 sm:mb-12">
+            <h2 className="text-lg sm:text-3xl font-bold">允许停车区域</h2>
+            <div className="grid md:grid-cols-3 gap-3 sm:gap-6">
               {parkingAreas.map((area, index) => (
-                <div key={index} className="bg-transparent rounded-lg p-6 border-l-4 border-gray-500 hover:shadow-lg transition-all duration-300">
-                  <h3 className="text-xl font-bold text-gray-700 mb-4">
+                <div key={index} className="bg-transparent rounded-lg p-3 sm:p-6 border-l-4 border-gray-500 hover:shadow-lg transition-all duration-300">
+                  <h3 className="text-sm sm:text-xl font-bold text-gray-700 mb-2 sm:mb-4">
                     {area.name}
                   </h3>
-                  <ul className="space-y-2 mb-4">
+                  <ul className="space-y-1.5 sm:space-y-2 mb-2 sm:mb-4">
                     {area.locations.map((location, idx) => (
-                      <li key={idx} className="flex items-center text-gray-700">
-                        <span className="w-2 h-2 bg-black rounded-full mr-2"></span>
-                        {location}
+                      <li key={idx} className="flex items-center">
+                        <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-black rounded-full mr-1.5 sm:mr-2"></span>
+                        <span className="text-xs sm:text-base text-gray-700">{location}</span>
                       </li>
                     ))}
                   </ul>
-                  <p className="text-sm text-gray-500 italic">
+                  <p className="text-[10px] sm:text-sm text-gray-500 italic">
                     📌 {area.note}
                   </p>
                 </div>
@@ -184,14 +184,15 @@ export default function UsageGuide() {
             </div>
           </section>
         </section>
-        <section id="charging-stations" className="space-y-6">
-          <h1 className="text-3xl font-bold">充电站位置</h1>
+        <section id="charging-stations" className="space-y-4 sm:space-y-6">
+          <h2 className="text-lg sm:text-3xl font-bold">充电站位置</h2>
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="aspect-w-16 aspect-h-9 mb-6">
               <iframe
                 src="https://map.baidu.com/@12959238.56,4825347.47,15z"
                 width="100%"
-                height="700"
+                height="300"
+                className="sm:height-700"
                 frameBorder="0"
                 style={{ border: 0 }}
                 allowFullScreen
@@ -200,8 +201,8 @@ export default function UsageGuide() {
               ></iframe>
             </div>
             <p className="text-gray-600 mb-4 font-bold">将以下内容的地址一键复制到地图中，即可快速导航到充电站</p>
-            <h3 className="text-xl font-semibold mb-4">主要充电站位置：</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <h3 className="text-base sm:text-xl font-semibold mb-4">主要充电站位置：</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
               {[
                 {
                   name: "西王庄小区充电桩",
@@ -210,10 +211,10 @@ export default function UsageGuide() {
                   rating: "4.9分，超方便的！而且应该是最近的吧，就在东南门肯德基旁边，充电的时候还能去蹭个疯狂星期四，清华学生都爱来这"
                 },
                 {
-                  name: "北京大学家园食堂旁的充电站",
+                  name: "北大家园食堂充电站",
                   location: "北京大学44号楼", 
                   price: "¥0.6-0.9/小时",
-                  rating: "4.8分，荐，位置特别好找就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
+                  rating: "4.8分，十分推荐！位置特别好找就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
                 },
                 {
                   name: "清华家属区充电桩",
@@ -234,15 +235,15 @@ export default function UsageGuide() {
                   rating: "4.3分，位置很好找，就在C出口旁边，充电也挺快，就是价格小贵"
                 },
                 {
-                  name: "王庄路小区充电站（各个小区都有）",
+                  name: "王庄路小区充电站 ",
                   location: "王庄路小区",
                   price: "¥1.8/小时",
-                  rating: "4.4分，各个小区都能找到，住哪充哪，方便得很！就是得熟悉一下自己小区的位置"
+                  rating: "4.4分，各个小区里面都能找到，住哪充哪，方便得很！就是得熟悉一下自己小区的位置"
                 }
               ].map((station, index) => (
-                <div key={index} className="bg-gray-50 rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <h4 className="font-semibold text-lg mb-2">{station.name}</h4>
-                  <div className="space-y-1 text-gray-600 text-sm">
+                <div key={index} className="bg-gray-50 rounded-lg p-2 sm:p-4 hover:shadow-md transition-shadow">
+                  <h4 className="font-semibold text-sm sm:text-lg mb-1 sm:mb-2">{station.name}</h4>
+                  <div className="space-y-0.5 sm:space-y-1 text-gray-600 text-xs sm:text-sm">
                     <div className="flex items-center justify-between">
                       <p className="flex items-center">
                         <MapPin className="inline-block w-4 h-4 mr-1" /> 
@@ -269,9 +270,9 @@ export default function UsageGuide() {
           </div>
         </section>
 
-        <section id="charging-services" className="space-y-6">
-          <h2 className="text-3xl font-bold">充电师傅服务信息</h2>
-          <p className="text-lg text-gray-600 mb-4 ">
+        <section id="charging-services" className="space-y-4 sm:space-y-6">
+          <h2 className="text-lg sm:text-3xl font-bold">充电师傅服务信息</h2>
+          <p className="text-sm sm:text-lg text-gray-600 mb-4">
             ———充电师傅可以在指定位置直接把电池取走后，隔天早上送回，单次服务费用较贵，一键复制联系方式
           </p>
           {error ? (
@@ -279,73 +280,96 @@ export default function UsageGuide() {
           ) : chargingMasters.length === 0 ? (
             <p>正在加载充电师傅数据...</p>
           ) : (
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-2 sm:gap-4">
               {chargingMasters.map((master) => (
-                <div key={master.id} className="bg-gray-100 rounded-lg p-6 hover:shadow-md transition-shadow">
-                  <h3 className="text-lg font-semibold mb-2">{master.name}</h3>
-                  <p className="text-gray-600"><MapPin className="inline-block w-4 h-4 mr-1" /> 服务区域: {master.area}</p>
-                  <div className="flex items-center justify-between text-gray-600">
-                    <p className="flex items-center">
-                      <User className="inline-block w-4 h-4 mr-1" /> 
-                      联系方式: {master.phone}
-                    </p>
-                    <button
-                      onClick={() => copyToClipboard(master.phone, master.id)}
-                      className="ml-2 p-1 hover:bg-gray-200 rounded-md transition-colors"
-                      title="复制联系方式"
-                    >
-                      {copiedId === master.id ? (
-                        <span className="text-green-500 text-xs">已复制!</span>
-                      ) : (
-                        <Copy className="w-4 h-4 text-gray-500 hover:text-gray-700" />
-                      )}
-                    </button>
+                <div 
+                  key={master.id} 
+                  className="bg-gray-100 rounded-lg p-2 sm:p-4 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex flex-col space-y-1 sm:space-y-2">
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-sm sm:text-lg font-semibold">{master.name}</h3>
+                      <div className="flex items-center text-xs sm:text-sm text-gray-600">
+                        <span className="text-yellow-500 mr-1">★</span>
+                        <span>{master.rating}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center text-gray-600">
+                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm truncate">{master.area}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-gray-600">
+                      <div className="flex items-center">
+                        <User className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
+                        <span className="text-xs sm:text-sm">{master.phone}</span>
+                      </div>
+                      <button
+                        onClick={() => copyToClipboard(master.phone, master.id)}
+                        className="p-1 hover:bg-gray-200 rounded-md transition-colors"
+                        title="复制联系方式"
+                      >
+                        {copiedId === master.id ? (
+                          <span className="text-green-500 text-xs">已复制!</span>
+                        ) : (
+                          <Copy className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 hover:text-gray-700" />
+                        )}
+                      </button>
+                    </div>
+
+                    <div className="flex items-center text-gray-600">
+                      <Battery className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm">{master.price}/次</span>
+                    </div>
                   </div>
-                  <p className="text-gray-600"><Battery className="inline-block w-4 h-4 mr-1" /> 单次价格: ¥{master.price}/次</p>
-                  <p className="text-gray-600"><span className="inline-block w-4 h-4 mr-1">★</span> 用户评分: {master.rating}/5</p>
                 </div>
               ))}
             </div>
           )}
         </section>
 
-        <section id="safety-tips" className="space-y-6">
-          <h2 className="text-3xl font-bold">安全骑行建议</h2>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <ul className="space-y-4">
+        <section id="safety-tips" className="space-y-4 sm:space-y-6">
+          <h2 className="text-lg sm:text-3xl font-bold">安全骑行建议</h2>
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
+            <ul className="space-y-3 sm:space-y-4">
               <li className="flex items-start">
-                <Shield className="w-6 h-6 text-blue-500 mr-2 mt-1" />
+                <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold">始终佩戴头盔</h3>
-                  <p className="text-gray-600">头盔可以在发生意外时保护您的头部，大降低严重伤害的风险。</p>
+                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">始终佩戴头盔</h3>
+                  <p className="text-xs sm:text-base text-gray-600">头盔可以在发生意外时保护您的头部，大降低严重伤害的风险。</p>
                 </div>
               </li>
+
               <li className="flex items-start">
-                <AlertTriangle className="w-6 h-6 text-yellow-500 mr-2 mt-1" />
+                <AlertTriangle className="w-4 h-4 sm:w-6 sm:h-6 text-yellow-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold">遵守交通规则</h3>
-                  <p className="text-gray-600">遵守交通信号，注意行人全，不要逆行或闯红灯。</p>
+                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">遵守交通规则</h3>
+                  <p className="text-xs sm:text-base text-gray-600">遵守交通信号，注意行人安全，不要逆行或闯红灯。</p>
                 </div>
               </li>
+
               <li className="flex items-start">
-                <Shield className="w-6 h-6 text-blue-500 mr-2 mt-1" />
+                <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold">保持车速在15km/h以下</h3>
-                  <p className="text-gray-600">校园内请控制车速，保证自己和他人的安全。</p>
+                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">保持车速在15km/h以下</h3>
+                  <p className="text-xs sm:text-base text-gray-600">校园内请控制车速，保证自己和他人的安全。</p>
                 </div>
               </li>
+
               <li className="flex items-start">
-                <AlertTriangle className="w-6 h-6 text-yellow-500 mr-2 mt-1" />
+                <AlertTriangle className="w-4 h-4 sm:w-6 sm:h-6 text-yellow-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold">夜间骑行开启车灯</h3>
-                  <p className="text-gray-600">确保他人能看到您，同时提高您的视野范围。</p>
+                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">夜间骑行开启车灯</h3>
+                  <p className="text-xs sm:text-base text-gray-600">确保他人能看到您，同时提高您的视野范围。</p>
                 </div>
               </li>
+
               <li className="flex items-start">
-                <Shield className="w-6 h-6 text-blue-500 mr-2 mt-1" />
+                <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold">定期检查车辆状况</h3>
-                  <p className="text-gray-600">确保刹车、轮胎等关键部件处于良好状态。</p>
+                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">定期检查车辆状况</h3>
+                  <p className="text-xs sm:text-base text-gray-600">确保刹车、轮胎等关键部件处于良好状态。</p>
                 </div>
               </li>
             </ul>

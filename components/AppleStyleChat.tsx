@@ -243,30 +243,30 @@ export default function AppleStyleChat() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-transparent rounded-2xl  transition-all duration-300 hover:shadow-lg">
+    <div className="max-w-2xl mx-auto p-1 sm:p-4 bg-transparent rounded-2xl transition-all duration-300 hover:shadow-lg">
       {isInitialState ? (
         <>
-          <h1 className="text-3xl font-bold text-center mb-8">我是THU老司机.AI，有问题可以先问我</h1>
+          <h1 className="text-lg sm:text-3xl font-bold text-center mb-3 sm:mb-8">我是THU老司机.AI，有问题可以先问我</h1>
           
-          <div className="bg-gray-100 rounded-full p-2 flex items-center mb-6 transition-all duration-300 hover:bg-gray-200">
+          <div className="bg-gray-100 rounded-full p-1.5 sm:p-2 flex items-center mb-4 sm:mb-6 transition-all duration-300 hover:bg-gray-200">
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="🛵给清华老司机发消息"
-              className="flex-grow bg-transparent outline-none px-4"
+              className="flex-grow bg-transparent outline-none px-2 sm:px-4 text-sm sm:text-base"
               onKeyPress={handleKeyPress}
             />
-            <button onClick={() => sendMessage()} className="p-2 transition-transform duration-300 hover:scale-110">
-              <Send size={20} />
+            <button onClick={() => sendMessage()} className="p-1.5 sm:p-2 transition-transform duration-300 hover:scale-110">
+              <Send size={16} className="sm:w-5 sm:h-5" />
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-2 sm:gap-4">
             {recommendedQuestions.map((question, index) => (
               <button 
                 key={index} 
-                className="bg-gray-200 rounded-lg p-3 text-left text-sm text-gray-700 transition-all duration-300 hover:bg-gray-300 hover:shadow-md transform hover:-translate-y-1"
+                className="bg-gray-200 rounded-lg p-2 sm:p-3 text-left text-xs sm:text-sm text-gray-700 transition-all duration-300 hover:bg-gray-300 hover:shadow-md transform hover:-translate-y-1"
                 onClick={() => handleQuestionClick(question)}
               >
                 {question}
@@ -276,11 +276,11 @@ export default function AppleStyleChat() {
         </>
       ) : (
         <>
-          <div className="h-[500px] overflow-y-auto mb-4 p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:shadow-inner [scroll-behavior:smooth]">
+          <div className="h-[450px] sm:h-[500px] overflow-y-auto mb-2 sm:mb-4 p-1.5 sm:p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:shadow-inner [scroll-behavior:smooth]">
             {messages.map((message, index) => (
-              <div key={index} className={`mb-4 flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
+              <div key={index} className={`mb-1.5 sm:mb-4 flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
                 {!message.isUser && (
-                  <div className="w-8 h-8 rounded-full overflow-hidden mr-2 flex-shrink-0">
+                  <div className="w-5 h-5 sm:w-8 sm:h-8 rounded-full overflow-hidden mr-1 sm:mr-2 flex-shrink-0">
                     <Image
                       src="/user-avatar.png"
                       alt="AI Avatar"
@@ -291,7 +291,7 @@ export default function AppleStyleChat() {
                   </div>
                 )}
                 <span 
-                  className={`inline-block p-2 rounded-lg transition-all duration-300 max-w-[70%] ${
+                  className={`inline-block p-1 sm:p-2 rounded-lg transition-all duration-300 max-w-[80%] text-xs sm:text-base ${
                     message.isUser 
                       ? 'bg-gray-200 text-black hover:bg-gray-300' 
                       : 'bg-transparent text-gray-800 hover:bg-gray-50'
@@ -299,35 +299,35 @@ export default function AppleStyleChat() {
                 >
                   {message.content}
                 </span>
-                {message.isUser && <div className="w-8 h-8 ml-2" />}
+                {message.isUser && <div className="w-5 h-5 sm:w-8 sm:h-8 ml-1 sm:ml-2" />}
               </div>
             ))}
             <div ref={messagesEndRef} />
           </div>
-          <div className="flex items-center bg-gray-100 rounded-full p-1">
+          <div className="flex items-center bg-gray-100 rounded-full p-1 sm:p-1.5">
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="输入您的问题..." 
-              className="flex-grow p-2 bg-transparent border-none focus:outline-none"
+              className="flex-grow p-1 sm:p-2 bg-transparent border-none focus:outline-none text-xs sm:text-base"
               onKeyPress={handleKeyPress}
             />
             {isLoading ? (
               <button 
                 onClick={handleAbort}
-                className="bg-transparent text-black p-2 rounded-full transition-all duration-300 transform hover:scale-110"
+                className="bg-transparent text-black p-1.5 sm:p-2 rounded-full transition-all duration-300 transform hover:scale-110"
                 title="点击停止输出"
                 aria-label="停止输出"
               >
-                <StopCircle size={20} />
+                <StopCircle size={16} className="sm:w-5 sm:h-5" />
               </button>
             ) : (
               <button 
                 onClick={() => sendMessage()}
-                className="bg-transparent text-black-500 p-2 rounded-full transition-all duration-300 transform hover:scale-110"
+                className="bg-transparent text-black-500 p-1.5 sm:p-2 rounded-full transition-all duration-300 transform hover:scale-110"
               >
-                <Send size={20} />
+                <Send size={16} className="sm:w-5 sm:h-5" />
               </button>
             )}
           </div>

@@ -50,7 +50,7 @@ export default function FeedbackButton() {
       toast({
         title: "感谢您的反馈！",
         description: "您的意见对我们非常重要",
-        duration: 5000,
+        duration: 3000,
       })
 
       // 重置表单
@@ -79,8 +79,8 @@ export default function FeedbackButton() {
         onClick={() => setIsOpen(true)}
       >
         <MessageSquarePlus className="w-4 h-4 md:mr-2" />
-        <span className="hidden md:inline">反馈您的意见</span>
-        <span className="md:hidden ml-1">反馈</span>
+        <span className="hidden md:inline">反馈｜Feedback</span>
+        <span className="md:hidden ml-1">Feedback</span>
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
