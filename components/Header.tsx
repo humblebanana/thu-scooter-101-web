@@ -10,25 +10,27 @@ const Header = () => {
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <Image
-              src="/icon.svg"
-              alt="THU Electric Bike Logo"
-              width={32}
-              height={32}
-              className="w-8 h-8"
-            />
-            <Link href="/" className="text-2xl font-bold text-gray-900">
+          <div className="flex items-center gap-2 md:gap-3">
+            <Link href="/">
+              <Image
+                src="/icon.svg"
+                alt="THU Electric Bike Logo"
+                width={32}
+                height={32}
+                className="w-6 h-6 md:w-8 md:h-8"
+              />
+            </Link>
+            <Link href="/" className="hidden md:block md:text-2xl font-bold text-gray-900">
               THU-电动车-101
             </Link>
           </div>
           
-          <div className="flex items-center gap-8">
-            <ul className="hidden md:flex space-x-8">
+          <nav className="flex items-center">
+            <ul className="flex space-x-3 md:space-x-8 text-xs md:text-base">
               <li>
                 <Link 
                   href="/buying-guide" 
-                  className="text-gray-600 hover:text-gray-900 font-medium relative
+                  className="text-gray-600 hover:text-gray-900 font-medium relative whitespace-nowrap
                     after:content-[''] after:absolute after:left-0 after:bottom-[-4px]
                     after:h-[2px] after:w-0 after:bg-gray-900 after:transition-all
                     hover:after:w-full"
@@ -81,7 +83,7 @@ const Header = () => {
                 </Link>
               </li>
             </ul>
-          </div>
+          </nav>
         </div>
       </div>
     </header>

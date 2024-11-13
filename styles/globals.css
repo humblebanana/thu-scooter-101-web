@@ -12,3 +12,9 @@
 .nav-link:hover {
   color: #007bff; /* 或者您喜欢的任何颜色 */
 }
+
+@layer utilities {
+  .no-interaction {
+    @apply select-none text-transparent touch-none;
+  }
+}

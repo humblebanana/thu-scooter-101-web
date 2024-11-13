@@ -78,9 +78,9 @@ export default function FeedbackButton() {
         className="fixed bottom-8 right-8 bg-gradient-to-r from-[#4E2A84] to-[#6B3DAD] text-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50"
         onClick={() => setIsOpen(true)}
       >
-        <MessageSquarePlus className="w-4 h-4 mr-2" />
-        反馈您的意见
-        Feedback
+        <MessageSquarePlus className="w-4 h-4 md:mr-2" />
+        <span className="hidden md:inline">反馈您的意见</span>
+        <span className="md:hidden ml-1">反馈</span>
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -149,7 +149,7 @@ export default function FeedbackButton() {
               >
                 取消
               </Button>
-              <Button type="submit" className="bg-blue-500 text-white">
+              <Button type="submit" className="bg-gradient-to-r from-[#4E2A84] to-[#6B3DAD] text-white">
                 提交反馈
               </Button>
             </div>
