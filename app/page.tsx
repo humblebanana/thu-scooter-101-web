@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AppleStyleChat from '@/components/AppleStyleChat'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -9,11 +9,20 @@ import WelcomeCard from '@/components/WelcomeCard'
 import BlurIn from "@/components/ui/blur-in"
 import { RainbowButton } from "@/components/ui/rainbow-button"
 
-
-
 export default function Home() {
-  const [showContent, setShowContent] = useState(false)
+  const [showContent, setShowContent] = useState(true)
   
+  useEffect(() => {
+    const isFirstVisit = !localStorage.getItem('hasVisitedBefore')
+    
+    if (isFirstVisit) {
+      setShowContent(false)
+      localStorage.setItem('hasVisitedBefore', 'true')
+    } else {
+      setShowContent(true)
+    }
+  }, [])
+
   const sections = [
     { title: "购买指南", icon: Bike, href: "/buying-guide", description: "找到适合您的电动车和购买渠道" },
     { title: "使用指南", icon: Book, href: "/usage-guide", description: "了解校园的停车规则和如何给电动车" },
@@ -62,7 +71,7 @@ export default function Home() {
                   <p className="text-gray-600 mb-2 sm:mb-3 text-xs sm:text-sm">{item.description}</p>
                   <Link
                     href={item.href}
-                    className="inline-block bg-gray-400 text-white px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm rounded-full hover:bg-black transition-colors duration-300"
+                    className="inline-block bg-gradient-to-r from-gray-600 to-gray-400 text-white px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm rounded-full hover:bg-black transition-colors duration-300 font-semibold"
                   >
                     了解更多
                   </Link>

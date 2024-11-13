@@ -78,7 +78,7 @@ export default function FeedbackButton() {
         className="fixed bottom-8 right-8 bg-gradient-to-r from-[#4E2A84] to-[#6B3DAD] text-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50"
         onClick={() => setIsOpen(true)}
       >
-        <MessageSquarePlus className="w-4 h-4 md:mr-2" />
+        <MessageSquarePlus className="w-4 h-4 md:mr-2 font-semibold" />
         <span className="hidden md:inline">反馈｜Feedback</span>
         <span className="md:hidden ml-1">Feedback</span>
       </Button>

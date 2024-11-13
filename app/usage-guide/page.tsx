@@ -106,11 +106,35 @@ export default function UsageGuide() {
   }, []);
 
   const copyToClipboard = (text: string, id: number) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopiedId(id);
-      // 1.5秒后重置复制状态
-      setTimeout(() => setCopiedId(null), 1500);
-    });
+    try {
+      // 首先尝试使用 navigator.clipboard API
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          setCopiedId(id);
+          setTimeout(() => setCopiedId(null), 1500);
+        });
+      } else {
+        // 后备方案：创建一个临时的 textarea 元素
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';  // 避免页面滚动
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        
+        try {
+          document.execCommand('copy');
+          setCopiedId(id);
+          setTimeout(() => setCopiedId(null), 1500);
+        } catch (err) {
+          console.error('复制失败:', err);
+        } finally {
+          document.body.removeChild(textarea);
+        }
+      }
+    } catch (error) {
+      console.error('复制过程出错:', error);
+    }
   };
 
   return (
@@ -138,7 +162,7 @@ export default function UsageGuide() {
           <div className="grid md:grid-cols-2 gap-6">
             {/* 禁止停车区域 */}
             <div className="bg-red-100 rounded-lg shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-red-500">
-              <h3 className="text-base sm:text-2xl font-semibold mb-4 text-red-600">⚠️禁止停车区域</h3>
+              <h3 className="text-base sm:text-2xl font-semibold mb-4 text-red-600">⚠️禁止停车区域👮</h3>
               <ul className="list-disc list-inside font-semibold space-y-2">
                 <li className="text-sm sm:text-lg text-red-800 font-bold">紫荆公寓宿舍楼下及楼外，严禁停车</li>
                 <li className="text-sm sm:text-lg text-red-800 font-bold">教学楼特定区域(如六教大楼旁不能停车，请在停车时注看告示)</li>
@@ -148,7 +172,7 @@ export default function UsageGuide() {
 
             {/* 处罚标准 */}
             <div className="bg-yellow-50 rounded-lg shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-yellow-200">
-              <h3 className="text-base sm:text-xl font-semibold mb-4">👮违规停车处置方式和处罚标准</h3>
+              <h3 className="text-base sm:text-xl font-semibold mb-4">⚠️违规停车处置方式和处罚标准👮</h3>
               <ul className="list-disc list-inside space-y-2">
                 <li className="text-sm sm:text-base text-gray-700 font-bold">停在违规区域的电动车将被拖走</li>
                 <li className="text-sm sm:text-base text-gray-700 font-bold">第一次被拖走：需要持生活卡签取车单并签署承诺书</li>
@@ -187,82 +211,101 @@ export default function UsageGuide() {
         <section id="charging-stations" className="space-y-4 sm:space-y-6">
           <h2 className="text-lg sm:text-3xl font-bold">充电站位置</h2>
           <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="aspect-w-16 aspect-h-9 mb-6">
+            <div className="hidden sm:block w-full h-[600px] mb-6 rounded-lg overflow-hidden">
               <iframe
                 src="https://map.baidu.com/@12959238.56,4825347.47,15z"
                 width="100%"
-                height="300"
-                className="sm:height-700"
-                frameBorder="0"
+                height="100%"
+                className="w-full h-full border-0"
                 style={{ border: 0 }}
                 allowFullScreen
                 aria-hidden="false"
                 tabIndex={0}
               ></iframe>
             </div>
-            <p className="text-gray-600 mb-4 font-bold">将以下内容的地址一键复制到地图中，即可快速导航到充电站</p>
+            <div className="block sm:hidden mb-4 text-sm text-gray-600 font-semibold">
+              <p>将以下内容的地址一键复制到地图中，即可快速导航到充电站</p>
+            </div>
             <h3 className="text-base sm:text-xl font-semibold mb-4">主要充电站位置：</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
               {[
                 {
                   name: "西王庄小区充电桩",
                   location: "西王庄小区12号楼",
-                  price: "¥0.7/小时",
-                  rating: "4.9分，超方便的！而且应该是最近的吧，就在东南门肯德基旁边，充电的时候还能去蹭个疯狂星期四，清华学生都爱来这"
+                  price: "¥0.7/次",
+                  rating: "4.9",
+                  review: "超方便的！而且应该是最近的吧，就在东南门肯德基旁边，充电的时候还能去蹭个疯狂星期四，清华学生都爱来这"
                 },
                 {
                   name: "北大家园食堂充电站",
                   location: "北京大学44号楼", 
-                  price: "¥0.6-0.9/小时",
-                  rating: "4.8分，十分推荐！位置特别好找就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
+                  price: "¥0.6-0.9/次",
+                  rating: "4.8",
+                  review: "十分推荐！位置特别好找就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
                 },
                 {
                   name: "清华家属区充电桩",
                   location: "清华大学照澜职工食堂",
-                  price: "¥2/小时",
-                  rating: "4.0分，劝退！没有家属充电卡根本充不了，而且僵尸车超多，想找个位置太难了"
+                  price: "¥2/次",
+                  rating: "4.0",
+                  review: "劝退！没有家属充电卡根本充不了，而且僵尸车超多，想找个位置太难了"
                 },
                 {
                   name: "五道口地铁站充电桩",
                   location: "优盛大厦",
-                  price: "¥1/小时",
-                  rating: "4.6分，地铁站边上挺方便的，就是得跟外卖小哥抢位置，建议避开大晚上去充电"
+                  price: "¥1/次",
+                  rating: "4.6",
+                  review: "地铁站边上挺方便的，就是得跟外卖小哥抢位置，建议避开大晚上去充电"
                 },
                 {
                   name: "圆明园地铁站充电桩",
                   location: "地铁圆明园站c口",
                   price: "¥0.5/度",
-                  rating: "4.3分，位置很好找，就在C出口旁边，充电也挺快，就是价格小贵"
+                  rating: "4.3",
+                  review: "位置很好找，就在C出口旁边，充电也挺快，就是价格小贵"
                 },
                 {
                   name: "王庄路小区充电站 ",
                   location: "王庄路小区",
-                  price: "¥1.8/小时",
-                  rating: "4.4分，各个小区里面都能找到，住哪充哪，方便得很！就是得熟悉一下自己小区的位置"
+                  price: "¥0.8/次",
+                  rating: "4.4",
+                  review: "各个小区里面都能找到，住哪充哪，方便得很！就是得熟悉一下自己小区的位置"
                 }
               ].map((station, index) => (
                 <div key={index} className="bg-gray-50 rounded-lg p-2 sm:p-4 hover:shadow-md transition-shadow">
                   <h4 className="font-semibold text-sm sm:text-lg mb-1 sm:mb-2">{station.name}</h4>
                   <div className="space-y-0.5 sm:space-y-1 text-gray-600 text-xs sm:text-sm">
                     <div className="flex items-center justify-between">
-                      <p className="flex items-center">
-                        <MapPin className="inline-block w-4 h-4 mr-1" /> 
-                        {station.location}
-                      </p>
+                      <div className="flex items-center flex-grow truncate mr-2">
+                        <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" /> 
+                        <span className="truncate">{station.location}</span>
+                      </div>
                       <button
                         onClick={() => copyToClipboard(station.location, index)}
-                        className="ml-2 p-1 hover:bg-gray-200 rounded-md transition-colors"
+                        className="flex-shrink-0 p-1 hover:bg-gray-200 rounded-md transition-colors"
                         title="复制地址"
+                        aria-label="复制地址"
                       >
                         {copiedId === index ? (
-                          <span className="text-green-500 text-xs">已复制!</span>
+                          <span className="text-green-500 text-xs whitespace-nowrap">已复制!</span>
                         ) : (
-                          <Copy className="w-4 h-4 text-gray-500 hover:text-gray-700" />
+                          <Copy className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 hover:text-gray-700" />
                         )}
                       </button>
                     </div>
-                    <p><Battery className="inline-block w-4 h-4 mr-1" /> {station.price}</p>
-                    <p><span className="inline-block w-4 h-4 mr-1">★</span> {station.rating}</p>
+                    <p className="flex items-center">
+                      <Battery className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" /> 
+                      {station.price}
+                    </p>
+                    <div className="mt-2 border-t pt-2">
+                      <div className="flex items-center mb-1">
+                        <span className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1 text-yellow-500">★</span>
+                        <span className="font-semibold">{station.rating}</span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">
+                        {station.review}
+                      </p>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -273,7 +316,7 @@ export default function UsageGuide() {
         <section id="charging-services" className="space-y-4 sm:space-y-6">
           <h2 className="text-lg sm:text-3xl font-bold">充电师傅服务信息</h2>
           <p className="text-sm sm:text-lg text-gray-600 mb-4">
-            ———充电师傅可以在指定位置直接把电池取走后，隔天早上送回，单次服务费用较贵，一键复制联系方式
+            ———充电师傅可以在指定位置直接把电池取走后，隔天早上送回，单次服务费用较贵，一键复制联系方式（微信）
           </p>
           {error ? (
             <p className="text-red-500">错误: {error}</p>
@@ -320,7 +363,7 @@ export default function UsageGuide() {
 
                     <div className="flex items-center text-gray-600">
                       <Battery className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
-                      <span className="text-xs sm:text-sm">{master.price}/次</span>
+                      <span className="text-xs sm:text-sm">{master.price}元/次</span>
                     </div>
                   </div>
                 </div>
