@@ -1,8 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
-import { MessageSquarePlus, X as CloseIcon } from 'lucide-react';
-import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import type { FeedbackType } from '@/lib/supabase';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Slider } from "@/components/ui/slider"
+import { MessageSquarePlus } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface FeedbackFormData {
   rating: number;
@@ -17,132 +27,135 @@ export default function FeedbackButton() {
     improvements: '',
     suggestions: ''
   });
-  const pathname = usePathname();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const feedback = {
-      page: pathname,
-      rating: formData.rating,
-      improvements: formData.improvements,
-      suggestions: formData.suggestions,
-      timestamp: new Date().toISOString()
-    };
+    setIsSubmitting(true);
 
     try {
-      // 将反馈写入本地文件
-      const response = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(feedback),
-      });
+      const { error } = await supabase
+        .from('feedback')
+        .insert({
+          page: window.location.pathname,
+          rating: formData.rating,
+          improvements: formData.improvements,
+          suggestions: formData.suggestions
+        })
 
-      if (!response.ok) {
-        throw new Error('反馈提交失败');
-      }
+      if (error) throw error;
 
-      // 重置表单并关闭modal
+      // 成功提交后显示感谢信息
+      toast({
+        title: "感谢您的反馈！",
+        description: "您的意见对我们非常重要",
+        duration: 5000,
+      })
+
+      // 重置表单
       setFormData({ rating: 5, improvements: '', suggestions: '' });
-      setIsOpen(false);
-      alert('感谢您的反馈！');
+      
+      // 延迟关闭对话框
+      setTimeout(() => setIsOpen(false), 2000);
     } catch (error) {
       console.error('提交反馈时出错:', error);
-      alert('提交反馈时出现错误，请稍后重试');
+      toast({
+        title: "提交失败",
+        description: "抱歉，提交反馈时出现错误，请稍后重试",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <>
-      <button
-        onClick={() => setIsOpen(true)}
+    <div className="fixed bottom-16 right-8 z-50">
+      <Button
+        variant="default"
+        size="lg"
         className="fixed bottom-8 right-8 bg-gradient-to-r from-[#4E2A84] to-[#6B3DAD] text-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50"
-        aria-label="提供反馈"
+        onClick={() => setIsOpen(true)}
       >
-        <MessageSquarePlus size={24} />
-      </button>
+        <MessageSquarePlus className="w-4 h-4 mr-2" />
+        反馈您的意见
+        Feedback
+      </Button>
 
-      {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-[480px] max-w-[90vw] relative">
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors"
-            >
-              <CloseIcon size={20} />
-            </button>
-            
-            <h2 className="text-2xl font-bold mb-6 text-center">帮助我们变得更好</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  您对当前页面的满意度如何？
-                </label>
-                <div className="flex gap-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, rating: star })}
-                      className={`text-2xl transition-colors ${
-                        star <= formData.rating ? 'text-yellow-400' : 'text-gray-300'
-                      }`}
-                    >
-                      ★
-                    </button>
-                  ))}
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="text-center text-xl font-bold">
+              帮助我们变得更好
+            </DialogTitle>
+          </DialogHeader>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-4">
+              <label className="block text-base font-medium">
+                您对当前页面的满意度如何？
+              </label>
+              <div className="px-3">
+                <Slider
+                  value={[formData.rating]}
+                  onValueChange={(value: number[]) => setFormData({ ...formData, rating: value[0] })}
+                  max={10}
+                  min={1}
+                  step={1}
+                  className="w-full"
+                />
+                <div className="flex justify-between mt-2 text-sm text-muted-foreground">
+                  <span>不满意</span>
+                  <span className="font-medium">{formData.rating}/10</span>
+                  <span>非常满意</span>
                 </div>
               </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  您觉得哪些地方需要改进？
-                </label>
-                <textarea
-                  value={formData.improvements}
-                  onChange={(e) => setFormData({ ...formData, improvements: e.target.value })}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  rows={3}
-                  placeholder="请具体描述需要改进的地方..."
-                  required
-                />
-              </div>
+            </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  您认为需要补充哪些信息？
-                </label>
-                <textarea
-                  value={formData.suggestions}
-                  onChange={(e) => setFormData({ ...formData, suggestions: e.target.value })}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  rows={3}
-                  placeholder="请提供您认为所需要补充的信息..."
-                  required
-                />
-              </div>
+            <div className="space-y-4">
+              <label className="block text-base">
+                您觉得哪些地方需要改进？
+              </label>
+              <textarea
+                value={formData.improvements}
+                onChange={(e) =>
+                  setFormData({ ...formData, improvements: e.target.value })
+                }
+                className="w-full min-h-[100px] p-3 rounded-lg border"
+                placeholder="如：页面设计、信息准确性、功能实用性等……"
+              />
+            </div>
 
-              <div className="flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                >
-                  取消
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:scale-105 transition-all duration-300"
-                >
-                  提交反馈
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-    </>
+            <div className="space-y-4">
+              <label className="block text-base">
+                您认为需要补充哪些信息？
+              </label>
+              <textarea
+                value={formData.suggestions}
+                onChange={(e) =>
+                  setFormData({ ...formData, suggestions: e.target.value })
+                }
+                className="w-full min-h-[100px] p-3 rounded-lg border"
+                placeholder="如：推荐的电动车型号、充电桩位置、购买渠道等……"
+              />
+            </div>
+
+            <div className="flex justify-end gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+              >
+                取消
+              </Button>
+              <Button type="submit" className="bg-blue-500 text-white">
+                提交反馈
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }

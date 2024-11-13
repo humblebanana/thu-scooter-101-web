@@ -52,6 +52,7 @@ export default function RootLayout({
         {process.env.NODE_ENV === 'production' && (
           <script defer src="https://hm.baidu.com/hm.js?YOUR_BAIDU_ANALYTICS_ID"></script>
         )}
+        <FeedbackButton />
       </body>
     </html>
   )
