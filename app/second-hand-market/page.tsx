@@ -1,9 +1,9 @@
 'use client';
 
 import { Suspense } from 'react'
-import UploadForm from '@/components/UploadForm'
 import BikeList from '@/components/BikeList'
 import { ErrorBoundary } from 'react-error-boundary'
+import UploadForm from '@/components/UploadForm';
 
 function ErrorFallback({error}: {error: Error}) {
   return (
