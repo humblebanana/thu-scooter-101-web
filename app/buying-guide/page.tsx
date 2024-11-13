@@ -93,7 +93,8 @@ export default async function BuyingGuide() {
                 <p className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">品牌: {scooter.brand}</p>
                 <p className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">价格: ¥{scooter.price}</p>
                 <p className="text-xs sm:text-sm text-gray-600 mb-0.5 sm:mb-1">续航: {scooter.range}</p>
-                <p className="text-xs sm:text-sm text-gray-700 font-bold">学长学姐说：{scooter.description}</p>
+                <div className="border-t border-gray-200 my-2"></div>
+                <p className="text-xs sm:text-xs text-gray-500 font-semibold">学长学姐说：{scooter.description}</p>
               </div>
             </div>
           ))}
@@ -113,19 +114,21 @@ export default async function BuyingGuide() {
               key={index} 
               className="bg-white rounded-lg shadow-md p-2 sm:p-4 transform transition duration-300 hover:scale-105 hover:shadow-xl"
             >
-              <h3 className="text-sm sm:text-lg font-semibold mb-1 sm:mb-2 break-words">{channel.name}</h3>
-              <p className="text-xs sm:text-sm text-gray-600 mb-1 flex items-center">
-                <MapPin className="shrink-0 mr-1" size={14} /> 
-                <span className="break-words">{channel.location}</span>
-              </p>
-              <p className="text-xs sm:text-sm text-gray-600 mb-1 flex items-center">
-                <Phone className="shrink-0 mr-1" size={14} /> 
-                <span className="break-words">{channel.contact}</span>
-              </p>
-              <p className="text-xs sm:text-sm text-gray-600 flex items-center">
-                <Tag className="shrink-0 mr-1" size={14} /> 
-                <span className="break-words">{channel.priceRange}</span>
-              </p>
+              <h3 className="text-sm sm:text-lg font-semibold mb-2 sm:mb-3 min-h-[2.5em] flex items-center">{channel.name}</h3>
+              <div className="space-y-1.5">
+                <div className="flex items-start">
+                  <MapPin className="shrink-0 mr-1.5 mt-0.5" size={14} /> 
+                  <span className="text-xs sm:text-sm text-gray-600 flex-1 break-words">{channel.location}</span>
+                </div>
+                <div className="flex items-start">
+                  <Phone className="shrink-0 mr-1.5 mt-0.5" size={14} /> 
+                  <span className="text-xs sm:text-sm text-gray-600 flex-1 break-words">{channel.contact}</span>
+                </div>
+                <div className="flex items-start">
+                  <Tag className="shrink-0 mr-1.5 mt-0.5" size={14} /> 
+                  <span className="text-xs sm:text-sm text-gray-600 flex-1 break-words">{channel.priceRange}</span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
