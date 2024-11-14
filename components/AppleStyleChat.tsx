@@ -17,6 +17,14 @@ interface ChatMessage {
   content: string;
 }
 
+import ReactMarkdown from 'react-markdown';
+
+interface Message {
+  id: number;
+  content: string;
+  isUser: boolean;
+}
+
 export default function AppleStyleChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -324,15 +332,42 @@ export default function AppleStyleChat() {
                     />
                   </div>
                 )}
-                <span 
+                <div 
                   className={`inline-block p-1 sm:p-2 rounded-lg transition-all duration-300 max-w-[80%] text-xs sm:text-base ${
                     message.isUser 
                       ? 'bg-gray-200 text-black hover:bg-gray-300' 
                       : 'bg-transparent text-gray-800 hover:bg-gray-50'
                   }`}
                 >
-                  {message.content}
-                </span>
+                  {message.isUser ? (
+                    message.content
+                  ) : (
+                    <ReactMarkdown
+                      components={{
+                        code: ({className, children, ...props}: React.ComponentPropsWithoutRef<'code'>) => {
+                          const match = /language-(\w+)/.exec(className || '');
+                          const isInline = !match;
+                          return isInline ? (
+                            <code className="bg-gray-100 px-1 rounded" {...props}>
+                              {children}
+                            </code>
+                          ) : (
+                            <pre className="bg-gray-100 p-2 rounded-lg my-2 overflow-x-auto">
+                              <code
+                                className={className}
+                                {...props}
+                              >
+                                {children}
+                              </code>
+                            </pre>
+                          );
+                        },
+                      }}
+                    >
+                      {message.content}
+                    </ReactMarkdown>
+                  )}
+                </div>
                 {message.isUser && <div className="w-5 h-5 sm:w-8 sm:h-8 ml-1 sm:ml-2" />}
               </div>
             ))}
