@@ -36,18 +36,14 @@ export default function AppleStyleChat() {
     scrollToBottom();
   }, [messages]);
 
-  async function sendMessage(e?: React.FormEvent) {
+  const sendMessage = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!inputValue.trim() || isLoading) return;
-
-    // 创建新的 AbortController
-    const controller = new AbortController();
-    setAbortController(controller);
 
     try {
       setIsLoading(true);
       setIsInitialState(false);
-      
+
       // 添加用户消息
       const userMessage: Message = {
         id: Date.now(),
@@ -57,79 +53,88 @@ export default function AppleStyleChat() {
       setMessages(prev => [...prev, userMessage]);
       setInputValue('');
 
-      // 准备发送给API的消息历史
-      const chatMessages: ChatMessage[] = messages.map(msg => ({
-        role: msg.isUser ? 'user' : 'assistant',
-        content: msg.content
-      }));
-      chatMessages.push({ role: 'user', content: inputValue });
+      // 添加AI消息占位
+      const aiMessage: Message = {
+        id: Date.now() + 1,
+        content: '',
+        isUser: false
+      };
+      setMessages(prev => [...prev, aiMessage]);
 
-      // 发送请求到API
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ messages: chatMessages }),
-        signal: controller.signal,
+        body: JSON.stringify({
+          messages: [{ role: 'user', content: inputValue }]
+        }),
       });
 
       if (!response.ok) {
-        throw new Error('无法获取回复');
+        throw new Error('API请求失败');
       }
 
-      // 处理流式响应
       const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('无法获取响应流');
+      }
+
       let aiMessageContent = '';
 
-      if (reader) {
-        // 添加一个空的AI消息
-        const aiMessage: Message = {
-          id: Date.now() + 1,
-          content: '',
-          isUser: false
-        };
-        setMessages(prev => [...prev, aiMessage]);
-
+      try {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-          
-          // 将 Uint8Array 转换为文本
+
           const text = new TextDecoder().decode(value);
-          aiMessageContent += text;
-          
-          // 更新最后一条消息
-          setMessages(prev => {
-            const newMessages = [...prev];
-            newMessages[newMessages.length - 1].content = aiMessageContent;
-            return newMessages;
-          });
+          const lines = text.split('\n');
+
+          for (const line of lines) {
+            if (!line.trim() || !line.startsWith('data: ')) continue;
+
+            try {
+              const jsonStr = line.slice(6);
+              if (jsonStr === '[DONE]') continue;
+
+              const data = JSON.parse(jsonStr);
+              if (data.answer) {
+                aiMessageContent += data.answer;
+                setMessages(prev => {
+                  const newMessages = [...prev];
+                  newMessages[newMessages.length - 1].content = aiMessageContent;
+                  return newMessages;
+                });
+              }
+            } catch (parseError) {
+              // 忽略解析错误，继续处理下一行
+              continue;
+            }
+          }
         }
+      } catch (streamError) {
+        if (streamError instanceof Error && streamError.name === 'AbortError') {
+          setMessages(prev => [...prev, {
+            id: Date.now(),
+            content: '回答已中止',
+            isUser: false
+          }]);
+          return;
+        }
+        throw streamError;
       }
 
-    } catch (error: unknown) {
-      if (error instanceof Error && error.name === 'AbortError') {
-        const abortMessage: Message = {
-          id: Date.now() + 1,
-          content: '回答已中止',
-          isUser: false
-        };
-        setMessages(prev => [...prev, abortMessage]);
-      } else {
-        console.error('发送消息时出错:', error);
-        const errorMessage: Message = {
-          id: Date.now() + 1,
-          content: '抱歉，发生了一些错误。请稍后再试。',
-          isUser: false
-        };
-        setMessages(prev => [...prev, errorMessage]);
-      }
+    } catch (error) {
+      console.error('Chat error:', error);
+      setMessages(prev => [...prev, {
+        id: Date.now(),
+        content: error instanceof Error ? `错误: ${error.message}` : '发生未知错误',
+        isUser: false
+      }]);
     } finally {
       setIsLoading(false);
-      setAbortController(null);
     }
-  }
+  };
 
   const recommendedQuestions = [
     "学校对使用电动车的态度是什么？",
@@ -139,89 +144,118 @@ export default function AppleStyleChat() {
   ];
 
   const handleQuestionClick = async (question: string) => {
+    if (!question.trim() || isLoading) return;
+
     try {
       setIsLoading(true);
       setIsInitialState(false);
       
-      // 创建新的 AbortController
       const controller = new AbortController();
       setAbortController(controller);
 
-      const userMessage: Message = {
+      // 添加用户消息
+      setMessages(prev => [...prev, {
         id: Date.now(),
         content: question,
         isUser: true
-      };
-      setMessages(prev => [...prev, userMessage]);
+      }]);
 
-      // 准备发送给API的消息历史
-      const chatMessages: ChatMessage[] = messages.map(msg => ({
-        role: msg.isUser ? 'user' : 'assistant',
-        content: msg.content
-      }));
-      chatMessages.push({ role: 'user', content: question });
+      // 添加AI消息占位
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        content: '',
+        isUser: false
+      }]);
 
-      // 发送请求到API
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ messages: chatMessages }),
+        body: JSON.stringify({ 
+          messages: [{ role: 'user', content: question }] 
+        }),
         signal: controller.signal,
       });
 
       if (!response.ok) {
-        throw new Error('无法获取回复');
+        throw new Error('API请求失败');
       }
 
-      // 处理流式响应
       const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error('无法获取响应流');
+      }
+
       let aiMessageContent = '';
+      const decoder = new TextDecoder();
 
-      if (reader) {
-        // 添加一个空的AI消息
-        const aiMessage: Message = {
-          id: Date.now() + 1,
-          content: '',
-          isUser: false
-        };
-        setMessages(prev => [...prev, aiMessage]);
-
+      try {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
           
-          // 将 Uint8Array 转换为文本
-          const text = new TextDecoder().decode(value);
-          aiMessageContent += text;
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
           
-          // 更新最后一条消息
-          setMessages(prev => {
-            const newMessages = [...prev];
-            newMessages[newMessages.length - 1].content = aiMessageContent;
-            return newMessages;
-          });
+          for (const line of lines) {
+            const trimmedLine = line.trim();
+            
+            // 跳过空行和结束标记
+            if (!trimmedLine || trimmedLine === 'data: [DONE]') {
+              continue;
+            }
+
+            // 确保行以 'data: ' 开头
+            if (trimmedLine.startsWith('data: ')) {
+              try {
+                // 提取 JSON 字符串部分
+                const jsonString = trimmedLine.substring(6); // 跳过 'data: ' 前缀
+                const data = JSON.parse(jsonString);
+                
+                // 检查并处理回答内容
+                if (data && typeof data === 'object' && 'answer' in data) {
+                  const answer = data.answer;
+                  if (typeof answer === 'string') {
+                    aiMessageContent += answer;
+                    setMessages(prev => {
+                      const newMessages = [...prev];
+                      if (newMessages.length > 0) {
+                        newMessages[newMessages.length - 1].content = aiMessageContent;
+                      }
+                      return newMessages;
+                    });
+                  }
+                }
+              } catch (parseError) {
+                // 在开发环境下记录错误，但不中断处理
+                if (process.env.NODE_ENV === 'development') {
+                  console.warn('跳过无效的 JSON:', trimmedLine);
+                }
+                continue;
+              }
+            }
+          }
         }
+      } catch (streamError) {
+        if (streamError instanceof Error && streamError.name === 'AbortError') {
+          setMessages(prev => [...prev, {
+            id: Date.now(),
+            content: '回答已中止',
+            isUser: false
+          }]);
+          return;
+        }
+        throw streamError;
       }
 
-    } catch (error: unknown) {
-      if (error instanceof Error && error.name === 'AbortError') {
-        const abortMessage: Message = {
-          id: Date.now() + 1,
-          content: '回答已中止',
-          isUser: false
-        };
-        setMessages(prev => [...prev, abortMessage]);
-      } else {
-        console.error('发送消息时出错:', error);
-        const errorMessage: Message = {
-          id: Date.now() + 1,
-          content: '抱歉，发生了一些错误。请稍后再试。',
-          isUser: false
-        };
-        setMessages(prev => [...prev, errorMessage]);
-      }
+    } catch (error) {
+      console.error('Chat error:', error instanceof Error ? error.message : '未知错误');
+      setMessages(prev => [...prev, {
+        id: Date.now(),
+        content: error instanceof Error ? `错误: ${error.message}` : '发生未知错误',
+        isUser: false
+      }]);
     } finally {
       setIsLoading(false);
       setAbortController(null);
