@@ -13,11 +13,14 @@ export default function Home() {
   const [showContent, setShowContent] = useState(true)
   
   useEffect(() => {
-    const isFirstVisit = !localStorage.getItem('hasVisitedBefore')
+    // 获取上次访问的日期
+    const lastVisitDate = localStorage.getItem('lastVisitDate')
+    const today = new Date().toDateString()
     
-    if (isFirstVisit) {
+    // 如果今天没有访问过，显示欢迎界面
+    if (lastVisitDate !== today) {
       setShowContent(false)
-      localStorage.setItem('hasVisitedBefore', 'true')
+      localStorage.setItem('lastVisitDate', today)
     } else {
       setShowContent(true)
     }
