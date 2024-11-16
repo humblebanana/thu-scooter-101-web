@@ -333,9 +333,9 @@ export default function AppleStyleChat() {
   }, []);
 
   return (
-    <div className="max-w-2xl mx-auto p-1 sm:p-4 bg-transparent rounded-2xl transition-all duration-300 hover:shadow-lg">
+    <div className="w-full max-w-2xl mx-auto p-1 sm:p-4 bg-transparent rounded-2xl transition-all duration-300 hover:shadow-lg">
       {isInitialState ? (
-        <>
+        <div className="space-y-4">
           <h1 className="text-lg sm:text-3xl font-bold text-center mb-3 sm:mb-8">我是THU老司机.AI，有问题可以先问我</h1>
           <p className="text-gray-400 text-xs sm:text-sm text-center -mt-2 sm:-mt-6 mb-4 sm:mb-6">
             AI目前仍为实验性功能，请将以下页面作为信息的获取方式
@@ -366,7 +366,7 @@ export default function AppleStyleChat() {
               </button>
             ))}
           </div>
-        </>
+        </div>
       ) : (
         <>
           <div className="h-[450px] sm:h-[500px] overflow-y-auto mb-2 sm:mb-4 p-1.5 sm:p-4 bg-gray-50 rounded-lg transition-all duration-300 hover:shadow-inner [scroll-behavior:smooth]">

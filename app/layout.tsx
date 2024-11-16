@@ -8,6 +8,7 @@ import { LanguageProvider } from '@/contexts/LanguageContext'
 import FeedbackButton from '@/components/FeedbackButton'
 import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@vercel/analytics/react"
+import ErrorBoundary from '@/components/ErrorBoundary'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,27 +33,30 @@ export default function RootLayout({
   return (
     <html lang="zh">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <link rel="icon" href="/icon.png" type="image/png" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
       </head>
       <body className={`${inter.className} min-h-screen flex flex-col bg-gray-50`}>
-        <LanguageProvider>
-          <div className="min-h-screen flex flex-col bg-gray-50">
-            <Header />
-            <WelcomeCard />
-            <main className="flex-grow container mx-auto px-4 py-8">
-              {children} 
-            </main>
-            <Footer />
-          </div>
-        </LanguageProvider>
-        <Toaster />
-        <Analytics />
-        {process.env.NODE_ENV === 'production' && (
-          <script defer src="https://hm.baidu.com/hm.js?YOUR_BAIDU_ANALYTICS_ID"></script>
-        )}
-        <FeedbackButton />
+        <ErrorBoundary>
+          <LanguageProvider>
+            <div className="min-h-screen flex flex-col bg-gray-50">
+              <Header />
+              <WelcomeCard />
+              <main className="flex-grow container mx-auto px-4 py-8">
+                {children} 
+              </main>
+              <Footer />
+            </div>
+          </LanguageProvider>
+          <Toaster />
+          <Analytics />
+          {process.env.NODE_ENV === 'production' && (
+            <script defer src="https://hm.baidu.com/hm.js?YOUR_BAIDU_ANALYTICS_ID"></script>
+          )}
+          <FeedbackButton />
+        </ErrorBoundary>
       </body>
     </html>
   )
