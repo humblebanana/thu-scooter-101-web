@@ -31,6 +31,8 @@ export default function AppleStyleChat() {
   const [isLoading, setIsLoading] = useState(false);
   const [isInitialState, setIsInitialState] = useState(true);
   const [abortController, setAbortController] = useState<AbortController | null>(null);
+  const [isThinking, setIsThinking] = useState(false);
+  const currentController = useRef<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -44,13 +46,126 @@ export default function AppleStyleChat() {
     scrollToBottom();
   }, [messages]);
 
+  const ThinkingAnimation = () => {
+    return (
+      <div className="flex items-center space-x-2 text-gray-400 h-6">
+        <span className="animate-bounce">思</span>
+        <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>考</span>
+        <span className="animate-bounce" style={{ animationDelay: '0.4s' }}>中</span>
+        <span className="animate-bounce" style={{ animationDelay: '0.6s' }}>.</span>
+        <span className="animate-bounce" style={{ animationDelay: '0.7s' }}>.</span>
+        <span className="animate-bounce" style={{ animationDelay: '0.8s' }}>.</span>
+      </div>
+    );
+  };
+
+  const processStream = async (reader: ReadableStreamDefaultReader<Uint8Array>, decoder: TextDecoder) => {
+    let buffer = '';
+    let aiMessageContent = '';
+    let lastUpdateTime = Date.now();
+    let isFirstChunk = true;
+
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        
+        if (currentController.current === null) {
+          reader.cancel();
+          break;
+        }
+
+        if (done) {
+          // 处理最后一个chunk
+          if (buffer) {
+            try {
+              const jsonStr = buffer.slice(6);
+              if (jsonStr !== '[DONE]') {
+                const data = JSON.parse(jsonStr);
+                if (data.answer) {
+                  aiMessageContent += data.answer;
+                  setMessages(prev => {
+                    const newMessages = [...prev];
+                    newMessages[newMessages.length - 1].content = aiMessageContent;
+                    return newMessages;
+                  });
+                }
+              }
+            } catch (error) {
+              console.warn('处理最后一个chunk时出错:', error);
+            }
+          }
+          setIsThinking(false);
+          break;
+        }
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          if (!line.trim() || !line.startsWith('data: ')) continue;
+
+          try {
+            const jsonStr = line.slice(6);
+            if (jsonStr === '[DONE]') continue;
+
+            const data = JSON.parse(jsonStr);
+            if (data.answer) {
+              // 如果是第一个chunk，清空之前的内容
+              if (isFirstChunk) {
+                aiMessageContent = data.answer;
+                isFirstChunk = false;
+              } else {
+                aiMessageContent += data.answer;
+              }
+              setIsThinking(false);
+
+              const now = Date.now();
+              if (now - lastUpdateTime > 50) { // 降低更新间隔以减少截断
+                setMessages(prev => {
+                  const newMessages = [...prev];
+                  newMessages[newMessages.length - 1].content = aiMessageContent;
+                  return newMessages;
+                });
+                lastUpdateTime = now;
+              }
+            }
+          } catch (parseError) {
+            console.warn('解析错误，跳过此行:', parseError);
+            continue;
+          }
+        }
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        return;
+      }
+      console.error('Stream处理错误:', error);
+      throw error;
+    } finally {
+      // 确保最后一次更新
+      if (aiMessageContent) {
+        setMessages(prev => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1].content = aiMessageContent;
+          return newMessages;
+        });
+      }
+    }
+  };
+
   const sendMessage = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!inputValue.trim() || isLoading) return;
 
     try {
       setIsLoading(true);
+      setIsThinking(true);
       setIsInitialState(false);
+
+      const controller = new AbortController();
+      currentController.current = controller;
+      setAbortController(controller);
 
       // 添加用户消息
       const userMessage: Message = {
@@ -80,7 +195,7 @@ export default function AppleStyleChat() {
       });
 
       if (!response.ok) {
-        throw new Error('API请求失败');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const reader = response.body?.getReader();
@@ -88,49 +203,8 @@ export default function AppleStyleChat() {
         throw new Error('无法获取响应流');
       }
 
-      let aiMessageContent = '';
-
-      try {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          const text = new TextDecoder().decode(value);
-          const lines = text.split('\n');
-
-          for (const line of lines) {
-            if (!line.trim() || !line.startsWith('data: ')) continue;
-
-            try {
-              const jsonStr = line.slice(6);
-              if (jsonStr === '[DONE]') continue;
-
-              const data = JSON.parse(jsonStr);
-              if (data.answer) {
-                aiMessageContent += data.answer;
-                setMessages(prev => {
-                  const newMessages = [...prev];
-                  newMessages[newMessages.length - 1].content = aiMessageContent;
-                  return newMessages;
-                });
-              }
-            } catch (parseError) {
-              // 忽略解析错误，继续处理下一行
-              continue;
-            }
-          }
-        }
-      } catch (streamError) {
-        if (streamError instanceof Error && streamError.name === 'AbortError') {
-          setMessages(prev => [...prev, {
-            id: Date.now(),
-            content: '回答已中止',
-            isUser: false
-          }]);
-          return;
-        }
-        throw streamError;
-      }
+      const decoder = new TextDecoder();
+      await processStream(reader, decoder);
 
     } catch (error) {
       console.error('Chat error:', error);
@@ -141,6 +215,8 @@ export default function AppleStyleChat() {
       }]);
     } finally {
       setIsLoading(false);
+      setIsThinking(false);
+      setAbortController(null);
     }
   };
 
@@ -156,9 +232,11 @@ export default function AppleStyleChat() {
 
     try {
       setIsLoading(true);
+      setIsThinking(true); // 添加思考动画
       setIsInitialState(false);
       
       const controller = new AbortController();
+      currentController.current = controller; // 保存当前的 controller
       setAbortController(controller);
 
       // 添加用户消息
@@ -195,67 +273,8 @@ export default function AppleStyleChat() {
         throw new Error('无法获取响应流');
       }
 
-      let aiMessageContent = '';
       const decoder = new TextDecoder();
-
-      try {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          
-          const chunk = decoder.decode(value);
-          const lines = chunk.split('\n');
-          
-          for (const line of lines) {
-            const trimmedLine = line.trim();
-            
-            // 跳过空行和结束标记
-            if (!trimmedLine || trimmedLine === 'data: [DONE]') {
-              continue;
-            }
-
-            // 确保行以 'data: ' 开头
-            if (trimmedLine.startsWith('data: ')) {
-              try {
-                // 提取 JSON 字符串部分
-                const jsonString = trimmedLine.substring(6); // 跳过 'data: ' 前缀
-                const data = JSON.parse(jsonString);
-                
-                // 检查并处理回答内容
-                if (data && typeof data === 'object' && 'answer' in data) {
-                  const answer = data.answer;
-                  if (typeof answer === 'string') {
-                    aiMessageContent += answer;
-                    setMessages(prev => {
-                      const newMessages = [...prev];
-                      if (newMessages.length > 0) {
-                        newMessages[newMessages.length - 1].content = aiMessageContent;
-                      }
-                      return newMessages;
-                    });
-                  }
-                }
-              } catch (parseError) {
-                // 在开发环境下记录错误，但不中断处理
-                if (process.env.NODE_ENV === 'development') {
-                  console.warn('跳过无效的 JSON:', trimmedLine);
-                }
-                continue;
-              }
-            }
-          }
-        }
-      } catch (streamError) {
-        if (streamError instanceof Error && streamError.name === 'AbortError') {
-          setMessages(prev => [...prev, {
-            id: Date.now(),
-            content: '回答已中止',
-            isUser: false
-          }]);
-          return;
-        }
-        throw streamError;
-      }
+      await processStream(reader, decoder);
 
     } catch (error) {
       console.error('Chat error:', error instanceof Error ? error.message : '未知错误');
@@ -266,6 +285,7 @@ export default function AppleStyleChat() {
       }]);
     } finally {
       setIsLoading(false);
+      setIsThinking(false);
       setAbortController(null);
     }
   };
@@ -278,17 +298,48 @@ export default function AppleStyleChat() {
 
   // 添加中止函数
   const handleAbort = () => {
-    if (abortController) {
-      abortController.abort();
-      setAbortController(null);
+    if (currentController.current) {
+      currentController.current.abort();
+      currentController.current = null;
+      setIsLoading(false);
+      setIsThinking(false);
+      
+      setMessages(prev => {
+        const newMessages = [...prev];
+        const lastMessage = newMessages[newMessages.length - 1];
+        if (!lastMessage.isUser) {
+          if (!lastMessage.content.trim()) {
+            lastMessage.content = '已中止回答';
+          } else {
+            if (!lastMessage.content.includes('[回答已中止]')) {
+              lastMessage.content = lastMessage.content.trim() + '\n\n[回答已中止]';
+            }
+          }
+        }
+        return newMessages;
+      });
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (currentController.current) {
+        currentController.current.abort();
+        currentController.current = null;
+        setIsLoading(false);
+        setIsThinking(false);
+      }
+    };
+  }, []);
 
   return (
     <div className="max-w-2xl mx-auto p-1 sm:p-4 bg-transparent rounded-2xl transition-all duration-300 hover:shadow-lg">
       {isInitialState ? (
         <>
           <h1 className="text-lg sm:text-3xl font-bold text-center mb-3 sm:mb-8">我是THU老司机.AI，有问题可以先问我</h1>
+          <p className="text-gray-400 text-xs sm:text-sm text-center -mt-2 sm:-mt-6 mb-4 sm:mb-6">
+            AI目前仍为实验性功能，请将以下页面作为信息的获取方式
+          </p>
           
           <div className="bg-gray-100 rounded-full p-1.5 sm:p-2 flex items-center mb-4 sm:mb-6 transition-all duration-300 hover:bg-gray-200">
             <input
@@ -342,30 +393,36 @@ export default function AppleStyleChat() {
                   {message.isUser ? (
                     message.content
                   ) : (
-                    <ReactMarkdown
-                      components={{
-                        code: ({className, children, ...props}: React.ComponentPropsWithoutRef<'code'>) => {
-                          const match = /language-(\w+)/.exec(className || '');
-                          const isInline = !match;
-                          return isInline ? (
-                            <code className="bg-gray-100 px-1 rounded" {...props}>
-                              {children}
-                            </code>
-                          ) : (
-                            <pre className="bg-gray-100 p-2 rounded-lg my-2 overflow-x-auto">
-                              <code
-                                className={className}
-                                {...props}
-                              >
-                                {children}
-                              </code>
-                            </pre>
-                          );
-                        },
-                      }}
-                    >
-                      {message.content}
-                    </ReactMarkdown>
+                    <>
+                      {isThinking && message.content === '' ? (
+                        <ThinkingAnimation />
+                      ) : (
+                        <ReactMarkdown
+                          components={{
+                            code: ({className, children, ...props}: React.ComponentPropsWithoutRef<'code'>) => {
+                              const match = /language-(\w+)/.exec(className || '');
+                              const isInline = !match;
+                              return isInline ? (
+                                <code className="bg-gray-100 px-1 rounded" {...props}>
+                                  {children}
+                                </code>
+                              ) : (
+                                <pre className="bg-gray-100 p-2 rounded-lg my-2 overflow-x-auto">
+                                  <code
+                                    className={className}
+                                    {...props}
+                                  >
+                                    {children}
+                                  </code>
+                                </pre>
+                              );
+                            },
+                          }}
+                        >
+                          {message.content}
+                        </ReactMarkdown>
+                      )}
+                    </>
                   )}
                 </div>
                 {message.isUser && <div className="w-5 h-5 sm:w-8 sm:h-8 ml-1 sm:ml-2" />}

@@ -4,11 +4,14 @@ const DIFY_API_KEY = process.env.DIFY_API_KEY;
 const DIFY_API_URL = "https://api.dify.ai/v1/chat-messages";
 
 export async function POST(req: NextRequest) {
-  if (!DIFY_API_KEY) {
-    return NextResponse.json({ error: 'API key not configured' }, { status: 500 });
-  }
-
+  const controller = new AbortController();
+  
   try {
+    // 监听请求中止
+    req.signal.addEventListener('abort', () => {
+      controller.abort();
+    });
+
     const { messages } = await req.json();
     const userMessage = messages[messages.length - 1].content;
 
@@ -24,30 +27,28 @@ export async function POST(req: NextRequest) {
         response_mode: "streaming",
         user: "user-" + Date.now(),
       }),
+      signal: controller.signal,
     });
 
     if (!response.ok) {
-      throw new Error(`Dify API Error: ${response.status}`);
+      throw new Error(`API Error: ${response.status}`);
     }
 
-    // 转换为 ReadableStream
-    const encoder = new TextEncoder();
-    const decoder = new TextDecoder();
-
+    // 创建转换流来处理响应
     const transformStream = new TransformStream({
-      async transform(chunk, controller) {
-        const text = decoder.decode(chunk);
-        const lines = text.split('\n');
-        
-        for (const line of lines) {
-          if (line.trim()) {
-            controller.enqueue(encoder.encode(line + '\n'));
-          }
-        }
+      transform(chunk, controller) {
+        controller.enqueue(chunk);
       },
     });
 
-    response.body?.pipeTo(transformStream.writable);
+    // 将响应流通过管道传输到转换流
+    if (response.body) {
+      response.body.pipeTo(transformStream.writable).catch((error) => {
+        if (error.name !== 'AbortError') {
+          console.error('Stream error:', error);
+        }
+      });
+    }
 
     return new Response(transformStream.readable, {
       headers: {
@@ -58,10 +59,15 @@ export async function POST(req: NextRequest) {
     });
 
   } catch (error) {
-    console.error('API Route Error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : '请求失败' },
-      { status: 500 }
+    if (error instanceof Error && error.name === 'AbortError') {
+      return new Response('{"error": "请求已中止"}', {
+        status: 499,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    return new Response(
+      JSON.stringify({ error: error instanceof Error ? error.message : '未知错误' }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
 }
