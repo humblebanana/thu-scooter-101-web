@@ -218,7 +218,9 @@ export default function AppleStyleChat() {
       setIsLoading(true);
       setIsThinking(true);
       setIsInitialState(false);
+      contentBufferRef.current = '';
 
+      // 创建新的 AbortController
       const controller = new AbortController();
       currentController.current = controller;
       setAbortController(controller);
@@ -229,49 +231,83 @@ export default function AppleStyleChat() {
         content: inputValue,
         isUser: true
       };
-      setMessages(prev => [...prev, userMessage]);
-      setInputValue('');
-
+      
       // 添加AI消息占位
       const aiMessage: Message = {
         id: Date.now() + 1,
         content: '',
         isUser: false
       };
-      setMessages(prev => [...prev, aiMessage]);
+
+      setMessages(prev => [...prev, userMessage, aiMessage]);
+      setInputValue('');
 
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: [{ role: 'user', content: inputValue }]
         }),
+        signal: controller.signal
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      
       const reader = response.body?.getReader();
-      if (!reader) {
-        throw new Error('无法获取响应流');
-      }
+      if (!reader) throw new Error('无法获取响应流');
 
-      const decoder = new TextDecoder();
-      await processStream(reader, decoder);
+      // 处理流式响应
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        // 解码并处理消息
+        const text = new TextDecoder().decode(value);
+        const messages = text.split('\n').filter(Boolean);
+
+        for (const message of messages) {
+          if (message.startsWith('data: ')) {
+            const jsonStr = message.slice(6);
+            if (jsonStr === '[DONE]') continue;
+
+            try {
+              const data = JSON.parse(jsonStr);
+              if (data.answer) {
+                contentBufferRef.current += data.answer;
+                setMessages(prev => {
+                  const newMessages = [...prev];
+                  const lastMessage = newMessages[newMessages.length - 1];
+                  if (!lastMessage.isUser) {
+                    lastMessage.content = contentBufferRef.current;
+                  }
+                  return newMessages;
+                });
+              }
+            } catch (e) {
+              console.warn('解析消息时出错:', e);
+            }
+          }
+        }
+      }
 
     } catch (error) {
-      console.error('Chat error:', error);
-      setMessages(prev => [...prev, {
-        id: Date.now(),
-        content: error instanceof Error ? `错误: ${error.message}` : '发生未知错误',
-        isUser: false
-      }]);
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.log('请求已取消');
+        return;
+      }
+      
+      setMessages(prev => {
+        const newMessages = [...prev];
+        const lastMessage = newMessages[newMessages.length - 1];
+        if (!lastMessage.isUser) {
+          lastMessage.content = `错误: ${error instanceof Error ? error.message : '未知错误'}`;
+        }
+        return newMessages;
+      });
     } finally {
       setIsLoading(false);
       setIsThinking(false);
+      currentController.current = null;
       setAbortController(null);
     }
   };
