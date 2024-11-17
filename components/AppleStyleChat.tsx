@@ -120,24 +120,13 @@ export default function AppleStyleChat() {
 
   // 处理流错误
   const handleStreamError = (error: unknown) => {
-    console.error('Stream error:', error);
     setConnectionState('error');
-    
-    // 如果是用户主动中止，不显示错误信息
-    if (error instanceof Error && error.name === 'AbortError') {
-      return;
-    }
-    
-    const errorMessage = error instanceof Error 
-      ? error.message 
-      : '未知错误';
     
     setMessages(prev => {
       const newMessages = [...prev];
       const lastMessage = newMessages[newMessages.length - 1];
       if (!lastMessage.isUser) {
-        lastMessage.content = (lastMessage.content || '') + 
-          `\n\n[连接已断开，请重试: ${errorMessage}]`;
+        lastMessage.content = '已中止回答';
       }
       return newMessages;
     });
@@ -374,16 +363,20 @@ export default function AppleStyleChat() {
       await processStream(reader, decoder);
 
     } catch (error) {
-      console.error('Chat error:', error instanceof Error ? error.message : '未知错误');
-      setMessages(prev => [...prev, {
-        id: Date.now(),
-        content: error instanceof Error ? `错误: ${error.message}` : '发生未知错误',
-        isUser: false
-      }]);
-    } finally {
+      // 如果是中止操作，静默处理
+      if (error instanceof Error && error.name === 'AbortError') {
+        setMessages(prev => {
+          const newMessages = [...prev];
+          const lastMessage = newMessages[newMessages.length - 1];
+          if (!lastMessage.isUser) {
+            lastMessage.content = '已中止回答';
+          }
+          return newMessages;
+        });
+      }
+      // 其他错误也不显示错误信息
       setIsLoading(false);
       setIsThinking(false);
-      setAbortController(null);
     }
   };
 
