@@ -123,6 +123,11 @@ export default function AppleStyleChat() {
     console.error('Stream error:', error);
     setConnectionState('error');
     
+    // 如果是用户主动中止，不显示错误信息
+    if (error instanceof Error && error.name === 'AbortError') {
+      return;
+    }
+    
     const errorMessage = error instanceof Error 
       ? error.message 
       : '未知错误';
