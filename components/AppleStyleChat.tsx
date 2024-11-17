@@ -32,8 +32,11 @@ export default function AppleStyleChat() {
   const [isInitialState, setIsInitialState] = useState(true);
   const [abortController, setAbortController] = useState<AbortController | null>(null);
   const [isThinking, setIsThinking] = useState(false);
+  const [connectionState, setConnectionState] = useState<'idle' | 'connecting' | 'streaming' | 'error'>('idle');
+  const [retryCount, setRetryCount] = useState(0);
   const currentController = useRef<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const contentBufferRef = useRef<string>('');
 
   const scrollToBottom = () => {
     const chatContainer = messagesEndRef.current?.parentElement;
@@ -59,98 +62,151 @@ export default function AppleStyleChat() {
     );
   };
 
-  const processStream = async (reader: ReadableStreamDefaultReader<Uint8Array>, decoder: TextDecoder) => {
-    let buffer = '';
-    let aiMessageContent = '';
-    let lastUpdateTime = Date.now();
-    let isFirstChunk = true;
+  // 处理单个消息
+  const processMessage = async (message: string, currentContent: string, isFirst: boolean) => {
+    if (!message.trim() || !message.startsWith('data: ')) return;
 
     try {
-      while (true) {
-        const { done, value } = await reader.read();
-        
-        if (currentController.current === null) {
-          reader.cancel();
-          break;
-        }
+      const jsonStr = message.slice(6);
+      if (jsonStr === '[DONE]') return;
 
-        if (done) {
-          // 处理最后一个chunk
-          if (buffer) {
-            try {
-              const jsonStr = buffer.slice(6);
-              if (jsonStr !== '[DONE]') {
-                const data = JSON.parse(jsonStr);
-                if (data.answer) {
-                  aiMessageContent += data.answer;
-                  setMessages(prev => {
-                    const newMessages = [...prev];
-                    newMessages[newMessages.length - 1].content = aiMessageContent;
-                    return newMessages;
-                  });
-                }
-              }
-            } catch (error) {
-              console.warn('处理最后一个chunk时出错:', error);
-            }
-          }
-          setIsThinking(false);
-          break;
-        }
+      const data = JSON.parse(jsonStr);
+      if (data.answer) {
+        let newContent = isFirst ? data.answer : currentContent + data.answer;
+        contentBufferRef.current = newContent;
 
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || '';
-
-        for (const line of lines) {
-          if (!line.trim() || !line.startsWith('data: ')) continue;
-
-          try {
-            const jsonStr = line.slice(6);
-            if (jsonStr === '[DONE]') continue;
-
-            const data = JSON.parse(jsonStr);
-            if (data.answer) {
-              // 如果是第一个chunk，清空之前的内容
-              if (isFirstChunk) {
-                aiMessageContent = data.answer;
-                isFirstChunk = false;
-              } else {
-                aiMessageContent += data.answer;
-              }
-              setIsThinking(false);
-
-              const now = Date.now();
-              if (now - lastUpdateTime > 50) { // 降低更新间隔以减少截断
-                setMessages(prev => {
-                  const newMessages = [...prev];
-                  newMessages[newMessages.length - 1].content = aiMessageContent;
-                  return newMessages;
-                });
-                lastUpdateTime = now;
-              }
-            }
-          } catch (parseError) {
-            console.warn('解析错误，跳过此行:', parseError);
-            continue;
-          }
-        }
-      }
-    } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') {
-        return;
-      }
-      console.error('Stream处理错误:', error);
-      throw error;
-    } finally {
-      // 确保最后一次更新
-      if (aiMessageContent) {
         setMessages(prev => {
           const newMessages = [...prev];
-          newMessages[newMessages.length - 1].content = aiMessageContent;
+          const lastMessage = newMessages[newMessages.length - 1];
+          if (!lastMessage.isUser) {
+            lastMessage.content = newContent;
+          }
           return newMessages;
         });
       }
+    } catch (error) {
+      console.warn('处理消息时出错:', error);
+    }
+  };
+
+  // 处理最后一个chunk
+  const processLastChunk = async (buffer: string) => {
+    if (!buffer) return;
+
+    try {
+      const jsonStr = buffer.slice(6);
+      if (jsonStr !== '[DONE]') {
+        const data = JSON.parse(jsonStr);
+        if (data.answer) {
+          const newContent = contentBufferRef.current + data.answer;
+          contentBufferRef.current = newContent;
+
+          setMessages(prev => {
+            const newMessages = [...prev];
+            const lastMessage = newMessages[newMessages.length - 1];
+            if (!lastMessage.isUser) {
+              lastMessage.content = newContent;
+            }
+            return newMessages;
+          });
+        }
+      }
+    } catch (error) {
+      console.warn('处理最后一个chunk时出错:', error);
+    } finally {
+      setIsThinking(false);
+    }
+  };
+
+  // 处理流错误
+  const handleStreamError = (error: unknown) => {
+    console.error('Stream error:', error);
+    setConnectionState('error');
+    
+    const errorMessage = error instanceof Error 
+      ? error.message 
+      : '未知错误';
+    
+    setMessages(prev => {
+      const newMessages = [...prev];
+      const lastMessage = newMessages[newMessages.length - 1];
+      if (!lastMessage.isUser) {
+        lastMessage.content = (lastMessage.content || '') + 
+          `\n\n[连接已断开，请重试: ${errorMessage}]`;
+      }
+      return newMessages;
+    });
+
+    setIsLoading(false);
+    setIsThinking(false);
+  };
+
+  const processStream = async (reader: ReadableStreamDefaultReader<Uint8Array>, decoder: TextDecoder) => {
+    let buffer = '';
+    let isFirstChunk = true;
+    let lastUpdateTime = Date.now();
+    const TIMEOUT = 10000; // 10秒超时
+    let retryCount = 0;
+    const MAX_RETRIES = 3;
+
+    const processTimeout = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Stream processing timeout')), TIMEOUT);
+    });
+
+    try {
+      setConnectionState('streaming');
+      while (true) {
+        try {
+          const readResult = await Promise.race([
+            reader.read(),
+            processTimeout
+          ]) as ReadableStreamReadResult<Uint8Array>;
+
+          const { done, value } = readResult;
+          
+          if (currentController.current === null) {
+            await reader.cancel();
+            break;
+          }
+
+          if (done) {
+            await processLastChunk(buffer);
+            setConnectionState('idle');
+            break;
+          }
+
+          retryCount = 0; // 重置重试计数
+          const newData = decoder.decode(value, { stream: true });
+          buffer += newData;
+          
+          const messages = buffer.split('\n');
+          buffer = messages.pop() || '';
+
+          for (const message of messages) {
+            await processMessage(message, contentBufferRef.current, isFirstChunk);
+            isFirstChunk = false;
+          }
+
+          lastUpdateTime = Date.now();
+
+        } catch (error) {
+          if (error instanceof Error && error.name === 'AbortError') {
+            throw error;
+          }
+
+          retryCount++;
+          if (retryCount > MAX_RETRIES) {
+            throw new Error('Maximum retry attempts reached');
+          }
+
+          await new Promise(resolve => 
+            setTimeout(resolve, Math.pow(2, retryCount) * 1000)
+          );
+          continue;
+        }
+      }
+    } catch (error) {
+      handleStreamError(error); // 现在可以传递 unknown 类型的 error
     }
   };
 

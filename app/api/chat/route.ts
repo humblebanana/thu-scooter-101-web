@@ -37,8 +37,25 @@ export async function POST(req: NextRequest) {
     // 创建转换流来处理响应
     const transformStream = new TransformStream({
       transform(chunk, controller) {
-        controller.enqueue(chunk);
+        try {
+          // 检查chunk是否有效
+          if (!chunk) return;
+          
+          const text = new TextDecoder().decode(chunk);
+          if (!text.trim()) return;
+          
+          controller.enqueue(chunk);
+        } catch (error) {
+          console.error('Transform error:', error);
+          // 不要立即终止流，而是发送错误信息
+          const errorMessage = JSON.stringify({ error: 'Stream processing error' });
+          controller.enqueue(new TextEncoder().encode(`data: ${errorMessage}\n\n`));
+        }
       },
+      flush(controller) {
+        // 确保所有数据都被处理
+        controller.terminate();
+      }
     });
 
     // 将响应流通过管道传输到转换流
