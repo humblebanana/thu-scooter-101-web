@@ -25,7 +25,7 @@ const parkingAreas = [
       "一教至五教周边指定区域",
       "六教（除架空层外）指定区域",
       "一般院系楼外皆能停车",
-      "待补充……"
+      "待补充……（如有补充可点击右下角反馈🙏）"
     ],
     note: "请注意观察每个教学楼附近的停车标识，严格遵守停放规范"
   },
@@ -35,7 +35,7 @@ const parkingAreas = [
       "紫荆篮球场旁停车带",
       "紫荆网球场旁停车带",
       "紫荆34号楼，紫荆8号楼，紫荆11号楼对面停车带（沿着紫操边缘）",
-      "待补充……"
+      "待补充……（如有补充可点击右下角反馈🙏）"
     ],
     note: "宿舍区请不要将车停到架空层"
   },
@@ -45,7 +45,7 @@ const parkingAreas = [
       "图书馆周边皆可停，除李文正馆和逸夫馆有特殊要求外",
       "综体北体周边暂无特殊规定皆可停车",
       "食堂周边规划区域",
-      "待补充……"
+      "待补充……（如有补充可点击右下角反馈🙏）"
     ],
     note: "公共区域停车需特别注意不要影响行人通行"
   }
@@ -224,30 +224,37 @@ export default function UsageGuide() {
               ></iframe>
             </div>
             <div className="block sm:hidden mb-4 text-sm text-gray-600 font-semibold">
-              <p>将以下内容的地址一键复制到地图中，即可快速导航到充电站</p>
+              <p>将以下内容的地址一键复制到您的地图中，即可快速导航到充电站。充电桩信息持续更新，如有补充可点击右下角反馈🙏</p>
             </div>
             <h3 className="text-base sm:text-xl font-semibold mb-4">主要充电站位置：</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
               {[
                 {
-                  name: "西王庄小区充电桩",
+                  name: "西王庄小区充电桩1",
                   location: "西王庄小区12号楼",
                   price: "¥0.7/次",
                   rating: "4.9",
-                  review: "超方便的！而且应该是最近的吧，就在东南门肯德基旁边，充电的时候还能去蹭个疯狂星期四，清华学生都爱来这"
+                  review: "超方便的！而且应该是离教学楼最近的吧，就在东南门肯德基旁边，充电的时候还能去蹭个疯狂星期四，清华学生都爱来这"
+                },
+                {
+                  name: "西王庄小区充电桩2",
+                  location: "318精酿啤酒馆",
+                  price: "¥0.7/次",
+                  rating: "4.9",
+                  review: "在西王庄小区入口处，靠近东南门，出来就是盒马，价格也很合适"
                 },
                 {
                   name: "北大家园食堂充电站",
                   location: "北京大学44号楼", 
                   price: "¥0.6-0.9/次",
                   rating: "4.8",
-                  review: "十分推荐！位置特别好找就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
+                  review: "推荐！位置特别好找就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
                 },
                 {
                   name: "清华家属区充电桩",
                   location: "清华大学照澜职工食堂",
                   price: "¥2/次",
-                  rating: "4.0",
+                  rating: "3.0",
                   review: "劝退！没有家属充电卡根本充不了，而且僵尸车超多，想找个位置太难了"
                 },
                 {
@@ -255,7 +262,7 @@ export default function UsageGuide() {
                   location: "优盛大厦",
                   price: "¥1/次",
                   rating: "4.6",
-                  review: "地铁站边上挺方便的，就是得跟外卖小哥抢位置，建议避开大晚上去充电"
+                  review: "在巴黎贝甜再往东走可以看到停车棚，整体挺好的，就是得跟外卖小哥抢位置，然后有些混乱"
                 },
                 {
                   name: "圆明园地铁站充电桩",
@@ -269,7 +276,7 @@ export default function UsageGuide() {
                   location: "王庄路小区",
                   price: "¥0.8/次",
                   rating: "4.4",
-                  review: "各个小区里面都能找到，住哪充哪，方便得很！就是得熟悉一下自己小区的位置"
+                  review: "各个小区里面都能找到，就是得熟悉一下自己小区的位置"
                 }
               ].map((station, index) => (
                 <div key={index} className="bg-gray-50 rounded-lg p-2 sm:p-4 hover:shadow-md transition-shadow">
@@ -316,7 +323,7 @@ export default function UsageGuide() {
         <section id="charging-services" className="space-y-4 sm:space-y-6">
           <h2 className="text-lg sm:text-3xl font-bold">充电师傅服务信息</h2>
           <p className="text-sm sm:text-lg text-gray-600 mb-4">
-            ———充电师傅可以在指定位置直接把电池取走后，隔天早上送回，单次服务费用较贵，一键复制联系方式（微信）
+            ———充电师傅可以在指定位置直接把电池取走后，隔天早上送回，单次服务费用较贵，一键复制联系方式（微信）。充电师傅相关信息持续更新，如有补充可点击右下角反馈🙏
           </p>
           {error ? (
             <p className="text-red-500">错误: {error}</p>
@@ -379,7 +386,7 @@ export default function UsageGuide() {
               <li className="flex items-start">
                 <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">始终佩戴头盔</h3>
+                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">如果条件允许始终佩戴头盔</h3>
                   <p className="text-xs sm:text-base text-gray-600">头盔可以在发生意外时保护您的头部，大降低严重伤害的风险。</p>
                 </div>
               </li>
@@ -396,7 +403,7 @@ export default function UsageGuide() {
                 <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">保持车速在15km/h以下</h3>
-                  <p className="text-xs sm:text-base text-gray-600">校园内请控制车速，保证自己和他人的安全。</p>
+                  <p className="text-xs sm:text-base text-gray-600">校园内请控制车速，保证自己和他人的安全，尤其是在十字路口，一定要减速，清华大部分车祸都发生在十字路口。</p>
                 </div>
               </li>
 

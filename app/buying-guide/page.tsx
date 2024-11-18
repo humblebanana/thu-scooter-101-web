@@ -69,7 +69,7 @@ export default async function BuyingGuide() {
 
       <h2 className="text-xl sm:text-3xl font-bold mb-3 sm:mb-6">电动车推荐列表</h2>
       <p className="text-base sm:text-lg text-gray-600 mb-4 sm:mb-8 italic">
-        ———看看学长学姐都在骑什么电动车
+        ———看看学长学姐都在骑什么电动车（持续更新ing，如有补充可点击右下角反馈🙏）
       </p>
       {scooters.length === 0 ? (
         <p>暂无电动车数据</p>
