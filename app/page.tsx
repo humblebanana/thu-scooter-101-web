@@ -43,11 +43,11 @@ export default function Home() {
             <div className="flex-grow flex items-center justify-center p-8 sm:p-20">
               <div className="text-center">
                 <BlurIn
-                  word="你的下一个代步工具，何必只能脚踏"
+                  word="你的T大电动车一站式信息平台"
                   className="text-2xl sm:text-4xl font-bold mb-6 bg-gradient-to-t from-gray-800 to-gray-400 text-transparent bg-clip-text whitespace-nowrap"
                 />
                 <BlurIn
-                  word="Empowering with Scooter in Tsinghua"
+                  word="Thu Campus Scooter One-Stop Information Platform"
                   className="text-xl sm:text-4xl font-bold mb-6 bg-gradient-to-t from-gray-800 to-gray-400 text-transparent bg-clip-text whitespace-nowrap"
                 />
                 <div className="opacity-0 animate-fadeIn">
