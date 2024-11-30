@@ -265,13 +265,6 @@ export default function UsageGuide() {
                   review: "在巴黎贝甜再往东走可以看到停车棚，整体挺好的，就是得跟外卖小哥抢位置，然后有些混乱"
                 },
                 {
-                  name: "圆明园地铁站充电桩",
-                  location: "地铁圆明园站c口",
-                  price: "¥0.5/度",
-                  rating: "4.3",
-                  review: "位置很好找，就在C出口旁边，充电也挺快，就是价格小贵"
-                },
-                {
                   name: "王庄路小区充电站 ",
                   location: "王庄路小区",
                   price: "¥0.8/次",

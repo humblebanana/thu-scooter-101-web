@@ -47,7 +47,7 @@ export default function Home() {
                   className="text-2xl sm:text-4xl font-bold mb-6 bg-gradient-to-t from-gray-800 to-gray-400 text-transparent bg-clip-text whitespace-nowrap"
                 />
                 <BlurIn
-                  word="Thu Campus Scooter One-Stop Information Platform"
+                  word="One-Stop Scooter Information Platform"
                   className="text-xl sm:text-4xl font-bold mb-6 bg-gradient-to-t from-gray-800 to-gray-400 text-transparent bg-clip-text whitespace-nowrap"
                 />
                 <div className="opacity-0 animate-fadeIn">
