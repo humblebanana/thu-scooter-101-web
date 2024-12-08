@@ -18,6 +18,16 @@ interface ChargingMaster {
   description: string;
 }
 
+// 定义充电站类型
+interface ChargingStation {
+  id: number;
+  name: string;
+  location: string;
+  price: number;
+  rating: number;
+  review: string;
+}
+
 const parkingAreas = [
   { 
     name: "教学楼区域",
@@ -52,11 +62,51 @@ const parkingAreas = [
 ];
 
 export default function UsageGuide() {
-  const [typedText, setTypedText] = useState('');
+  const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]);
   const [chargingMasters, setChargingMasters] = useState<ChargingMaster[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<number | null>(null);
+  const [typedText, setTypedText] = useState('');
   const fullText = "⚠️请不要携带电动车电池进入公寓！不要在公寓内给电动车电池充电！⚠️😠";
+
+  // 获取充电站数据
+  useEffect(() => {
+    async function fetchChargingStations() {
+      try {
+        const response = await fetch('/api/charging-stations');
+        if (!response.ok) {
+          throw new Error('Failed to fetch charging stations');
+        }
+        const data = await response.json();
+        setChargingStations(data);
+      } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : '获取充电站数据失败';
+        setError(errorMessage);
+        console.error('获取充电站数据失败:', e);
+      }
+    }
+
+    fetchChargingStations();
+  }, []);
+
+  useEffect(() => {
+    async function fetchChargingMasters() {
+      try {
+        const response = await fetch('/data/charging-master.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch charging masters');
+        }
+        const data = await response.json();
+        setChargingMasters(data);
+      } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : '获取充电师傅数据失败';
+        setError(errorMessage);
+        console.error('获取充电师傅数据失败:', e);
+      }
+    }
+
+    fetchChargingMasters();
+  }, []);
 
   useEffect(() => {
     // 1. 先移除 URL 中的 hash
@@ -84,25 +134,6 @@ export default function UsageGuide() {
     }, 100);
 
     return () => clearInterval(typingInterval);
-  }, []);
-
-  useEffect(() => {
-    async function fetchChargingMasters() {
-      try {
-        const response = await fetch('/api/charging-masters');
-        if (!response.ok) {
-          throw new Error('Failed to fetch charging masters');
-        }
-        const data = await response.json();
-        setChargingMasters(data);
-      } catch (e) {
-        const errorMessage = e instanceof Error ? e.message : '获取充电师傅数据时发生未知错误';
-        setError(errorMessage);
-        console.error('获取充电师傅数据失败:', e);
-      }
-    }
-
-    fetchChargingMasters();
   }, []);
 
   const copyToClipboard = (text: string, id: number) => {
@@ -156,7 +187,7 @@ export default function UsageGuide() {
         <section id="parking-rules" className="space-y-6">
           <h2 className="text-lg sm:text-3xl font-bold">停车规则</h2>
           <p className="text-base sm:text-lg text-gray-600 mb-4 ">
-            ———若要在清华内骑电动车，请务必一定要严格遵守以下规则：
+            ———若要在清华内骑电动���，请务必一定要严格遵守以下规则：
           </p>
           {/* 禁止停车区域和处罚标准并排 */}
           <div className="grid md:grid-cols-2 gap-6">
@@ -164,7 +195,7 @@ export default function UsageGuide() {
             <div className="bg-red-100 rounded-lg shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-red-500">
               <h3 className="text-base sm:text-2xl font-semibold mb-4 text-red-600">⚠️禁止停车区域👮</h3>
               <ul className="list-disc list-inside font-semibold space-y-2">
-                <li className="text-sm sm:text-lg text-red-800 font-bold">紫荆公寓宿舍楼下及楼外，严禁停车</li>
+                <li className="text-sm sm:text-lg text-red-800 font-bold">紫荆公寓宿舍楼下楼外，严禁停车</li>
                 <li className="text-sm sm:text-lg text-red-800 font-bold">教学楼特定区域(如六教大楼旁不能停车，请在停车时注看告示)</li>
                 <li className="text-sm sm:text-lg text-red-800 font-bold">古建筑旁（清华学堂，明斋，大礼堂……）</li>
               </ul>
@@ -228,51 +259,8 @@ export default function UsageGuide() {
             </div>
             <h3 className="text-base sm:text-xl font-semibold mb-4">主要充电站位置：</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
-              {[
-                {
-                  name: "西王庄小区充电桩1",
-                  location: "西王庄小区12号楼",
-                  price: "¥0.7/次",
-                  rating: "4.9",
-                  review: "超方便的！而且应该是离教学楼最近的吧，就在东南门肯德基旁边，充电的时候还能去蹭个疯狂星期四，清华学生都爱来这"
-                },
-                {
-                  name: "西王庄小区充电桩2",
-                  location: "318精酿啤酒馆",
-                  price: "¥0.7/次",
-                  rating: "4.9",
-                  review: "在西王庄小区入口处，靠近东南门，出来就是盒马，价格也很合适"
-                },
-                {
-                  name: "北大家园食堂充电站",
-                  location: "北京大学44号楼", 
-                  price: "¥0.6-0.9/次",
-                  rating: "4.8",
-                  review: "推荐！位置特别好找就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
-                },
-                {
-                  name: "清华家属区充电桩",
-                  location: "清华大学照澜职工食堂",
-                  price: "¥2/次",
-                  rating: "3.0",
-                  review: "劝退！没有家属充电卡根本充不了，而且僵尸车超多，想找个位置太难了"
-                },
-                {
-                  name: "五道口地铁站充电桩",
-                  location: "优盛大厦",
-                  price: "¥1/次",
-                  rating: "4.6",
-                  review: "在巴黎贝甜再往东走可以看到停车棚，整体挺好的，就是得跟外卖小哥抢位置，然后有些混乱"
-                },
-                {
-                  name: "王庄路小区充电站 ",
-                  location: "王庄路小区",
-                  price: "¥0.8/次",
-                  rating: "4.4",
-                  review: "各个小区里面都能找到，就是得熟悉一下自己小区的位置"
-                }
-              ].map((station, index) => (
-                <div key={index} className="bg-gray-50 rounded-lg p-2 sm:p-4 hover:shadow-md transition-shadow">
+              {chargingStations.map((station) => (
+                <div key={station.id} className="bg-gray-50 rounded-lg p-2 sm:p-4 hover:shadow-md transition-shadow">
                   <h4 className="font-semibold text-sm sm:text-lg mb-1 sm:mb-2">{station.name}</h4>
                   <div className="space-y-0.5 sm:space-y-1 text-gray-600 text-xs sm:text-sm">
                     <div className="flex items-center justify-between">
@@ -281,12 +269,12 @@ export default function UsageGuide() {
                         <span className="truncate">{station.location}</span>
                       </div>
                       <button
-                        onClick={() => copyToClipboard(station.location, index)}
+                        onClick={() => copyToClipboard(station.location, station.id)}
                         className="flex-shrink-0 p-1 hover:bg-gray-200 rounded-md transition-colors"
                         title="复制地址"
                         aria-label="复制地址"
                       >
-                        {copiedId === index ? (
+                        {copiedId === station.id ? (
                           <span className="text-green-500 text-xs whitespace-nowrap">已复制!</span>
                         ) : (
                           <Copy className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 hover:text-gray-700" />
@@ -295,7 +283,7 @@ export default function UsageGuide() {
                     </div>
                     <p className="flex items-center">
                       <Battery className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" /> 
-                      {station.price}
+                      ¥{station.price}/次
                     </p>
                     <div className="mt-2 border-t pt-2">
                       <div className="flex items-center mb-1">
@@ -320,50 +308,43 @@ export default function UsageGuide() {
           </p>
           {error ? (
             <p className="text-red-500">错误: {error}</p>
-          ) : chargingMasters.length === 0 ? (
-            <p>正在加载充电师傅数据...</p>
           ) : (
-            <div className="grid grid-cols-2 gap-2 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {chargingMasters.map((master) => (
-                <div 
-                  key={master.id} 
-                  className="bg-gray-100 rounded-lg p-2 sm:p-4 hover:shadow-md transition-shadow"
-                >
-                  <div className="flex flex-col space-y-1 sm:space-y-2">
-                    <div className="flex justify-between items-center">
-                      <h3 className="text-sm sm:text-lg font-semibold">{master.name}</h3>
-                      <div className="flex items-center text-xs sm:text-sm text-gray-600">
-                        <span className="text-yellow-500 mr-1">★</span>
-                        <span>{master.rating}</span>
+                <div key={master.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-all">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-lg font-semibold">{master.name}</h3>
+                    <div className="flex items-center">
+                      <span className="text-yellow-500 mr-1">★</span>
+                      <span>{master.rating}</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        <span>{master.area}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Battery className="w-4 h-4 mr-1" />
+                        <span>¥{master.price}/次</span>
                       </div>
                     </div>
-                    
-                    <div className="flex items-center text-gray-600">
-                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
-                      <span className="text-xs sm:text-sm truncate">{master.area}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between text-gray-600">
+                    <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <User className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
-                        <span className="text-xs sm:text-sm">{master.phone}</span>
+                        <User className="w-4 h-4 mr-1" />
+                        <span className="truncate">{master.phone}</span>
                       </div>
                       <button
                         onClick={() => copyToClipboard(master.phone, master.id)}
-                        className="p-1 hover:bg-gray-200 rounded-md transition-colors"
-                        title="复制联系方式"
+                        className="p-1 hover:bg-gray-100 rounded-md transition-colors"
                       >
                         {copiedId === master.id ? (
                           <span className="text-green-500 text-xs">已复制!</span>
                         ) : (
-                          <Copy className="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 hover:text-gray-700" />
+                          <Copy className="w-4 h-4 text-gray-500" />
                         )}
                       </button>
-                    </div>
-
-                    <div className="flex items-center text-gray-600">
-                      <Battery className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
-                      <span className="text-xs sm:text-sm">{master.price}元/次</span>
                     </div>
                   </div>
                 </div>
