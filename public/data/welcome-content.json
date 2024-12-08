@@ -1,0 +1,68 @@
+{
+  "zh": {
+    "title": "清华大学近年来对于电动车出行的规定日趋严谨，以下仅截取学校部分相关规定供大家参考。",
+    "sections": [
+      {
+        "title": "1. 电动车进入校园规定",
+        "items": [
+          "必须悬挂正规号牌,临时标识不可进校园",
+          "校内限速15公里/小时",
+          "必须避让行人和自行车",
+          "禁止鸣笛和骑车使用手机"
+        ]
+      },
+      {
+        "title": "2. 电池管理规定",
+        "items": [
+          "电动车及电池禁止进入教学楼、科研楼、办公楼",
+          "电动车及电池禁止进入学生公寓",
+          "禁止在公寓给电动车充电"
+        ]
+      },
+      {
+        "title": "3. 电子标签管理",
+        "items": [
+          "2019年4月30日后不再办理新的电子标签",
+          "2021年11月1日起临时标识车辆禁止上路"
+        ]
+      },
+      {
+        "title": "注意！",
+        "items": [
+          "以上仅为部分规定摘要,建议同学们仔细阅读完整的管理办法再做决定。12月后学校对紫荆宿舍楼的停车区域进行了缩减，请同学们注意。最近更新：2024-12-08"
+        ]
+      }
+    ],
+    "footer": " "
+  },
+  "en": {
+    "title": "Tsinghua University E-bike Management Regulations",
+    "sections": [
+      {
+        "title": "1. Campus Entry Regulations",
+        "items": [
+          "Must have official license plate, temporary tags not allowed",
+          "Speed limit 15km/h on campus",
+          "Must yield to pedestrians and bicycles",
+          "No honking or using phone while riding"
+        ]
+      },
+      {
+        "title": "2. Battery Management",
+        "items": [
+          "E-bikes and batteries prohibited in academic buildings",
+          "E-bikes and batteries prohibited in student dormitories",
+          "Charging in dormitories is prohibited"
+        ]
+      },
+      {
+        "title": "3. Electronic Tag Management",
+        "items": [
+          "No new electronic tags issued after April 30, 2019",
+          "Vehicles with temporary tags prohibited after November 1, 2021"
+        ]
+      }
+    ],
+    "footer": "Above is only a summary. Students are advised to read the complete regulations before making decisions."
+  }
+} 

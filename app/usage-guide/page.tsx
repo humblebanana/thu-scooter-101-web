@@ -28,38 +28,11 @@ interface ChargingStation {
   review: string;
 }
 
-const parkingAreas = [
-  { 
-    name: "教学楼区域",
-    locations: [
-      "一教至五教周边指定区域",
-      "六教（除架空层外）指定区域",
-      "一般院系楼外皆能停车",
-      "待补充……（如有补充可点击右下角反馈🙏）"
-    ],
-    note: "请注意观察每个教学楼附近的停车标识，严格遵守停放规范"
-  },
-  { 
-    name: "宿舍区域",
-    locations: [
-      "紫荆篮球场旁停车带",
-      "紫荆网球场旁停车带",
-      "紫荆34号楼，紫荆8号楼，紫荆11号楼对面停车带（沿着紫操边缘）",
-      "待补充……（如有补充可点击右下角反馈🙏）"
-    ],
-    note: "宿舍区请不要将车停到架空层"
-  },
-  { 
-    name: "公共区域",
-    locations: [
-      "图书馆周边皆可停，除李文正馆和逸夫馆有特殊要求外",
-      "综体北体周边暂无特殊规定皆可停车",
-      "食堂周边规划区域",
-      "待补充……（如有补充可点击右下角反馈🙏）"
-    ],
-    note: "公共区域停车需特别注意不要影响行人通行"
-  }
-];
+interface ParkingArea {
+  name: string;
+  locations: string[];
+  note: string;
+}
 
 export default function UsageGuide() {
   const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]);
@@ -68,6 +41,7 @@ export default function UsageGuide() {
   const [copiedId, setCopiedId] = useState<number | null>(null);
   const [typedText, setTypedText] = useState('');
   const fullText = "⚠️请不要携带电动车电池进入公寓！不要在公寓内给电动车电池充电！⚠️😠";
+  const [parkingAreas, setParkingAreas] = useState<ParkingArea[]>([]);
 
   // 获取充电站数据
   useEffect(() => {
@@ -136,6 +110,25 @@ export default function UsageGuide() {
     return () => clearInterval(typingInterval);
   }, []);
 
+  useEffect(() => {
+    async function fetchParkingAreas() {
+      try {
+        const response = await fetch('/api/parking-areas');
+        if (!response.ok) {
+          throw new Error('Failed to fetch parking areas');
+        }
+        const data = await response.json();
+        setParkingAreas(data);
+      } catch (e) {
+        const errorMessage = e instanceof Error ? e.message : '获取停车区域数据失败';
+        setError(errorMessage);
+        console.error('获取停车区域数据失败:', e);
+      }
+    }
+
+    fetchParkingAreas();
+  }, []);
+
   const copyToClipboard = (text: string, id: number) => {
     try {
       // 首先尝试使用 navigator.clipboard API
@@ -187,7 +180,7 @@ export default function UsageGuide() {
         <section id="parking-rules" className="space-y-6">
           <h2 className="text-lg sm:text-3xl font-bold">停车规则</h2>
           <p className="text-base sm:text-lg text-gray-600 mb-4 ">
-            ———若要在清华内骑电动���，请务必一定要严格遵守以下规则：
+            ———若要在清华内骑电动车，请务必一定要严格遵守以下规则：
           </p>
           {/* 禁止停车区域和处罚标准并排 */}
           <div className="grid md:grid-cols-2 gap-6">
@@ -304,7 +297,7 @@ export default function UsageGuide() {
         <section id="charging-services" className="space-y-4 sm:space-y-6">
           <h2 className="text-lg sm:text-3xl font-bold">充电师傅服务信息</h2>
           <p className="text-sm sm:text-lg text-gray-600 mb-4">
-            ———充电师傅可以在指定位置直接把电池取走后，隔天早上送回，单次服务费用较贵，一键复制联系方式（微信）。充电师傅相关信息持续更新，如有补充可点击右下角反馈🙏
+            ———充电师傅可以在指定位置直接把电池取走后，隔天早上送回，单次服务费用较贵，一复制联系方式（微信）。充电师傅相关信息持续更新，如有补充可点击右下角反馈🙏
           </p>
           {error ? (
             <p className="text-red-500">错误: {error}</p>
@@ -360,7 +353,7 @@ export default function UsageGuide() {
               <li className="flex items-start">
                 <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">如果条件允许始终佩戴头盔</h3>
+                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">如果条件允许始终佩戴头盔（并非强制）</h3>
                   <p className="text-xs sm:text-base text-gray-600">头盔可以在发生意外时保护您的头部，大降低严重伤害的风险。</p>
                 </div>
               </li>
@@ -385,7 +378,7 @@ export default function UsageGuide() {
                 <AlertTriangle className="w-4 h-4 sm:w-6 sm:h-6 text-yellow-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">夜间骑行开启车灯</h3>
-                  <p className="text-xs sm:text-base text-gray-600">确保他人能看到您，同时提高您的视野范围。</p>
+                  <p className="text-xs sm:text-base text-gray-600">确保他人能看您，同时提高您的视野范围。</p>
                 </div>
               </li>
 

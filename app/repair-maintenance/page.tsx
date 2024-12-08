@@ -1,6 +1,10 @@
 import { Wrench, MapPin } from 'lucide-react'
+import repairStationsData from '@/public/data/repair-stations.json'
+import { RepairStation } from '../types/routes'
 
 export default function RepairMaintenance() {
+  const repairStations: RepairStation[] = repairStationsData.repairStations
+
   return (
     <main className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
       <div className="space-y-8 sm:space-y-12">
@@ -14,52 +18,23 @@ export default function RepairMaintenance() {
         <section className="space-y-4 sm:space-y-6">
           <h2 className="text-xl sm:text-3xl font-bold">维修点推荐</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
-            {[
-              { 
-                name: "清芬北边维修点1（靠近宿舍离；更北边）", 
-                location: "清芬食堂北侧出口", 
-                contact: "暂无", 
-                rating: "4.7",
-                reviews: [
-                  { text: "师傅很专业，维修速度快，且价格实惠，还能拖车", date: "2024-10-15" }
-                ]
-              },
-              {
-                name: "清芬北边维修点2（靠近清芬圆；更南边）", 
-                location: "清芬食堂北侧出口", 
-                contact: "暂无", 
-                rating: "3.5",
-                reviews: [
-                  { text: "师傅比较敷衍，态度一般，价格也蛮贵的", date: "2024-09-12" }
-                ]
-              },
-              { 
-                name: "上门维修张师傅", 
-                location: "所有位置，随叫随到", 
-                contact: "13730048215", 
-                rating: "4.7",
-                reviews: [
-                  { text: "上门很快，很方便，唯一不好的地方因为是校外的师傅，所以需要帮忙预约", date: "2024-03-14" },
-                ]
-              },
-              { name: "持续更新ing，如有补充可点击右下角反馈🙏", location: "N/A", contact: "NA", rating: "N/A" ,reviews: [{text: "正在更新ing", date: "2024-11-04"}]},
-            ].map((shop, index) => (
-              <div key={index} className="bg-white rounded-lg p-3 sm:p-6 shadow-md hover:shadow-lg transition-shadow">
-                <h3 className="text-base sm:text-lg font-semibold">{shop.name}</h3>
+            {repairStations.map((station) => (
+              <div key={station.id} className="bg-white rounded-lg p-3 sm:p-6 shadow-md hover:shadow-lg transition-shadow">
+                <h3 className="text-base sm:text-lg font-semibold">{station.name}</h3>
                 <p className="text-sm sm:text-base text-gray-600">
-                  <MapPin className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1" /> {shop.location}
+                  <MapPin className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1" /> {station.location}
                 </p>
                 <p className="text-sm sm:text-base text-gray-600">
-                  <Wrench className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1" /> {shop.contact}
+                  <Wrench className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1" /> {station.contact}
                 </p>
                 <p className="text-sm sm:text-base text-gray-600 mb-2 sm:mb-4">
-                  <span className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1">★</span> {shop.rating}/5
+                  <span className="inline-block w-3 h-3 sm:w-4 sm:h-4 mr-1">★</span> {station.rating}/5
                 </p>
                 
                 <div className="mt-2 sm:mt-4 border-t pt-2 sm:pt-4">
                   <h4 className="text-xs sm:text-sm font-semibold mb-1 sm:mb-2">学长姐评价</h4>
                   <div className="space-y-1 sm:space-y-2">
-                    {shop.reviews?.map((review, idx) => (
+                    {station.reviews?.map((review, idx) => (
                       <div key={idx} className="text-xs sm:text-sm">
                         <p className="text-gray-700">{review.text}</p>
                         <p className="text-gray-400 text-[10px] sm:text-xs">{review.date}</p>
