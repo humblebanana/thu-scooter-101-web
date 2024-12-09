@@ -3,6 +3,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, StopCircle } from 'lucide-react';
 import Image from 'next/image';
+import ReactMarkdown from 'react-markdown';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // 定义消息类
 interface Message {
@@ -17,15 +19,8 @@ interface ChatMessage {
   content: string;
 }
 
-import ReactMarkdown from 'react-markdown';
-
-interface Message {
-  id: number;
-  content: string;
-  isUser: boolean;
-}
-
 export default function AppleStyleChat() {
+  const { t, language } = useLanguage();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +32,21 @@ export default function AppleStyleChat() {
   const currentController = useRef<AbortController | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const contentBufferRef = useRef<string>('');
+
+  const recommendedQuestions: Record<string, string[]> = {
+    zh: [
+      "学校对使用电动车的态度是什么？",
+      "在校园内骑行电动车有哪些注意事项？",
+      "在校园内哪里可以给电动车充电？",
+      "如何选择适合我的电动车？"
+    ],
+    en: [
+      "What's the school's attitude towards electric scooters?",
+      "What are the riding rules on campus?",
+      "Where can I charge my scooter on campus?",
+      "How to choose a suitable scooter?"
+    ]
+  };
 
   const scrollToBottom = () => {
     const chatContainer = messagesEndRef.current?.parentElement;
@@ -115,6 +125,8 @@ export default function AppleStyleChat() {
       console.warn('处理最后一个chunk时出错:', error);
     } finally {
       setIsThinking(false);
+      setIsLoading(false);
+      setConnectionState('idle');
     }
   };
 
@@ -138,69 +150,34 @@ export default function AppleStyleChat() {
   const processStream = async (reader: ReadableStreamDefaultReader<Uint8Array>, decoder: TextDecoder) => {
     let buffer = '';
     let isFirstChunk = true;
-    let lastUpdateTime = Date.now();
-    const TIMEOUT = 10000; // 10秒超时
-    let retryCount = 0;
-    const MAX_RETRIES = 3;
-
-    const processTimeout = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Stream processing timeout')), TIMEOUT);
-    });
 
     try {
-      setConnectionState('streaming');
       while (true) {
-        try {
-          const readResult = await Promise.race([
-            reader.read(),
-            processTimeout
-          ]) as ReadableStreamReadResult<Uint8Array>;
-
-          const { done, value } = readResult;
-          
-          if (currentController.current === null) {
-            await reader.cancel();
-            break;
-          }
-
-          if (done) {
+        const { done, value } = await reader.read();
+        
+        if (done) {
+          if (buffer) {
             await processLastChunk(buffer);
-            setConnectionState('idle');
-            break;
           }
+          break;
+        }
 
-          retryCount = 0; // 重置重试计数
-          const newData = decoder.decode(value, { stream: true });
-          buffer += newData;
-          
-          const messages = buffer.split('\n');
-          buffer = messages.pop() || '';
+        const chunk = decoder.decode(value, { stream: true });
+        buffer += chunk;
 
-          for (const message of messages) {
-            await processMessage(message, contentBufferRef.current, isFirstChunk);
-            isFirstChunk = false;
-          }
+        const messages = buffer.split('\n');
+        buffer = messages.pop() || '';
 
-          lastUpdateTime = Date.now();
-
-        } catch (error) {
-          if (error instanceof Error && error.name === 'AbortError') {
-            throw error;
-          }
-
-          retryCount++;
-          if (retryCount > MAX_RETRIES) {
-            throw new Error('Maximum retry attempts reached');
-          }
-
-          await new Promise(resolve => 
-            setTimeout(resolve, Math.pow(2, retryCount) * 1000)
-          );
-          continue;
+        for (const message of messages) {
+          await processMessage(message, contentBufferRef.current, isFirstChunk);
+          isFirstChunk = false;
         }
       }
     } catch (error) {
-      handleStreamError(error); // 现在可以传递 unknown 类型的 error
+      handleStreamError(error);
+    } finally {
+      setIsLoading(false);
+      setConnectionState('idle');
     }
   };
 
@@ -305,13 +282,6 @@ export default function AppleStyleChat() {
       setAbortController(null);
     }
   };
-
-  const recommendedQuestions = [
-    "学校对使用电动车的态度是什么？",
-    "在校园内骑行电动车有哪些注意事项？",
-    "在校园内哪里可以给电动车充电？",
-    "如何选择适合我的电动车？"
-  ];
 
   const handleQuestionClick = async (question: string) => {
     if (!question.trim() || isLoading) return;
@@ -426,9 +396,11 @@ export default function AppleStyleChat() {
     <div className="w-full max-w-2xl mx-auto p-1 sm:p-4 bg-transparent rounded-2xl transition-all duration-300 hover:shadow-lg">
       {isInitialState ? (
         <div className="space-y-4">
-          <h1 className="text-lg sm:text-3xl font-bold text-center mb-3 sm:mb-8">我是THU老司机.AI，有问题可以先问我</h1>
+          <h1 className="text-lg sm:text-3xl font-bold text-center mb-3 sm:mb-8">
+            {t('chat.welcome.title')}
+          </h1>
           <p className="text-gray-400 text-xs sm:text-sm text-center -mt-2 sm:-mt-6 mb-4 sm:mb-6">
-            AI目前仍为实验性功能，请将以下页面作为信息的获取方式
+            {t('chat.welcome.subtitle')}
           </p>
           
           <div className="bg-gray-100 rounded-full p-1.5 sm:p-2 flex items-center mb-4 sm:mb-6 transition-all duration-300 hover:bg-gray-200">
@@ -436,17 +408,20 @@ export default function AppleStyleChat() {
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="🛵给清华老司机发消息"
+              placeholder={t('chat.input.placeholder')}
               className="flex-grow bg-transparent outline-none px-2 sm:px-4 text-sm sm:text-base"
               onKeyPress={handleKeyPress}
             />
-            <button onClick={() => sendMessage()} className="p-1.5 sm:p-2 transition-transform duration-300 hover:scale-110">
+            <button 
+              onClick={() => sendMessage()} 
+              className="p-1.5 sm:p-2 transition-transform duration-300 hover:scale-110"
+            >
               <Send size={16} className="sm:w-5 sm:h-5" />
             </button>
           </div>
 
           <div className="grid grid-cols-2 gap-2 sm:gap-4">
-            {recommendedQuestions.map((question, index) => (
+            {recommendedQuestions[language].map((question: string, index: number) => (
               <button 
                 key={index} 
                 className="bg-gray-200 rounded-lg p-2 sm:p-3 text-left text-xs sm:text-sm text-gray-700 transition-all duration-300 hover:bg-gray-300 hover:shadow-md transform hover:-translate-y-1"
@@ -466,7 +441,7 @@ export default function AppleStyleChat() {
                   <div className="w-5 h-5 sm:w-8 sm:h-8 rounded-full overflow-hidden mr-1 sm:mr-2 flex-shrink-0">
                     <Image
                       src="/user-avatar.png"
-                      alt="AI Avatar"
+                      alt={t('chat.avatar.alt')}
                       width={32}
                       height={32}
                       className="object-cover"
@@ -489,23 +464,20 @@ export default function AppleStyleChat() {
                       ) : (
                         <ReactMarkdown
                           components={{
-                            code: ({className, children, ...props}: React.ComponentPropsWithoutRef<'code'>) => {
-                              const match = /language-(\w+)/.exec(className || '');
-                              const isInline = !match;
+                            code: ({className, children, ...props}) => {
+                              const match = /language-(\w+)/.exec(className || '')
+                              const isInline = !match
                               return isInline ? (
                                 <code className="bg-gray-100 px-1 rounded" {...props}>
                                   {children}
                                 </code>
                               ) : (
                                 <pre className="bg-gray-100 p-2 rounded-lg my-2 overflow-x-auto">
-                                  <code
-                                    className={className}
-                                    {...props}
-                                  >
+                                  <code className={className} {...props}>
                                     {children}
                                   </code>
                                 </pre>
-                              );
+                              )
                             },
                           }}
                         >
@@ -525,7 +497,7 @@ export default function AppleStyleChat() {
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="输入您的问题..." 
+              placeholder={t('chat.input.placeholder')}
               className="flex-grow p-1 sm:p-2 bg-transparent border-none focus:outline-none text-xs sm:text-base"
               onKeyPress={handleKeyPress}
             />
@@ -533,8 +505,8 @@ export default function AppleStyleChat() {
               <button 
                 onClick={handleAbort}
                 className="bg-transparent text-black p-1.5 sm:p-2 rounded-full transition-all duration-300 transform hover:scale-110"
-                title="点击停止输出"
-                aria-label="停止输出"
+                title={t('chat.button.stop')}
+                aria-label={t('chat.button.stop')}
               >
                 <StopCircle size={16} className="sm:w-5 sm:h-5" />
               </button>

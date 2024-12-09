@@ -6,6 +6,22 @@ import LanguageToggle from './LanguageToggle'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 const Header = () => {
+  const { t, language } = useLanguage()
+
+  const navLinks = [
+    { href: '/buying-guide', key: 'buyingGuide' },
+    { href: '/usage-guide', key: 'usageGuide' },
+    { href: '/repair-maintenance', key: 'repairMaintenance' },
+    { href: '/laws-safety', key: 'lawsSafety' },
+    { href: '/faq', key: 'faq', label: 'FAQ' }  // 特殊处理 FAQ
+  ]
+
+  // 网站名称的双语设置
+  const siteName = {
+    zh: 'THU-电动车-101',
+    en: 'THU-Scooter-101'
+  }
+
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
@@ -21,68 +37,27 @@ const Header = () => {
               />
             </Link>
             <Link href="/" className="hidden md:block md:text-2xl font-bold text-gray-900">
-              THU-电动车-101
+              {siteName[language]}
             </Link>
           </div>
           
-          <nav className="flex items-center">
+          <nav className="flex items-center space-x-4">
             <ul className="flex space-x-3 md:space-x-8 text-xs md:text-base">
-              <li>
-                <Link 
-                  href="/buying-guide" 
-                  className="text-gray-600 hover:text-gray-900 font-medium relative whitespace-nowrap
-                    after:content-[''] after:absolute after:left-0 after:bottom-[-4px]
-                    after:h-[2px] after:w-0 after:bg-gray-900 after:transition-all
-                    hover:after:w-full"
-                >
-                  购买指南
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/usage-guide" 
-                  className="text-gray-600 hover:text-gray-900 font-medium relative
-                    after:content-[''] after:absolute after:left-0 after:bottom-[-4px]
-                    after:h-[2px] after:w-0 after:bg-gray-900 after:transition-all
-                    hover:after:w-full"
-                >
-                  使用指南
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/repair-maintenance" 
-                  className="text-gray-600 hover:text-gray-900 font-medium relative
-                    after:content-[''] after:absolute after:left-0 after:bottom-[-4px]
-                    after:h-[2px] after:w-0 after:bg-gray-900 after:transition-all
-                    hover:after:w-full"
-                >
-                  维修保养
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/laws-safety" 
-                  className="text-gray-600 hover:text-gray-900 font-medium relative
-                    after:content-[''] after:absolute after:left-0 after:bottom-[-4px]
-                    after:h-[2px] after:w-0 after:bg-gray-900 after:transition-all
-                    hover:after:w-full"
-                >
-                  法规安全
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/faq" 
-                  className="text-gray-600 hover:text-gray-900 font-medium relative
-                    after:content-[''] after:absolute after:left-0 after:bottom-[-4px]
-                    after:h-[2px] after:w-0 after:bg-gray-900 after:transition-all
-                    hover:after:w-full"
-                >
-                  常见问题
-                </Link>
-              </li>
+              {navLinks.map(({ href, key, label }) => (
+                <li key={href}>
+                  <Link 
+                    href={href} 
+                    className="text-gray-600 hover:text-gray-900 font-medium relative whitespace-nowrap
+                      after:content-[''] after:absolute after:left-0 after:bottom-[-4px]
+                      after:h-[2px] after:w-0 after:bg-gray-900 after:transition-all
+                      hover:after:w-full"
+                  >
+                    {label || t(`nav.${key}`)}
+                  </Link>
+                </li>
+              ))}
             </ul>
+            <LanguageToggle />
           </nav>
         </div>
       </div>

@@ -2,78 +2,53 @@
 
 import { createContext, useContext, useState, useEffect } from 'react'
 import { translations } from '@/locales/translations'
+import type { Translations } from '@/types/translations'
 
 type LanguageContextType = {
-  language: string
+  language: keyof Translations
+  setLanguage: (lang: keyof Translations) => void
   t: (key: string) => string
-  setLanguage: (lang: string) => void
 }
 
 const LanguageContext = createContext<LanguageContextType>({
   language: 'zh',
-  t: () => '',
-  setLanguage: () => {}
+  setLanguage: () => {},
+  t: (key: string) => key
 })
 
-export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
-  const [language, setLanguage] = useState('zh')
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [language, setLanguage] = useState<keyof Translations>('zh')
 
-  // 翻译函数
-  const t = (key: string): string => {
-    try {
-      const keys = key.split('.')
-      let current: any = translations[language as keyof typeof translations]
-      
-      for (const k of keys) {
-        if (current[k] === undefined) {
-          console.warn(`Translation key not found: ${key}`)
-          return key
-        }
-        current = current[k]
-      }
-      
-      return current || key
-    } catch (error) {
-      console.error('Translation error:', error)
-      return key
-    }
-  }
-
-  // 初始化语言设置
   useEffect(() => {
-    const savedLang = localStorage.getItem('language')
+    const savedLang = localStorage.getItem('language') as keyof Translations
     if (savedLang && (savedLang === 'zh' || savedLang === 'en')) {
       setLanguage(savedLang)
     }
   }, [])
 
-  // 语言变更处理
-  const handleLanguageChange = (newLang: string) => {
-    if (newLang === 'zh' || newLang === 'en') {
-      setLanguage(newLang)
-      localStorage.setItem('language', newLang)
-      // 触发重新渲染
-      window.dispatchEvent(new Event('languageChange'))
+  const t = (key: string): string => {
+    const keys = key.split('.')
+    let value: any = translations[language]
+    
+    for (const k of keys) {
+      if (value && typeof value === 'object') {
+        value = value[k as keyof typeof value]
+      }
     }
+    
+    if (typeof value !== 'string') {
+      console.warn(`Translation missing for key: ${key}`)
+      return key
+    }
+    
+    return value
   }
 
   return (
-    <LanguageContext.Provider 
-      value={{ 
-        language, 
-        t, 
-        setLanguage: handleLanguageChange 
-      }}
-    >
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   )
 }
 
-export const useLanguage = () => {
-  const context = useContext(LanguageContext)
-  if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider')
-  }
-  return context
-}
+export const useLanguage = () => useContext(LanguageContext)
