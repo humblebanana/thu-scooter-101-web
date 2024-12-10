@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
 import path from 'path';
+import { promises as fs } from 'fs';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const filePath = path.join(process.cwd(), 'public', 'data', 'charging-stations.json');
     const jsonData = await fs.readFile(filePath, 'utf8');
@@ -11,7 +11,7 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to fetch charging stations' },
+      { error: 'Failed to load charging stations data' },
       { status: 500 }
     );
   }

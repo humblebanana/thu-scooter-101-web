@@ -1,39 +1,78 @@
-[
-  {
-    "id": 1,
-    "name": "x师傅",
-    "phone": "xing13269096502",
-    "area": "紫荆公寓及南区",
-    "rating": 4.9,
-    "price": 15,
-    "description": "服务评分：4.9/5"
-  },
-  {
-    "id": 2,
-    "name": "l师傅",
-    "phone": "l1664019171",
-    "area": "紫荆公寓及南区",
-    "rating": 4.7,
-    "price": 18,
-    "description": "服务评分：4.7/5"
-  },
-  {
-    "id": 3,
-    "name": "l师傅",
-    "phone": "LPM572689",
-    "area": "紫荆公寓及南区",
-    "rating": 4.5,
-    "price": 20,
-    "description": "服务评分：4.5/5"
-  },
-  {
-    "id": 4,
-    "name": "d师傅",
-    "phone": "15810117987",
-    "area": "全校",
-    "rating": "4.2",
-    "price": "16-20",
-    "description": "服务评分：4.7/5"
-  }
- 
-]
+{
+  "zh": [
+    {
+      "id": 1,
+      "name": "x师傅",
+      "phone": "xing13269096502", 
+      "area": "紫荆公寓及南区",
+      "rating": 4.9,
+      "price": 15,
+      "description": "服务评分：4.9/5"
+    },
+    {
+      "id": 2,
+      "name": "l师傅",
+      "phone": "l1664019171",
+      "area": "紫荆公寓及南区", 
+      "rating": 4.7,
+      "price": 18,
+      "description": "服务评分：4.7/5"
+    },
+    {
+      "id": 3,
+      "name": "l师傅",
+      "phone": "LPM572689",
+      "area": "紫荆公寓及南区",
+      "rating": 4.5,
+      "price": 20,
+      "description": "服务评分：4.5/5"
+    },
+    {
+      "id": 4,
+      "name": "d师傅",
+      "phone": "15810117987",
+      "area": "全校",
+      "rating": 4.2,
+      "price": 16,
+      "description": "服务评分：4.7/5"
+    }
+  ],
+  "en": [
+    {
+      "id": 1,
+      "name": "Master X",
+      "phone": "xing13269096502",
+      "area": "Zijing Apartments & South Area",
+      "rating": 4.9,
+      "price": 15,
+      "description": "Service Rating: 4.9/5"
+    },
+    {
+      "id": 2, 
+      "name": "Master L",
+      "phone": "l1664019171",
+      "area": "Zijing Apartments & South Area",
+      "rating": 4.7,
+      "price": 18,
+      "description": "Service Rating: 4.7/5"
+    },
+    {
+      "id": 3,
+      "name": "Master L",
+      "phone": "LPM572689",
+      "area": "Zijing Apartments & South Area",
+      "rating": 4.5,
+      "price": 20,
+      "description": "Service Rating: 4.5/5"
+    },
+    {
+      "id": 4,
+      "name": "Master D",
+      "phone": "15810117987",
+      "area": "Whole Campus",
+      "rating": 4.2,
+      "price": 16,
+      "description": "Service Rating: 4.7/5"
+    }
+  ]
+}

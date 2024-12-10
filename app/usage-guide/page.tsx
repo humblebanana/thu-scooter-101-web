@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { MapPin, Battery, User, Shield, AlertTriangle, Clock, Copy, MessageSquare } from 'lucide-react'
 import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const ImageSlider = dynamic(() => import('@/components/ImageSlider'), { ssr: false });
 
@@ -35,6 +36,7 @@ interface ParkingArea {
 }
 
 export default function UsageGuide() {
+  const { t, language } = useLanguage();
   const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]);
   const [chargingMasters, setChargingMasters] = useState<ChargingMaster[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -52,7 +54,7 @@ export default function UsageGuide() {
           throw new Error('Failed to fetch charging stations');
         }
         const data = await response.json();
-        setChargingStations(data);
+        setChargingStations(data[language]);
       } catch (e) {
         const errorMessage = e instanceof Error ? e.message : '获取充电站数据失败';
         setError(errorMessage);
@@ -61,17 +63,18 @@ export default function UsageGuide() {
     }
 
     fetchChargingStations();
-  }, []);
+  }, [language]);
 
+  // 获取充电师傅数据
   useEffect(() => {
     async function fetchChargingMasters() {
       try {
-        const response = await fetch('/data/charging-master.json');
+        const response = await fetch('/api/charging-masters');
         if (!response.ok) {
           throw new Error('Failed to fetch charging masters');
         }
         const data = await response.json();
-        setChargingMasters(data);
+        setChargingMasters(data[language]);
       } catch (e) {
         const errorMessage = e instanceof Error ? e.message : '获取充电师傅数据失败';
         setError(errorMessage);
@@ -80,7 +83,7 @@ export default function UsageGuide() {
     }
 
     fetchChargingMasters();
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     // 1. 先移除 URL 中的 hash
@@ -110,6 +113,7 @@ export default function UsageGuide() {
     return () => clearInterval(typingInterval);
   }, []);
 
+  // 获取停车区域数据
   useEffect(() => {
     async function fetchParkingAreas() {
       try {
@@ -118,7 +122,7 @@ export default function UsageGuide() {
           throw new Error('Failed to fetch parking areas');
         }
         const data = await response.json();
-        setParkingAreas(data);
+        setParkingAreas(data[language]);
       } catch (e) {
         const errorMessage = e instanceof Error ? e.message : '获取停车区域数据失败';
         setError(errorMessage);
@@ -127,7 +131,7 @@ export default function UsageGuide() {
     }
 
     fetchParkingAreas();
-  }, []);
+  }, [language]);
 
   const copyToClipboard = (text: string, id: number) => {
     try {
@@ -162,54 +166,65 @@ export default function UsageGuide() {
   };
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <div className="space-y-12">
-        <section className="text-center space-y-2">
-          <h1 className="text-2xl sm:text-4xl font-bold">电动车使用指南</h1>
+    <main className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
+      <div className="space-y-6 sm:space-y-12">
+        <section className="text-center space-y-2 sm:space-y-4">
+          <h1 className="text-2xl sm:text-4xl font-bold">
+            {t('usageGuide.title')}
+          </h1>
           <p className="text-sm sm:text-xl text-gray-600">
-            了解校园内的停车规则、充电站位置安全骑行建议
+            {t('usageGuide.subtitle')}
           </p>
         </section>
 
         <div className="bg-yellow-100 border-l-4 border-yellow-500 p-3 sm:p-4 mb-4 sm:mb-8">
           <p className="text-base sm:text-xl font-bold text-red-700 typing-animation">
-            {typedText}
+            {t('usageGuide.warning')}
           </p>
         </div>
 
         <section id="parking-rules" className="space-y-6">
-          <h2 className="text-lg sm:text-3xl font-bold">停车规则</h2>
-          <p className="text-base sm:text-lg text-gray-600 mb-4 ">
-            ———若要在清华内骑电动车，请务必一定要严格遵守以下规则：
+          <h2 className="text-lg sm:text-3xl font-bold">
+            {t('usageGuide.parkingRules.title')}
+          </h2>
+          <p className="text-base sm:text-lg text-gray-600 mb-4">
+            {t('usageGuide.parkingRules.subtitle')}
           </p>
-          {/* 禁止停车区域和处罚标准并排 */}
           <div className="grid md:grid-cols-2 gap-6">
             {/* 禁止停车区域 */}
             <div className="bg-red-100 rounded-lg shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-red-500">
-              <h3 className="text-base sm:text-2xl font-semibold mb-4 text-red-600">⚠️禁止停车区域👮</h3>
+              <h3 className="text-base sm:text-2xl font-semibold mb-4 text-red-600">
+                {t('usageGuide.parkingRules.forbiddenAreas.title')}
+              </h3>
               <ul className="list-disc list-inside font-semibold space-y-2">
-                <li className="text-sm sm:text-lg text-red-800 font-bold">紫荆公寓宿舍楼下楼外，严禁停车</li>
-                <li className="text-sm sm:text-lg text-red-800 font-bold">教学楼特定区域(如六教大楼旁不能停车，请在停车时注看告示)</li>
-                <li className="text-sm sm:text-lg text-red-800 font-bold">古建筑旁（清华学堂，明斋，大礼堂……）</li>
+                {t('usageGuide.parkingRules.forbiddenAreas.areas').map((area, index) => (
+                  <li key={index} className="text-sm sm:text-lg text-red-800 font-bold">
+                    {area}
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* 处罚标准 */}
-            <div className="bg-yellow-50 rounded-lg shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-yellow-200">
-              <h3 className="text-base sm:text-xl font-semibold mb-4">⚠️违规停车处置方式和处罚标准👮</h3>
-              <ul className="list-disc list-inside space-y-2">
-                <li className="text-sm sm:text-base text-gray-700 font-bold">停在违规区域的电动车将被拖走</li>
-                <li className="text-sm sm:text-base text-gray-700 font-bold">第一次被拖走：需要持生活卡签取车单并签署承诺书</li>
-                <li className="text-sm sm:text-base text-gray-700 font-bold">第二次被拖走：需要签署违纪单并递交情况说明</li>
-                <li className="text-sm sm:text-base text-gray-700 font-bold">重要提醒：违规次数是累计的，不会重置</li>
-                <li className="text-sm sm:text-base text-gray-700 font-bold">为避免处罚，请务必将电动车停放在指定区域 💪</li>
+            {/* 违规停车处置方式和处罚标准 */}
+            <div className="bg-orange-100 rounded-lg shadow-md p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+              <h3 className="text-base sm:text-2xl font-semibold mb-4 text-orange-600">
+                {t('usageGuide.parkingRules.penalties.title')}
+              </h3>
+              <ul className="space-y-2">
+                {t('usageGuide.parkingRules.penalties.items').map((item, index) => (
+                  <li key={index} className="text-sm sm:text-lg text-orange-800 font-semibold">
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
           {/* 允许停车区域 */}
+          <h2 className="text-lg sm:text-3xl font-bold">
+            {t('usageGuide.parkingRules.allowedAreas')}
+          </h2>
           <section className="space-y-4 sm:space-y-6 mb-8 sm:mb-12">
-            <h2 className="text-lg sm:text-3xl font-bold">允许停车区域</h2>
             <div className="grid md:grid-cols-3 gap-3 sm:gap-6">
               {parkingAreas.map((area, index) => (
                 <div key={index} className="bg-transparent rounded-lg p-3 sm:p-6 border-l-4 border-gray-500 hover:shadow-lg transition-all duration-300">
@@ -233,7 +248,9 @@ export default function UsageGuide() {
           </section>
         </section>
         <section id="charging-stations" className="space-y-4 sm:space-y-6">
-          <h2 className="text-lg sm:text-3xl font-bold">充电站位置</h2>
+          <h2 className="text-lg sm:text-3xl font-bold">
+            {t('usageGuide.chargingStations.sectionTitle')}
+          </h2>
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="hidden sm:block w-full h-[600px] mb-6 rounded-lg overflow-hidden">
               <iframe
@@ -250,7 +267,9 @@ export default function UsageGuide() {
             <div className="block sm:hidden mb-4 text-sm text-gray-600 font-semibold">
               <p>将以下内容的地址一键复制到您的地图中，即可快速导航到充电站。充电桩信息持续更新，如有补充可点击右下角反馈🙏</p>
             </div>
-            <h3 className="text-base sm:text-xl font-semibold mb-4">主要充电站位置：</h3>
+            <h3 className="text-base sm:text-2xl font-semibold mb-4">
+              {t('usageGuide.chargingStations.title')}
+            </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
               {chargingStations.map((station) => (
                 <div key={station.id} className="bg-gray-50 rounded-lg p-2 sm:p-4 hover:shadow-md transition-shadow">
@@ -295,12 +314,14 @@ export default function UsageGuide() {
         </section>
 
         <section id="charging-services" className="space-y-4 sm:space-y-6">
-          <h2 className="text-lg sm:text-3xl font-bold">充电师傅服务信息</h2>
+          <h2 className="text-lg sm:text-3xl font-bold">
+            {t('usageGuide.chargingMasters.title')}
+          </h2>
           <p className="text-sm sm:text-lg text-gray-600 mb-4">
-            ———充电师傅可以在指定位置直接把电池取走后，隔天早上送回，单次服务费用较贵，一复制联系方式（微信）。充电师傅相关信息持续更新，如有补充可点击右下角反馈🙏
+            {t('usageGuide.chargingMasters.subtitle')}
           </p>
           {error ? (
-            <p className="text-red-500">错误: {error}</p>
+            <p className="text-red-500">{t('usageGuide.chargingMasters.error', { error })}</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {chargingMasters.map((master) => (
@@ -346,50 +367,22 @@ export default function UsageGuide() {
           )}
         </section>
 
-        <section id="safety-tips" className="space-y-4 sm:space-y-6">
-          <h2 className="text-lg sm:text-3xl font-bold">安全骑行建议</h2>
-          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
-            <ul className="space-y-3 sm:space-y-4">
-              <li className="flex items-start">
-                <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">如果条件允许始终佩戴头盔（并非强制）</h3>
-                  <p className="text-xs sm:text-base text-gray-600">头盔可以在发生意外时保护您的头部，大降低严重伤害的风险。</p>
-                </div>
-              </li>
-
-              <li className="flex items-start">
-                <AlertTriangle className="w-4 h-4 sm:w-6 sm:h-6 text-yellow-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">遵守交通规则</h3>
-                  <p className="text-xs sm:text-base text-gray-600">遵守交通信号，注意行人安全，不要逆行或闯红灯。</p>
-                </div>
-              </li>
-
-              <li className="flex items-start">
-                <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">保持车速在15km/h以下</h3>
-                  <p className="text-xs sm:text-base text-gray-600">校园内请控制车速，保证自己和他人的安全，尤其是在十字路口，一定要减速，清华大部分车祸都发生在十字路口。</p>
-                </div>
-              </li>
-
-              <li className="flex items-start">
-                <AlertTriangle className="w-4 h-4 sm:w-6 sm:h-6 text-yellow-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">夜间骑行开启车灯</h3>
-                  <p className="text-xs sm:text-base text-gray-600">确保他人能看您，同时提高您的视野范围。</p>
-                </div>
-              </li>
-
-              <li className="flex items-start">
-                <Shield className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="text-sm sm:text-lg font-semibold mb-0.5 sm:mb-1">定期检查车辆状况</h3>
-                  <p className="text-xs sm:text-base text-gray-600">确保刹车、轮胎等关键部件处于良好状态。</p>
-                </div>
-              </li>
-            </ul>
+        <section className="space-y-4">
+          <h2 className="text-lg sm:text-3xl font-bold">
+            {t('usageGuide.safetyTips.title')}
+          </h2>
+          
+          <div className="space-y-6">
+            {t('usageGuide.safetyTips.tips').map((tip, index) => (
+              <div key={index} className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
+                <h3 className="text-base sm:text-lg font-semibold mb-2">
+                  {tip.title}
+                </h3>
+                <p className="text-sm sm:text-base text-gray-600">
+                  {tip.description}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
       </div>

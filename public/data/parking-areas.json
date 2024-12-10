@@ -1,32 +1,66 @@
-[
-  { 
-    "name": "宿舍区域",
-    "locations": [
-      "紫荆篮球场新民路旁停车带",
-      "紫荆网球场新民路旁停车带",
-      "紫荆园食堂正门和侧门的门口附近",
-      "待补充……（如有补充可点击右下角反馈🙏）"
-    ],
-    "note": "宿舍区请不要将车停到架空层"
-  },
-  { 
-    "name": "教学楼区域",
-    "locations": [
-      "一教至五教周边指定区域",
-      "六教（除架空层外）指定区域", 
-      "一般院系楼外皆能停车",
-      "待补充……（如有补充可点击右下角反馈🙏）"
-    ],
-    "note": "请注意观察每个教学楼附近的停车标识，严格遵守停放规范"
-  },
-  { 
-    "name": "公共区域",
-    "locations": [
-      "图书馆周边皆可停，除李文正馆和逸夫馆有特殊要求外",
-      "综体北体周边暂无特殊规定皆可停车",
-      "食堂周边规划区域",
-      "待补充……（如有补充可点击右下角反馈🙏）"
-    ],
-    "note": "公共区域停车需特别注意不要影响行人通行"
-  }
-]
+{
+  "zh": [
+    { 
+      "name": "宿舍区域",
+      "locations": [
+        "紫荆篮球场新民路旁停车带",
+        "紫荆网球场新民路旁停车带", 
+        "紫荆园食堂正门和侧门的门口附近",
+        "待补充……（如有补充可点击右下角反馈🙏）"
+      ],
+      "note": "宿舍区请不要将车停到架空层"
+    },
+    { 
+      "name": "教学楼区域",
+      "locations": [
+        "一教至五教周边指定区域",
+        "六教（除架空层外）指定区域",
+        "一般院系楼外皆能停车", 
+        "待补充……（如有补充可点击右下角反馈🙏）"
+      ],
+      "note": "请注意观察每个教学楼附近的停车标识，严格遵守停放规范"
+    },
+    { 
+      "name": "公共区域",
+      "locations": [
+        "图书馆周边皆可停，除李文正馆和逸夫馆有特殊要求外",
+        "综体北体周边暂无特殊规定皆可停车",
+        "食堂周边规划区域",
+        "待补充……（如有补充可点击右下角反馈🙏）"
+      ],
+      "note": "公共区域停车需特别注意不要影响行人通行"
+    }
+  ],
+  "en": [
+    {
+      "name": "Dormitory Area",
+      "locations": [
+        "Parking strip along Xinmin Road near Zijing Basketball Court",
+        "Parking strip along Xinmin Road near Zijing Tennis Court",
+        "Near the main and side entrances of Zijing Garden Cafeteria",
+        "To be updated... (Please click the feedback button in the bottom right corner if you have additions 🙏)"
+      ],
+      "note": "Please do not park in the piloti area of dormitory buildings"
+    },
+    {
+      "name": "Teaching Building Area", 
+      "locations": [
+        "Designated areas around Teaching Buildings 1-5",
+        "Designated areas around Teaching Building 6 (except piloti area)",
+        "Generally allowed to park outside department buildings",
+        "To be updated... (Please click the feedback button in the bottom right corner if you have additions 🙏)"
+      ],
+      "note": "Please observe parking signs near each teaching building and strictly follow parking regulations"
+    },
+    {
+      "name": "Public Areas",
+      "locations": [
+        "Parking allowed around libraries, except special requirements for Li Wenzheng Library and Shaw Library",
+        "No special restrictions for parking around the Comprehensive Gym and North Gym",
+        "Planned areas around cafeterias",
+        "To be updated... (Please click the feedback button in the bottom right corner if you have additions 🙏)"
+      ],
+      "note": "When parking in public areas, please be especially careful not to obstruct pedestrian traffic"
+    }
+  ]
+}

@@ -1,74 +1,150 @@
-[
-  {
-    "id": 1,
-    "name": "西王庄小区充电桩1",
-    "location": "西王庄小区12号楼",
-    "price": 0.7,
-    "rating": 4.9,
-    "review": "超方便的！而且应该是离教学楼最近的吧，就在东南门肯德基旁边，充电的时候还能去蹭个疯狂星期四，清华学生都爱来这"
-  },
-  {
-    "id": 2, 
-    "name": "西王庄小区充电桩2",
-    "location": "318精酿啤酒馆",
-    "price": 0.7,
-    "rating": 4.9,
-    "review": "在西王庄小区入口处，靠近东南门，出来就是盒马，价格也很合适"
-  },
-  {
-    "id": 3,
-    "name": "华清嘉园21号楼充电桩",
-    "location": "华清嘉园21号楼",
-    "price": 0.8,
-    "rating": 4.7,
-    "review": "位置很好找,就在华清嘉园里面,充电的时候可以去附近的酒吧小酌一杯,环境很不错"
-  },
-  {
-    "id": 4,
-    "name": "华清嘉园9号楼充电桩",
-    "location": "华清嘉园9号楼",
-    "price": 0.8,
-    "rating": 4.9,
-    "review": "位置很好找,就在华清嘉园里面,充电的时候可以去附近的酒吧小酌一杯,环境很不错,但是有些时候小区大门不开，得找机会进去"
-  },
-  {
-    "id": 5,
-    "name": "北大44号楼充电站",
-    "location": "北京大学44号楼",
-    "price": 0.75,
-    "rating": 4.8,
-    "review": "推荐！位置特别好找就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
-  },
-  {
-    "id": 6,
-    "name": "北大48号楼充电站",
-    "location": "北京大学48号楼",
-    "price": 0.75,
-    "rating": 4.8,
-    "review": "位置很好找在48号楼北面，充电桩数量充足"
-  },
-  {
-    "id": 7,
-    "name": "清华家属区充电桩",
-    "location": "清华大学照澜职工食堂",
-    "price": 2.0,
-    "rating": 3.0,
-    "review": "劝退！没有家属充电卡根本充不了，有渠道的同学可以尝试去跟家属区的人搞一张充电卡"
-  },
-  {
-    "id": 8,
-    "name": "五道口优盛大厦充电桩",
-    "location": "五道口巴黎贝甜",
-    "price": 1.0,
-    "rating": 4.6,
-    "review": "在巴黎贝甜再往东走可以看到停车棚，整体挺好的，就是得跟外卖小哥抢位置，然后有些混乱"
-  },
-  {
-    "id": 9,
-    "name": "王庄路小区充电站",
-    "location": "王庄路小区",
-    "price": 0.8,
-    "rating": 4.4,
-    "review": "各个小区里面都能找到，就是得熟悉一下自己小区的位置"
-  }
-]
+{
+  "zh": [
+    {
+      "id": 1,
+      "name": "西王庄小区充电桩1",
+      "location": "西王庄小区12号楼",
+      "price": 0.7,
+      "rating": 4.9,
+      "review": "超方便的！而且应该是离教学楼最近的吧，就在东南门肯德基旁边，充电的时候还能去蹭个疯狂星期四，清华学生都爱来这"
+    },
+    {
+      "id": 2,
+      "name": "西王庄小区充电桩2", 
+      "location": "318精酿啤酒馆",
+      "price": 0.7,
+      "rating": 4.9,
+      "review": "在西王庄小区入口处，靠近东南门，出来就是盒马，价格也很合适"
+    },
+    {
+      "id": 3,
+      "name": "华清嘉园21号楼充电桩",
+      "location": "华清嘉园21号楼",
+      "price": 0.8,
+      "rating": 4.7,
+      "review": "位置很好找,就在华清嘉园里面,充电的时候可以去附近的酒吧小酌一杯,环境很不错"
+    },
+    {
+      "id": 4,
+      "name": "华清嘉园9号楼充电桩",
+      "location": "华清嘉园9号楼",
+      "price": 0.8,
+      "rating": 4.9,
+      "review": "位置很好找,就在华清嘉园里面,充电的时候可以去附近的酒吧小酌一杯,环境很不错,但是有些时候小区大门不开，得找机会进去"
+    },
+    {
+      "id": 5,
+      "name": "北大44号楼充电站",
+      "location": "北京大学44号楼",
+      "price": 0.75,
+      "rating": 4.8,
+      "review": "推荐！位置特别好找就在家园食堂旁边，旁边有家泊星地咖啡，充电的时候可以去喝杯咖啡，基本都有空位"
+    },
+    {
+      "id": 6,
+      "name": "北大48号楼充电站",
+      "location": "北京大学48号楼",
+      "price": 0.75,
+      "rating": 4.8,
+      "review": "位置很好找在48号楼北面，充电桩数量充足"
+    },
+    {
+      "id": 7,
+      "name": "清华家属区充电桩",
+      "location": "清华大学照澜职工食堂",
+      "price": 2.0,
+      "rating": 3.0,
+      "review": "劝退！没有家属充电卡根本充不了，有渠道的同学可以尝试去跟家属区的人搞一张充电卡"
+    },
+    {
+      "id": 8,
+      "name": "五道口优盛大厦充电桩",
+      "location": "五道口巴黎贝甜",
+      "price": 1.0,
+      "rating": 4.6,
+      "review": "在巴黎贝甜再往东走可以看到停车棚，整体挺好的，就是得跟外卖小哥抢位置，然后有些混乱"
+    },
+    {
+      "id": 9,
+      "name": "王庄路小区充电站",
+      "location": "王庄路小区",
+      "price": 0.8,
+      "rating": 4.4,
+      "review": "各个小区里面都能找到，就是得熟悉一下自己小区的位置"
+    }
+  ],
+  "en": [
+    {
+      "id": 1,
+      "name": "Xiwangzhuang Community Charging Station 1",
+      "location": "Building 12, Xiwangzhuang Community",
+      "price": 0.7,
+      "rating": 4.9,
+      "review": "Super convenient! Probably the closest to teaching buildings, next to KFC at the southeast gate. You can grab KFC's crazy Thursday deals while charging. Tsinghua students love it here"
+    },
+    {
+      "id": 2,
+      "name": "Xiwangzhuang Community Charging Station 2",
+      "location": "318 Craft Beer Bar",
+      "price": 0.7,
+      "rating": 4.9,
+      "review": "Located at the entrance of Xiwangzhuang Community, near the southeast gate. Hema Fresh is right outside, and the price is reasonable"
+    },
+    {
+      "id": 3,
+      "name": "Huaqing Jiayuan Building 21 Charging Station",
+      "location": "Building 21, Huaqing Jiayuan",
+      "price": 0.8,
+      "rating": 4.7,
+      "review": "Easy to find, inside Huaqing Jiayuan. You can enjoy a drink at nearby bars while charging, nice environment"
+    },
+    {
+      "id": 4,
+      "name": "Huaqing Jiayuan Building 9 Charging Station",
+      "location": "Building 9, Huaqing Jiayuan",
+      "price": 0.8,
+      "rating": 4.9,
+      "review": "Easy to find, inside Huaqing Jiayuan. You can enjoy a drink at nearby bars while charging. Nice environment, but sometimes the community gate is closed, need to find the right timing"
+    },
+    {
+      "id": 5,
+      "name": "PKU Building 44 Charging Station",
+      "location": "Peking University Building 44",
+      "price": 0.75,
+      "rating": 4.8,
+      "review": "Recommended! Very easy to find next to Jiayuan Cafeteria. There's a Parkingstar Coffee nearby where you can grab a coffee while charging. Usually has available spots"
+    },
+    {
+      "id": 6,
+      "name": "PKU Building 48 Charging Station",
+      "location": "Peking University Building 48",
+      "price": 0.75,
+      "rating": 4.8,
+      "review": "Easy to find on the north side of Building 48, plenty of charging spots available"
+    },
+    {
+      "id": 7,
+      "name": "Tsinghua Staff Quarter Charging Station",
+      "location": "Tsinghua University Zhaolan Staff Cafeteria",
+      "price": 2.0,
+      "rating": 3.0,
+      "review": "Not recommended! Can't charge without a staff charging card. Try to get a charging card from staff quarter residents if you have connections"
+    },
+    {
+      "id": 8,
+      "name": "Wudaokou Yousheng Building Charging Station",
+      "location": "Paris Baguette Wudaokou",
+      "price": 1.0,
+      "rating": 4.6,
+      "review": "The parking shed is east of Paris Baguette. Overall good, but you need to compete with delivery riders for spots, can be a bit chaotic"
+    },
+    {
+      "id": 9,
+      "name": "Wangzhuang Road Community Charging Station",
+      "location": "Wangzhuang Road Community",
+      "price": 0.8,
+      "rating": 4.4,
+      "review": "Can be found in various communities, just need to familiarize yourself with your community's location"
+    }
+  ]
+}
