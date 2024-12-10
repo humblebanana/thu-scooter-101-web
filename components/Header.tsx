@@ -12,7 +12,8 @@ const Header = () => {
     { href: '/buying-guide', key: 'buyingGuide' },
     { href: '/usage-guide', key: 'usageGuide' },
     { href: '/repair-maintenance', key: 'repairMaintenance' },
-    { href: '/laws-safety', key: 'lawsSafety' }
+    { href: '/laws-safety', key: 'lawsSafety' },
+    { href: '/faq', key: 'faq' }
   ]
 
   const siteName = {

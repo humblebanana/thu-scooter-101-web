@@ -77,7 +77,7 @@
     {
       "id": 1,
       "name": "Xiwangzhuang Community Charging Station 1",
-      "location": "Building 12, Xiwangzhuang Community",
+      "location": "西王庄小区12号楼",
       "price": 0.7,
       "rating": 4.9,
       "review": "Super convenient! Probably the closest to teaching buildings, next to KFC at the southeast gate. You can grab KFC's crazy Thursday deals while charging. Tsinghua students love it here"
@@ -85,7 +85,7 @@
     {
       "id": 2,
       "name": "Xiwangzhuang Community Charging Station 2",
-      "location": "318 Craft Beer Bar",
+      "location": "318精酿啤酒馆",
       "price": 0.7,
       "rating": 4.9,
       "review": "Located at the entrance of Xiwangzhuang Community, near the southeast gate. Hema Fresh is right outside, and the price is reasonable"
@@ -93,7 +93,7 @@
     {
       "id": 3,
       "name": "Huaqing Jiayuan Building 21 Charging Station",
-      "location": "Building 21, Huaqing Jiayuan",
+      "location": "华清嘉园21号楼",
       "price": 0.8,
       "rating": 4.7,
       "review": "Easy to find, inside Huaqing Jiayuan. You can enjoy a drink at nearby bars while charging, nice environment"
@@ -101,7 +101,7 @@
     {
       "id": 4,
       "name": "Huaqing Jiayuan Building 9 Charging Station",
-      "location": "Building 9, Huaqing Jiayuan",
+      "location": "华清嘉园9号楼",
       "price": 0.8,
       "rating": 4.9,
       "review": "Easy to find, inside Huaqing Jiayuan. You can enjoy a drink at nearby bars while charging. Nice environment, but sometimes the community gate is closed, need to find the right timing"
@@ -109,7 +109,7 @@
     {
       "id": 5,
       "name": "PKU Building 44 Charging Station",
-      "location": "Peking University Building 44",
+      "location": "北京大学44号楼",
       "price": 0.75,
       "rating": 4.8,
       "review": "Recommended! Very easy to find next to Jiayuan Cafeteria. There's a Parkingstar Coffee nearby where you can grab a coffee while charging. Usually has available spots"
@@ -117,7 +117,7 @@
     {
       "id": 6,
       "name": "PKU Building 48 Charging Station",
-      "location": "Peking University Building 48",
+      "location": "北京大学48号楼",
       "price": 0.75,
       "rating": 4.8,
       "review": "Easy to find on the north side of Building 48, plenty of charging spots available"
@@ -125,7 +125,7 @@
     {
       "id": 7,
       "name": "Tsinghua Staff Quarter Charging Station",
-      "location": "Tsinghua University Zhaolan Staff Cafeteria",
+      "location": "清华大学照澜职工食堂",
       "price": 2.0,
       "rating": 3.0,
       "review": "Not recommended! Can't charge without a staff charging card. Try to get a charging card from staff quarter residents if you have connections"
@@ -133,7 +133,7 @@
     {
       "id": 8,
       "name": "Wudaokou Yousheng Building Charging Station",
-      "location": "Paris Baguette Wudaokou",
+      "location": "五道口巴黎贝甜",
       "price": 1.0,
       "rating": 4.6,
       "review": "The parking shed is east of Paris Baguette. Overall good, but you need to compete with delivery riders for spots, can be a bit chaotic"
@@ -141,7 +141,7 @@
     {
       "id": 9,
       "name": "Wangzhuang Road Community Charging Station",
-      "location": "Wangzhuang Road Community",
+      "location": "王庄路小区",
       "price": 0.8,
       "rating": 4.4,
       "review": "Can be found in various communities, just need to familiarize yourself with your community's location"

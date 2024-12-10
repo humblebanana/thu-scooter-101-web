@@ -7,7 +7,8 @@ export const translations: Translations = {
       buyingGuide: "购买指南",
       usageGuide: "使用指南",
       repairMaintenance: "维修保养",
-      lawsSafety: "法规安全"
+      lawsSafety: "法规安全",
+      faq: "常见问题"
     },
     home: {
       welcome: {
@@ -192,8 +193,9 @@ export const translations: Translations = {
       home: "THU-Scooter-101",
       buyingGuide: "Buying Guide",
       usageGuide: "Usage Guide",
-      repairMaintenance: "Maintenance",
-      lawsSafety: "Safety"
+      repairMaintenance: "Repair & Maintenance",
+      lawsSafety: "Laws & Safety",
+      faq: "FAQ"
     },
     home: {
       welcome: {
