@@ -1,111 +1,222 @@
-[
-  {
-    "id": 1,
-    "name": "九号电动A2z",
-    "brand": "九号",
-    "price": 2899,
-    "range": "85km",
-    "image": "ninebot-a2z.jpg",
-    "description": "电池挺大的，25-26AH的锂电池，骑个80-90公里没问题。最主要是有智能系统，手机APP可以远程控制，还能实时查看车在哪，挺方便的。"
-  },
-  {
-    "id": 2,
-    "name": "绿源小果粒",
-    "brand": "绿源",
-    "price": 1500,
-    "range": "45km",
-    "image": "luyuan-xiaoguoli.jpg",
-    "description": "性价比还不错，400W的电机配上48V的电池，骑个45公里左右没问题。用的是钢丝真空胎，前后都是陶瓷刹车，安全性有保障。"
-  },
-  {
-    "id": 3,
-    "name": "爱玛小坦克",
-    "brand": "爱玛",
-    "price": 1300,
-    "range": "40km",
-    "image": "aima-xiaotank.jpg",
-    "description": "这款是入门级的，价格实惠，骑个40公里没问题。如果就是学校和周边转转的话，完全够用了。"
-  },
-  {
-    "id": 4,
-    "name": "爱玛A500",
-    "brand": "爱玛",
-    "price": 3599,
-    "range": "70km",
-    "image": "aima-a500.jpg",
-    "description": "这个电池容量很给力，充满电能骑150公里，而且支持快充，充一小时能充到80%，特别适合经常跑长途的同学。"
-  },
-  {
-    "id": 5,
-    "name": "雅迪DT6",
-    "brand": "雅迪",
-    "price": 3999,
-    "range": "55km",
-    "image": "yadea-dt6.jpg",
-    "description": "配置还不错，400W电机搭配48V24Ah锂电池，前面是碟刹后面是鼓刹。LED大灯挺亮的，晚上骑也很安全。"
-  },
-  {
-    "id": 6,
-    "name": "雅迪DT3",
-    "brand": "雅迪",
-    "price": 3699,
-    "range": "50km",
-    "image": "yadea-dt3.jpg",
-    "description": "用的是石墨烯锂电池，寿命特别长，厂家直接给5年质保。前后都有减震，骑起来特别舒服，减震效果真的不错。"
-  },
-  {
-    "id": 7,
-    "name": "雅迪欧曼2.0",
-    "brand": "雅迪",
-    "price": 3599,
-    "range": "60km",
-    "image": "yadea-oman.jpg",
-    "description": "这款是升级版，LED灯又亮又好看，还带防盗系统，晚上骑车特别有安全感。续航能力不错，特别适合住得远的同学。"
-  },
-  {
-    "id": 8,
-    "name": "台铃标兵",
-    "brand": "台铃",
-    "price": 3599,
-    "range": "70~80km",
-    "image": "tailg_bing.jpg",
-    "description": "电机功率很大，1200W的，速度杠杠的，最快能到50。刹车系统很靠谱，前碟后鼓的配置。实测能骑70-80公里，挺够用的。"
-  },
-  {
-    "id": 9,
-    "name": "小牛UQis/UQi",
-    "brand": "小牛",
-    "price": 4199,
-    "range": "45km",
-    "image": "niu_uqi.jpg",
-    "description": "可以用手机APP控制，挺智能的。UQis是简配版，少了转向灯，车身小了点，不过踏板改进了。想后期改装的话建议直接买UQi版本。"
-  },
-  {
-    "id": 10,
-    "name": "台铃赤兔超智版",
-    "brand": "台铃",
-    "price": 3599,
-    "range": "60km",
-    "image": "tailg_chitu.jpg",
-    "description": "动力很足，1000W的电机，速度能到51。刹车也很稳，前碟后鼓的。有USB充电口，手机没电了随时能充。还能用APP定位开锁，挺方便的。"
-  },
-  {
-    "id": 11,
-    "name": "小牛F100",
-    "brand": "小牛",
-    "price": 2599,
-    "range": "40km",
-    "image": "niu_f100.jpg",
-    "description": "入门款里性价比不错的，400W电机够用，电池可以拆下来充电。官方说能骑50公里，实际上40公里左右吧。"
-  },
-  {
-    "id": 12,
-    "name": "新日CiCi",
-    "brand": "新日",
-    "price": 2099,
-    "range": "续航45公里左右",
-    "image": "xrij_cici.jpg",
-    "description": "颜值真的很高，特别适合女生骑。速度对校园来说刚刚好，而且整体设计特别贴合女生身材，很多女生都说骑着特别舒服。"
-  }
-]
-
+{
+  "zh": [
+    {
+      "id": 1,
+      "name": "九号电动A2z",
+      "brand": "九号",
+      "price": 2899,
+      "range": "85km",
+      "image": "ninebot-a2z.jpg",
+      "description": "电池挺大的，25-26AH的锂电池，骑个80-90公里没问题。最主要是有智能系统，手机APP可以远程控制，还能实时查看车在哪，挺方便的。"
+    },
+    {
+      "id": 2,
+      "name": "绿源小果粒",
+      "brand": "绿源",
+      "price": 1500,
+      "range": "45km",
+      "image": "luyuan-xiaoguoli.jpg", 
+      "description": "性价比还不错，400W的电机配上48V的电池，骑个45公里左右没问题。用的是钢丝真空胎，前后都是陶瓷刹车，安全性有保障。"
+    },
+    {
+      "id": 3,
+      "name": "爱玛小坦克",
+      "brand": "爱玛",
+      "price": 1300,
+      "range": "40km",
+      "image": "aima-xiaotank.jpg",
+      "description": "这款是入门级的，价格实惠，骑个40公里没问题。如果就是学校和周边转转的话，完全够用了。"
+    },
+    {
+      "id": 4,
+      "name": "爱玛A500",
+      "brand": "爱玛", 
+      "price": 3599,
+      "range": "70km",
+      "image": "aima-a500.jpg",
+      "description": "这个电池容量很给力，充满电能骑150公里，而且支持快充，充一小时能充到80%，特别适合经常跑长途的同学。"
+    },
+    {
+      "id": 5,
+      "name": "雅迪DT6",
+      "brand": "雅迪",
+      "price": 3999,
+      "range": "55km",
+      "image": "yadea-dt6.jpg",
+      "description": "配置还不错，400W电机搭配48V24Ah锂电池，前面是碟刹后面是鼓刹。LED大灯挺亮的，晚上骑也很安全。"
+    },
+    {
+      "id": 6,
+      "name": "雅迪DT3",
+      "brand": "雅迪",
+      "price": 3699,
+      "range": "50km",
+      "image": "yadea-dt3.jpg",
+      "description": "用的是石墨烯锂电池，寿命特别长，厂家直接给5年质保。前后都有减震，骑起来特别舒服，减震效果真的不错。"
+    },
+    {
+      "id": 7,
+      "name": "雅迪欧曼2.0",
+      "brand": "雅迪",
+      "price": 3599,
+      "range": "60km",
+      "image": "yadea-oman.jpg",
+      "description": "这款是升级版，LED灯又亮又好看，还带防盗系统，晚上骑车特别有安全感。续航能力不错，特别适合住得远的同学。"
+    },
+    {
+      "id": 8,
+      "name": "台铃标兵",
+      "brand": "台铃",
+      "price": 3599,
+      "range": "70~80km",
+      "image": "tailg_bing.jpg",
+      "description": "电机功率很大，1200W的，速度杠杠的，最快能到50。刹车系统很靠谱，前碟后鼓的配置。实测能骑70-80公里，挺够用的。"
+    },
+    {
+      "id": 9,
+      "name": "小牛UQis/UQi",
+      "brand": "小牛",
+      "price": 4199,
+      "range": "45km",
+      "image": "niu_uqi.jpg",
+      "description": "可以用手机APP控制，挺智能的。UQis是简配版，少了转向灯，车身小了点，不过踏板改进了。想后期改装的话建议直接买UQi版本。"
+    },
+    {
+      "id": 10,
+      "name": "台铃赤兔超智版",
+      "brand": "台铃",
+      "price": 3599,
+      "range": "60km",
+      "image": "tailg_chitu.jpg",
+      "description": "动力很足，1000W的电机，速度能到51。刹车也很稳，前碟后鼓的。有USB充电口，手机没电了随时能充。还能用APP定位开锁，挺方便的。"
+    },
+    {
+      "id": 11,
+      "name": "小牛F100",
+      "brand": "小牛",
+      "price": 2599,
+      "range": "40km",
+      "image": "niu_f100.jpg",
+      "description": "入门款里性价比不错的，400W电机够用，电池可以拆下来充电。官方说能骑50公里，实际上40公里左右吧。"
+    },
+    {
+      "id": 12,
+      "name": "新日CiCi",
+      "brand": "新日",
+      "price": 2099,
+      "range": "45km",
+      "image": "xrij_cici.jpg",
+      "description": "颜值真的很高，特别适合女生骑。速度对校园来说刚刚好，而且整体设计特别贴合女生身材，很多女生都说骑着特别舒服。"
+    }
+  ],
+  "en": [
+    {
+      "id": 1,
+      "name": "Ninebot A2z",
+      "brand": "Ninebot",
+      "price": 2899,
+      "range": "85km",
+      "image": "ninebot-a2z.jpg",
+      "description": "Large 25-26AH lithium battery with 80-90km range. Features smart system with mobile app for remote control and real-time location tracking."
+    },
+    {
+      "id": 2,
+      "name": "Luyuan Xiaoguo Li",
+      "brand": "Luyuan",
+      "price": 1500,
+      "range": "45km",
+      "image": "luyuan-xiaoguoli.jpg",
+      "description": "Good value for money with 400W motor and 48V battery. Features wire vacuum tires and ceramic brakes for enhanced safety."
+    },
+    {
+      "id": 3,
+      "name": "Aima Mini Tank",
+      "brand": "Aima",
+      "price": 1300,
+      "range": "40km",
+      "image": "aima-xiaotank.jpg",
+      "description": "Entry-level model with affordable price and 40km range. Perfect for campus and nearby area commuting."
+    },
+    {
+      "id": 4,
+      "name": "Aima A500",
+      "brand": "Aima",
+      "price": 3599,
+      "range": "70km",
+      "image": "aima-a500.jpg",
+      "description": "Impressive battery capacity with 150km range. Features fast charging - 80% in one hour. Ideal for long-distance riders."
+    },
+    {
+      "id": 5,
+      "name": "Yadea DT6",
+      "brand": "Yadea",
+      "price": 3999,
+      "range": "55km",
+      "image": "yadea-dt6.jpg",
+      "description": "400W motor with 48V24Ah lithium battery. Disc front brake and drum rear brake. Bright LED lights for night safety."
+    },
+    {
+      "id": 6,
+      "name": "Yadea DT3",
+      "brand": "Yadea",
+      "price": 3699,
+      "range": "50km",
+      "image": "yadea-dt3.jpg",
+      "description": "Graphene lithium battery with 5-year warranty. Front and rear suspension for comfortable riding experience."
+    },
+    {
+      "id": 7,
+      "name": "Yadea Oman 2.0",
+      "brand": "Yadea",
+      "price": 3599,
+      "range": "60km",
+      "image": "yadea-oman.jpg",
+      "description": "Upgraded version with bright LED lights and anti-theft system. Good range, perfect for students living far from campus."
+    },
+    {
+      "id": 8,
+      "name": "Tailg Bing",
+      "brand": "Tailg",
+      "price": 3599,
+      "range": "70~80km",
+      "image": "tailg_bing.jpg",
+      "description": "Powerful 1200W motor with max speed of 50km/h. Reliable braking system with front disc and rear drum brakes. Tested range of 70-80km."
+    },
+    {
+      "id": 9,
+      "name": "NIU UQis/UQi",
+      "brand": "NIU",
+      "price": 4199,
+      "range": "45km",
+      "image": "niu_uqi.jpg",
+      "description": "Smart app control features. UQis is basic version without turn signals but improved footboard. Recommend UQi for future modifications."
+    },
+    {
+      "id": 10,
+      "name": "Tailg Chitu Smart",
+      "brand": "Tailg",
+      "price": 3599,
+      "range": "60km",
+      "image": "tailg_chitu.jpg",
+      "description": "Strong 1000W motor reaching 51km/h. Stable braking system. USB charging port and app-based location tracking and unlocking."
+    },
+    {
+      "id": 11,
+      "name": "NIU F100",
+      "brand": "NIU",
+      "price": 2599,
+      "range": "40km",
+      "image": "niu_f100.jpg",
+      "description": "Good value entry-level model with 400W motor and removable battery. Real range around 40km despite official 50km claim."
+    },
+    {
+      "id": 12,
+      "name": "Xinri CiCi",
+      "brand": "Xinri",
+      "price": 2099,
+      "range": "45km",
+      "image": "xrij_cici.jpg",
+      "description": "Stylish design perfect for female riders. Campus-friendly speed and ergonomic design specifically tailored for women's comfort."
+    }
+  ]
+}

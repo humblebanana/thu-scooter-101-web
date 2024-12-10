@@ -1,57 +1,114 @@
-[
+{
+  "zh": [
     {
-        "name": "闲鱼二手电动车",
-        "location": "线上平台",
-        "contact": "通过闲鱼APP联系卖家",
-        "priceRange": "¥800 - ¥3,000（价格因车况而异）"
+      "name": "闲鱼二手电动车",
+      "location": "线上平台",
+      "contact": "通过闲鱼APP联系卖家",
+      "priceRange": "¥800 - ¥3,000（价格因车况而异）"
     },
     {
-        "name": "清华大学校内二手交易平台",
-        "location": "校内",
-        "contact": "小程序搜索水木汇THU；关注水木助手",
-        "priceRange": "¥800 - ¥2,500（价格因车况而异）"
+      "name": "清华大学校内二手交易平台",
+      "location": "校内",
+      "contact": "小程序搜索水木汇THU；关注水木助手",
+      "priceRange": "¥800 - ¥2,500（价格因车况而异）"
     },
     {
-        "name": "九号电动车(厢白旗店)",
-        "location": "距离学校1.9公里，海淀区",
-        "contact": "13466946882",
-        "priceRange": "¥3,999 - ¥5,399"
+      "name": "九号电动车(厢白旗店)",
+      "location": "距离学校1.9公里，海淀区",
+      "contact": "13466946882",
+      "priceRange": "¥3,999 - ¥5,399"
     },
     {
-        "name": "雅迪电动车 (中关村未来科技店)",
-        "location": "距离学校2公里，中关村商圈",
-        "contact": "13717719884",
-        "priceRange": "¥4,299 - ¥4,899"
+      "name": "雅迪电动车 (中关村未来科技店)",
+      "location": "距离学校2公里，中关村商圈",
+      "contact": "13717719884", 
+      "priceRange": "¥4,299 - ¥4,899"
     },
     {
-        "name": "五道口爱玛电动车 (东升园公寓)",
-        "location": "距离学校1.5公里，五道口商圈",
-        "contact": "13681125868",
-        "priceRange": "¥2,999 - ¥3,699"
+      "name": "五道口爱玛电动车 (东升园公寓)",
+      "location": "距离学校1.5公里，五道口商圈",
+      "contact": "13681125868",
+      "priceRange": "¥2,999 - ¥3,699"
     },
     {
-        "name": "新日电动车",
-        "location": "距离学校1.6公里，五道口商圈",
-        "contact": "13051015237",
-        "priceRange": "¥1,999 - ¥5,199"
+      "name": "新日电动车",
+      "location": "距离学校1.6公里，五道口商圈",
+      "contact": "13051015237",
+      "priceRange": "¥1,999 - ¥5,199"
     },
     {
-        "name": "台铃电动车 (中关村店)",
-        "location": "距离学校1.8公里，海淀区",
-        "contact": "15801072891",
-        "priceRange": "暂无具体价格信息"
+      "name": "台铃电动车 (中关村店)",
+      "location": "距离学校1.8公里，海淀区",
+      "contact": "15801072891",
+      "priceRange": "暂无具体价格信息"
     },
     {
-        "name": "雅迪电动车(五道口店)",
-        "location": "距离学校1.6公里，海淀区",
-        "contact": "13717719884",
-        "priceRange": "暂无具体价格信息"
+      "name": "雅迪电动车(五道口店)",
+      "location": "距离学校1.6公里，海淀区",
+      "contact": "13717719884",
+      "priceRange": "暂无具体价格信息"
     },
     {
-        "name": "淘宝电动车旗舰店",
-        "location": "线上平台",
-        "contact": "通过淘宝APP联系商家客服",
-        "priceRange": "¥1,500 - ¥5,000（根据品牌和型号而定）"
+      "name": "淘宝电动车旗舰店",
+      "location": "线上平台",
+      "contact": "通过淘宝APP联系商家客服",
+      "priceRange": "¥1,500 - ¥5,000（根据品牌和型号而定）"
     }
-
-]
+  ],
+  "en": [
+    {
+      "name": "Xianyu Second-hand E-bikes",
+      "location": "Online Platform",
+      "contact": "Contact sellers via Xianyu APP",
+      "priceRange": "¥800 - ¥3,000 (varies by condition)"
+    },
+    {
+      "name": "THU Internal Second-hand Trading Platform",
+      "location": "On Campus",
+      "contact": "Search for ShuimuHui THU Mini Program; Follow Shuimu Assistant",
+      "priceRange": "¥800 - ¥2,500 (varies by condition)"
+    },
+    {
+      "name": "Ninebot Store (Xiangbaqi)",
+      "location": "1.9km from campus, Haidian District",
+      "contact": "13466946882",
+      "priceRange": "¥3,999 - ¥5,399"
+    },
+    {
+      "name": "Yadea Store (Zhongguancun Future Tech)",
+      "location": "2km from campus, Zhongguancun Area",
+      "contact": "13717719884",
+      "priceRange": "¥4,299 - ¥4,899"
+    },
+    {
+      "name": "Wudaokou Aima Store (Dongsheng Apartment)",
+      "location": "1.5km from campus, Wudaokou Area",
+      "contact": "13681125868",
+      "priceRange": "¥2,999 - ¥3,699"
+    },
+    {
+      "name": "Xinri E-bike Store",
+      "location": "1.6km from campus, Wudaokou Area",
+      "contact": "13051015237",
+      "priceRange": "¥1,999 - ¥5,199"
+    },
+    {
+      "name": "Tailg Store (Zhongguancun)",
+      "location": "1.8km from campus, Haidian District",
+      "contact": "15801072891",
+      "priceRange": "Price information unavailable"
+    },
+    {
+      "name": "Yadea Store (Wudaokou)",
+      "location": "1.6km from campus, Haidian District",
+      "contact": "13717719884",
+      "priceRange": "Price information unavailable"
+    },
+    {
+      "name": "Taobao E-bike Flagship Stores",
+      "location": "Online Platform",
+      "contact": "Contact sellers via Taobao APP",
+      "priceRange": "¥1,500 - ¥5,000 (varies by brand and model)"
+    }
+  ]
+}

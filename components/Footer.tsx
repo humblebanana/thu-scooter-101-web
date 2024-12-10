@@ -1,42 +1,46 @@
-import Image from 'next/image';
+'use client'
 
-export default function Footer() {
+import { useLanguage } from '@/contexts/LanguageContext'
+import Link from 'next/link'
+
+const Footer = () => {
+  const { t } = useLanguage()
+
   return (
-    <footer className="bg-white border-t border-gray-100">
-      <div className="container mx-auto px-4 py-4 sm:py-6">
-        {/* 将 flex-wrap 改为 flex-col，在 sm 断点处恢复为 row */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 sm:justify-between">
-          {/* Left Section: Logo and Name */}
-          <div className="flex items-center space-x-2">
-            <div className="w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]">
-              <Image src="/icon.svg" alt="Logo" width={24} height={24} className="w-full h-full" />
-            </div>
-            <span className="text-base sm:text-lg font-medium text-gray-800">THU Scooter 101</span>
+    <footer className="bg-gray-100 py-8">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 className="font-semibold mb-4">{t('footer.about.title')}</h3>
+            <p className="text-gray-600 text-sm">{t('footer.about.description')}</p>
           </div>
-
-          {/* Center Section: Mission Statement */}
-          <div className="text-base sm:text-lg text-gray-600 text-center">
-            您的清华校园电动车出行一站式信息平台
+          <div>
+            <h3 className="font-semibold mb-4">{t('footer.contact.title')}</h3>
+            <p className="text-gray-600 text-sm">{t('footer.contact.email')}</p>
+            <p className="text-gray-600 text-sm">{t('footer.contact.wechat')}</p>
           </div>
-
-          {/* Right Section: Contact */}
-          <div className="flex items-center">
-            <a 
-              href="mailto:humbleguava@qq.com" 
-              className="text-sm sm:text-base text-gray-600 hover:text-gray-900 transition-colors duration-200"
-            >
-              联系方式：humbleguava@qq.com
-            </a>
+          <div>
+            <h3 className="font-semibold mb-4">{t('footer.links.title')}</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/feedback" className="text-gray-600 text-sm hover:text-gray-900">
+                  {t('footer.links.feedback')}
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="text-gray-600 text-sm hover:text-gray-900">
+                  {t('footer.links.privacy')}
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
-
-        {/* Bottom Copyright - Centered */}
-        <div className="mt-3 sm:mt-4 text-center">
-          <div className="text-xs sm:text-sm text-gray-500">
-            © {new Date().getFullYear()} THU Scooter 101. All rights reserved.
-          </div>
+        <div className="mt-8 pt-8 border-t border-gray-200 text-center text-gray-600 text-sm">
+          <p>{t('footer.copyright')}</p>
         </div>
       </div>
     </footer>
-  );
+  )
 }
+
+export default Footer

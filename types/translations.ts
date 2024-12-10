@@ -51,6 +51,41 @@ export interface TranslationType {
       alt: string
     }
   }
+  buyingGuide: {
+    title: string
+    subtitle: string
+    recommendedScooters: {
+      title: string
+      subtitle: string
+      details: {
+        brand: string
+        price: string
+        range: string
+        seniorSays: string
+      }
+    }
+    purchaseChannels: {
+      title: string
+      subtitle: string
+      details: {
+        location: string
+        contact: string
+        priceRange: string
+      }
+    }
+    registration: {
+      title: string
+      subtitle: string
+      process: {
+        title: string
+        steps: string[]
+      }
+      notices: {
+        title: string
+        items: string[]
+      }
+    }
+  }
 }
 
 export interface Translations {
