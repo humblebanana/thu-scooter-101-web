@@ -202,7 +202,7 @@ export const translations: Translations = {
         },
         batteryUsage: {
           title: "电池使用建议",
-          description: "电量保持在20%-80%之间最佳，避免经常性充满或耗尽。冬季尤其注意：电量低于20%时及时充电，防止低温���致电池损坏。夏季避免阳光直射，可用遮阳伞等遮挡。"
+          description: "电量保持在20%-80%之间最佳，避免经常性充满或耗尽。冬季尤其注意：电量低于20%时及时充电，防止低温�����电池损坏。夏季避免阳光直射，可用遮阳伞等遮挡。"
         },
         rainProtection: {
           title: "防雨",
@@ -223,6 +223,44 @@ export const translations: Translations = {
       subtitle: "找到关于电动车购买、使用和维护的常见问题解答",
       loading: "正在加载FAQ数据...",
       error: "错误: {{message}}"
+    },
+    lawsSafety: {
+      title: "法规与安全",
+      subtitle: "了解校园和北京市的电动车相关法规，确保安全合规��行",
+      campusRules: {
+        title: "清华大学电动车管理规定",
+        entry: {
+          title: "电动车进入校园规定",
+          description: "自2021年11月1日起，禁止未悬挂正规号牌的电动自行车进入校园。未持有电子标签的电动自行车禁止进入学生生活区。"
+        },
+        riding: {
+          title: "骑行规则",
+          description: "校园内限速15公里/小时，避让行人和自行车，禁止鸣笛噪音，禁止边行驶边使用手机，提倡骑行时佩戴安全头盔。"
+        },
+        charging: {
+          title: "充电管理",
+          description: "电动自行车及电池不得进入所有教学、科研、办公场所和学生公寓。未经学校审核批准，不得私自建设和运行电动车充电设施。"
+        },
+        violations: {
+          title: "违规处理",
+          description: "对违反相关规定和拒不服从管理的情况，学校将采取提醒劝阻、登记记录、挪移车辆并集中停放等措施，并追究相关责任。"
+        }
+      },
+      cityRegulations: {
+        title: "北京市电动车相关法规",
+        registration: {
+          title: "电动车上牌要求",
+          description: "在北京市使用电动车需要进行注册上牌。未上牌的电动车将被禁止上路行驶。"
+        },
+        helmet: {
+          title: "骑行头盔",
+          description: "北京市法规要求电动车骑行者必须佩戴头盔。"
+        },
+        restrictedAreas: {
+          title: "禁行区域",
+          description: "电动车禁止在机动车道和部分主要道路上行驶，请注意观察交通标志。"
+        }
+      }
     }
   },
   en: {
@@ -447,6 +485,44 @@ export const translations: Translations = {
       subtitle: "Find answers to common questions about e-bike purchase, usage, and maintenance",
       loading: "Loading FAQ data...",
       error: "Error: {{message}}"
+    },
+    lawsSafety: {
+      title: "Laws & Safety",
+      subtitle: "Understanding campus and Beijing e-bike regulations to ensure safe and compliant riding",
+      campusRules: {
+        title: "Tsinghua University E-Bike Management Regulations",
+        entry: {
+          title: "E-Bike Campus Entry Regulations",
+          description: "As of November 1, 2021, e-bikes without official license plates are prohibited from entering the campus. E-bikes without electronic tags are prohibited from entering student living areas."
+        },
+        riding: {
+          title: "Riding Rules",
+          description: "Speed limit on campus is 15 km/h. Yield to pedestrians and bicycles, no honking, no using phones while riding, and wearing a helmet is encouraged."
+        },
+        charging: {
+          title: "Charging Management",
+          description: "E-bikes and batteries are not allowed in any teaching, research, office buildings, or student dormitories. Unauthorized construction and operation of e-bike charging facilities are prohibited."
+        },
+        violations: {
+          title: "Violation Handling",
+          description: "For violations of regulations and refusal to comply with management, the school will take measures such as reminders, registration, vehicle relocation, and centralized parking, and pursue related responsibilities."
+        }
+      },
+      cityRegulations: {
+        title: "Beijing E-Bike Regulations",
+        registration: {
+          title: "E-Bike Registration Requirements",
+          description: "E-bikes used in Beijing must be registered and licensed. Unlicensed e-bikes are prohibited from road use."
+        },
+        helmet: {
+          title: "Riding Helmet",
+          description: "Beijing regulations require e-bike riders to wear helmets."
+        },
+        restrictedAreas: {
+          title: "Restricted Areas",
+          description: "E-bikes are prohibited from driving on motor vehicle lanes and certain main roads. Please pay attention to traffic signs."
+        }
+      }
     }
   }
 } 
