@@ -64,7 +64,6 @@ export default function RepairMaintenance() {
           <div className="bg-white rounded-lg p-3 sm:p-6 shadow-md">
             <ul className="space-y-3 sm:space-y-4">
               <li className="flex items-start">
-                <Wrench className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-1.5 sm:mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="text-sm sm:text-base font-semibold">
                     {t('repairMaintenance.maintenanceTips.dailyCheck.title')}
@@ -75,7 +74,6 @@ export default function RepairMaintenance() {
                 </div>
               </li>
               <li className="flex items-start">
-                <Wrench className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-1.5 sm:mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="text-sm sm:text-base font-semibold">
                     {t('repairMaintenance.maintenanceTips.batteryUsage.title')}
@@ -86,7 +84,6 @@ export default function RepairMaintenance() {
                 </div>
               </li>
               <li className="flex items-start">
-                <Wrench className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-1.5 sm:mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="text-sm sm:text-base font-semibold">
                     {t('repairMaintenance.maintenanceTips.rainProtection.title')}
@@ -97,7 +94,6 @@ export default function RepairMaintenance() {
                 </div>
               </li>
               <li className="flex items-start">
-                <Wrench className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-1.5 sm:mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="text-sm sm:text-base font-semibold">
                     {t('repairMaintenance.maintenanceTips.regularMaintenance.title')}
@@ -108,7 +104,6 @@ export default function RepairMaintenance() {
                 </div>
               </li>
               <li className="flex items-start">
-                <Wrench className="w-4 h-4 sm:w-6 sm:h-6 text-blue-500 mr-1.5 sm:mr-2 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="text-sm sm:text-base font-semibold">
                     {t('repairMaintenance.maintenanceTips.winterUsage.title')}

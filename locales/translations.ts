@@ -7,7 +7,7 @@ export const translations: Translations = {
       buyingGuide: "购买指南",
       usageGuide: "使用指南",
       repairMaintenance: "维修保养",
-      lawsSafety: "法规安全",
+      lawsSafety: "法规安全", 
       faq: "常见问题"
     },
     home: {
@@ -58,12 +58,12 @@ export const translations: Translations = {
     footer: {
       about: {
         title: "关于我们",
-        description: "THU-电动车-101 是清华大学首个智能电动车信息服务平台"
+        description: "THU-电动车-101，你的电动车一站式信息平台"
       },
       contact: {
         title: "联系方式",
-        email: "邮箱：support@thu-scooter-101.site",
-        wechat: "微信公众号：THU Scooter 101"
+        email: "邮箱：humbleguava@gmail.com",
+        wechat: "微信（进清华大学电动车资讯交流群）：humblebanana12345"
       },
       links: {
         title: "快速链接",
@@ -136,7 +136,7 @@ export const translations: Translations = {
           ]
         },
         penalties: {
-          title: "违规停车处置方式和处罚标准👮",
+          title: "⚠️违规停车处置方式和处罚标准👮",
           items: [
             "停在违规区域的电动车将被拖走",
             "第一次被拖走：需要持生活卡签取车单并签署承诺书",
@@ -158,30 +158,30 @@ export const translations: Translations = {
       },
       chargingMasters: {
         title: "充电师傅服务信息",
-        subtitle: "———充电师傅以在指定位置直接把电池取走后，隔天早上送回，单次服务费用较贵，一复制联系方式（微信）。充电师傅相关信息持续更新，如有补充可点击右下角反馈🙏",
+        subtitle: "———充电师傅以在指定位置直接把电池取走后，隔天早上送回，单次服务费用较贵，一复制联系方式（微信",
         error: "错误: {error}"
       },
       safetyTips: {
         title: "安全骑行建议",
         tips: [
           {
-            title: "如果条件允许始终佩戴头盔（并非强制）",
+            title: "🪖 如果条件允许始终佩戴头盔（并非强制）",
             description: "头盔可以在发生意外时保护您的头部，大降低严重伤害的风险。"
           },
           {
-            title: "遵守交通规则",
+            title: "👮 遵守交通规则",
             description: "遵守交通信号，注意行人安全，不要逆行或闯红灯。"
           },
           {
-            title: "保持车速在15km/h以下",
-            description: "校园内请控制车速，保证自己和他人的安全，尤其是在十字路口，一定要减速，清华大部分车祸都发生在十字路口。"
+            title: "✈️ 保持车速在15km/h以下",
+            description: "校园内��制车速，保证自己和他人的安全，尤其是在十字路口，一定要减速，清华大部分车祸都发生在十字路口。"
           },
           {
-            title: "夜间骑行开启车灯",
+            title: "💡夜间骑行开启车灯",
             description: "确保他能看您，同时提高您的视野范围。"
           },
           {
-            title: "定期检查车辆状况",
+            title: "🔍 定期检查车辆状况",
             description: "确保刹车、轮胎等关键部件处于良好状态。"
           }
         ]
@@ -195,25 +195,25 @@ export const translations: Translations = {
         seniorReviews: "学长姐评价"
       },
       maintenanceTips: {
-        title: "保养建议",
+        title: "维修建议",
         dailyCheck: {
-          title: "日常检查",
+          title: "🔍 日常检查",
           description: "每次骑行前检查刹车是否灵敏、轮胎气压是否正常（建议保持在2.5-2.8bar）。特别是在雨天骑行前，一定要测试刹车性能。"
         },
         batteryUsage: {
-          title: "电池使用建议",
-          description: "电量保持在20%-80%之间最佳，避免经常性充满或耗尽。冬季尤其注意：电量低于20%时及时充电，防止低温�����电池损坏。夏季避免阳光直射，可用遮阳伞等遮挡。"
+          title: "🔋 电池使用建议",
+          description: "电量保持在20%-80%之间最佳，避免经常性充满或耗尽。冬季尤其注意：电量低于20%时及时充电，防止低温电池损坏。夏季避免阳光直射，可用遮阳伞等遮挡。"
         },
         rainProtection: {
-          title: "防雨",
+          title: "☔ 放雨",
           description: "雨天记得给车座套上防水套，特别注意电池仓和充电器要做好防水。长期露天停放建议购买防晒防雨的车衣。"
         },
         regularMaintenance: {
-          title: "定期保养",
+          title: "🔧 定期保养",
           description: "每年至少做一次全面检修，包括更换刹车片、调整链条松紧度、检查电机等。遇到异响或操控不适要及时去维修点检查。定期给链条上油可以延长使用寿命。"
         },
         winterUsage: {
-          title: "冬季使用注意",
+          title: "❄️ 冬季使用注意",
           description: "冬季温度低，要特别注意：电池容易受低温影响，电量锐减，请最好电量安排。路面结冰时谨慎骑行，保持低速；长时间不用时将电池取下室内保管；做好防寒保暖，戴手套骑行。"
         }
       }
@@ -226,7 +226,7 @@ export const translations: Translations = {
     },
     lawsSafety: {
       title: "法规与安全",
-      subtitle: "了解校园和北京市的电动车相关法规，确保安全合规��行",
+      subtitle: "了解校园和北京市的电动车相关法规，确保安全规行",
       campusRules: {
         title: "清华大学电动车管理规定",
         entry: {
@@ -239,7 +239,7 @@ export const translations: Translations = {
         },
         charging: {
           title: "充电管理",
-          description: "电动自行车及电池不得进入所有教学、科研、办公场所和学生公寓。未经学校审核批准，不得私自建设和运行电动车充电设施。"
+          description: "电动自行车及电池不得进入所有教学、科研、办公场所和学生公寓。未经学校审核批准，不得私建设和运行电动车充电设施。"
         },
         violations: {
           title: "违规处理",
@@ -250,7 +250,7 @@ export const translations: Translations = {
         title: "北京市电动车相关法规",
         registration: {
           title: "电动车上牌要求",
-          description: "在北京市使用电动车需要进行注册上牌。未上牌的电动车将被禁止上路行驶。"
+          description: "在北京市使用电动车需要行注册上牌未上牌的电动车将被禁止上路行驶。"
         },
         helmet: {
           title: "骑行头盔",
@@ -320,12 +320,12 @@ export const translations: Translations = {
     footer: {
       about: {
         title: "About Us",
-        description: "THU-Scooter-101 is the first smart e-bike information service platform at Tsinghua University"
+        description: "THU-Scooter-101 is e-bike information service platform at THU"
       },
       contact: {
         title: "Contact",
-        email: "Email: support@thu-scooter-101.site",
-        wechat: "WeChat: THU Scooter 101"
+        email: "Email: humbleguava@gmail.com",
+        wechat: "WeChat (Join THU E-bike Info Group): humblebanana12345"
       },
       links: {
         title: "Quick Links",
@@ -398,7 +398,7 @@ export const translations: Translations = {
           ]
         },
         penalties: {
-          title: "Parking Violation Penalties👮",
+          title: "⚠️Parking Violation Penalties👮",
           items: [
             "Illegally parked e-bikes will be towed",
             "First violation: Must present student card to retrieve bike and sign a commitment letter",
@@ -420,30 +420,30 @@ export const translations: Translations = {
       },
       chargingMasters: {
         title: "Charging Service Providers",
-        subtitle: "———Service providers can pick up your battery and return it the next morning. Service fee applies. Copy WeChat contact info. Information is continuously updated, click the feedback button in the bottom right to contribute🙏",
+        subtitle: "———Service providers can pick up your battery and return it the next morning. Service fee applies.",
         error: "Error: {error}"
       },
       safetyTips: {
         title: "Safe Riding Tips",
         tips: [
           {
-            title: "Always Wear a Helmet When Possible (Not Mandatory)",
+            title: "🪖 Always Wear a Helmet When Possible (Not Mandatory)",
             description: "A helmet can protect your head and significantly reduce the risk of serious injury in accidents."
           },
           {
-            title: "Follow Traffic Rules",
+            title: "👮 Follow Traffic Rules",
             description: "Obey traffic signals, watch out for pedestrians, don't ride against traffic or run red lights."
           },
           {
-            title: "Keep Speed Below 15km/h",
+            title: "✈️ Keep Speed Below 15km/h",
             description: "Control your speed on campus for everyone's safety, especially at intersections. Most accidents at THU happen at intersections."
           },
           {
-            title: "Use Lights When Riding at Night",
+            title: "💡 Use Lights When Riding at Night",
             description: "Ensure others can see you and improve your visibility."
           },
           {
-            title: "Regular Vehicle Inspection",
+            title: "🔍 Regular Vehicle Inspection",
             description: "Ensure critical components like brakes and tires are in good condition."
           }
         ]
@@ -459,23 +459,23 @@ export const translations: Translations = {
       maintenanceTips: {
         title: "Maintenance Tips",
         dailyCheck: {
-          title: "Daily Check",
+          title: "🔍 Daily Check",
           description: "Check brakes and tire pressure (recommended 2.5-2.8bar) before each ride. Especially test brake performance before riding in rain."
         },
         batteryUsage: {
-          title: "Battery Usage Tips",
+          title: "🔋 Battery Usage Tips",
           description: "Keep battery level between 20%-80%, avoid frequent full charges or depletions. In winter: charge when below 20% to prevent cold damage. In summer: avoid direct sunlight, use umbrella for shade."
         },
         rainProtection: {
-          title: "Rain Protection",
+          title: "☔ Rain Protection",
           description: "Use waterproof cover for seat in rain, protect battery compartment and charger. For long-term outdoor parking, consider getting a weather-resistant bike cover."
         },
         regularMaintenance: {
-          title: "Regular Maintenance",
+          title: "🔧 Regular Maintenance",
           description: "Do comprehensive maintenance at least once a year, including brake pad replacement, chain tension adjustment, and motor check. Visit repair station if abnormal noise or control issues occur. Regular chain oiling extends lifespan."
         },
         winterUsage: {
-          title: "Winter Usage Notes",
+          title: "❄️ Winter Usage Notes",
           description: "Special attention in cold weather: Battery capacity reduces significantly, plan charging accordingly. Ride carefully on icy roads, maintain low speed; store battery indoors when not in use; keep warm, wear gloves while riding."
         }
       }

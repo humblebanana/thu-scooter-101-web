@@ -227,15 +227,19 @@ export default function UsageGuide() {
           <section className="space-y-4 sm:space-y-6 mb-8 sm:mb-12">
             <div className="grid md:grid-cols-3 gap-3 sm:gap-6">
               {parkingAreas.map((area, index) => (
-                <div key={index} className="bg-transparent rounded-lg p-3 sm:p-6 border-l-4 border-gray-500 hover:shadow-lg transition-all duration-300">
+                <div key={index} className="bg-transparent rounded-lg p-3 sm:p-6 border-l-4 border-[#4E2A84] hover:shadow-lg transition-all duration-300">
                   <h3 className="text-sm sm:text-xl font-bold text-gray-700 mb-2 sm:mb-4">
                     {area.name}
                   </h3>
                   <ul className="space-y-1.5 sm:space-y-2 mb-2 sm:mb-4">
                     {area.locations.map((location, idx) => (
-                      <li key={idx} className="flex items-center">
-                        <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-black rounded-full mr-1.5 sm:mr-2"></span>
-                        <span className="text-xs sm:text-base text-gray-700">{location}</span>
+                      <li key={idx} className="flex items-start">
+                        <div className="flex-shrink-0 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-gray-500 rounded-full mt-1.5 mr-2 sm:mr-3 
+                          transition-all duration-300 hover:scale-110 hover:bg-gray-600" />
+                        <span className="text-xs sm:text-base text-gray-700 leading-relaxed hover:text-purple-700 
+                          transition-colors duration-300">
+                          {location}
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -265,7 +269,7 @@ export default function UsageGuide() {
               ></iframe>
             </div>
             <div className="block sm:hidden mb-4 text-sm text-gray-600 font-semibold">
-              <p>将以下内容的地址一键复制到您的地图中，即可快速导航到充电站。充电桩信息持续更新，如补充可点击右下角反馈🙏</p>
+              <p>{t('usageGuide.chargingStations.mobileNote')}</p>
             </div>
             <h3 className="text-base sm:text-2xl font-semibold mb-4">
               {t('usageGuide.chargingStations.title')}

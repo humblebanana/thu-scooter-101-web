@@ -79,7 +79,7 @@ export default function FeedbackButton() {
         onClick={() => setIsOpen(true)}
       >
         <MessageSquarePlus className="w-4 h-4 md:mr-2 font-semibold" />
-        <span className="hidden md:inline">反馈｜Feedback</span>
+        <span className="hidden md:inline">反馈 | Feedback</span>
         <span className="md:hidden ml-1">Feedback</span>
       </Button>
 
@@ -87,14 +87,14 @@ export default function FeedbackButton() {
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
             <DialogTitle className="text-center text-xl font-bold">
-              帮助我们变得更好
+              反馈 | Feedback
             </DialogTitle>
           </DialogHeader>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-4">
               <label className="block text-base font-medium">
-                您对当前页面的满意度如何？
+                满意度 | Rating
               </label>
               <div className="px-3">
                 <Slider
@@ -106,16 +106,16 @@ export default function FeedbackButton() {
                   className="w-full"
                 />
                 <div className="flex justify-between mt-2 text-sm text-muted-foreground">
-                  <span>不满意</span>
+                  <span>差 | Poor</span>
                   <span className="font-medium">{formData.rating}/10</span>
-                  <span>非常满意</span>
+                  <span>好 | Good</span>
                 </div>
               </div>
             </div>
 
             <div className="space-y-4">
               <label className="block text-base">
-                您觉得哪些地方需要改进？
+                改进建议 | Improvements
               </label>
               <textarea
                 value={formData.improvements}
@@ -123,13 +123,13 @@ export default function FeedbackButton() {
                   setFormData({ ...formData, improvements: e.target.value })
                 }
                 className="w-full min-h-[100px] p-3 rounded-lg border"
-                placeholder="如：页面设计、信息准确性、功能实用性等……"
+                placeholder="您的建议 | Your suggestions"
               />
             </div>
 
             <div className="space-y-4">
               <label className="block text-base">
-                您认为需要补充哪些信息？
+                其他意见 | Other Comments
               </label>
               <textarea
                 value={formData.suggestions}
@@ -137,7 +137,7 @@ export default function FeedbackButton() {
                   setFormData({ ...formData, suggestions: e.target.value })
                 }
                 className="w-full min-h-[100px] p-3 rounded-lg border"
-                placeholder="如：推荐的电动车型号、充电桩位置、购买渠道等……"
+                placeholder="补充说明 | Additional comments"
               />
             </div>
 
@@ -147,10 +147,10 @@ export default function FeedbackButton() {
                 variant="outline"
                 onClick={() => setIsOpen(false)}
               >
-                取消
+                取消 | Cancel
               </Button>
               <Button type="submit" className="bg-gradient-to-r from-[#4E2A84] to-[#6B3DAD] text-white">
-                提交反馈
+                提交 | Submit
               </Button>
             </div>
           </form>
