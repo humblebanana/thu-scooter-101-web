@@ -36,7 +36,7 @@ interface ParkingArea {
 }
 
 export default function UsageGuide() {
-  const { t, language } = useLanguage();
+  const { t, tArray, language } = useLanguage();
   const [chargingStations, setChargingStations] = useState<ChargingStation[]>([]);
   const [chargingMasters, setChargingMasters] = useState<ChargingMaster[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -197,7 +197,7 @@ export default function UsageGuide() {
                 {t('usageGuide.parkingRules.forbiddenAreas.title')}
               </h3>
               <ul className="list-disc list-inside font-semibold space-y-2">
-                {t('usageGuide.parkingRules.forbiddenAreas.areas').map((area, index) => (
+                {(tArray('usageGuide.parkingRules.forbiddenAreas.areas')).map((area: string, index: number) => (
                   <li key={index} className="text-sm sm:text-lg text-red-800 font-bold">
                     {area}
                   </li>
@@ -211,7 +211,7 @@ export default function UsageGuide() {
                 {t('usageGuide.parkingRules.penalties.title')}
               </h3>
               <ul className="space-y-2">
-                {t('usageGuide.parkingRules.penalties.items').map((item, index) => (
+                {(tArray('usageGuide.parkingRules.penalties.items')).map((item: string, index: number) => (
                   <li key={index} className="text-sm sm:text-lg text-orange-800 font-semibold">
                     {item}
                   </li>
@@ -265,7 +265,7 @@ export default function UsageGuide() {
               ></iframe>
             </div>
             <div className="block sm:hidden mb-4 text-sm text-gray-600 font-semibold">
-              <p>将以下内容的地址一键复制到您的地图中，即可快速导航到充电站。充电桩信息持续更新，如有补充可点击右下角反馈🙏</p>
+              <p>将以下内容的地址一键复制到您的地图中，即可快速导航到充电站。充电桩信息持续更新，如补充可点击右下角反馈🙏</p>
             </div>
             <h3 className="text-base sm:text-2xl font-semibold mb-4">
               {t('usageGuide.chargingStations.title')}
@@ -373,7 +373,7 @@ export default function UsageGuide() {
           </h2>
           
           <div className="space-y-6">
-            {t('usageGuide.safetyTips.tips').map((tip, index) => (
+            {(tArray('usageGuide.safetyTips.tips')).map((tip: any, index: number) => (
               <div key={index} className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
                 <h3 className="text-base sm:text-lg font-semibold mb-2">
                   {tip.title}

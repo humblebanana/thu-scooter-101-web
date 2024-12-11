@@ -5,6 +5,7 @@ export interface TranslationType {
     usageGuide: string
     repairMaintenance: string
     lawsSafety: string
+    faq: string
   }
   home: {
     welcome: {
@@ -122,6 +123,100 @@ export interface TranslationType {
     subtitle: string
     loading: string
     error: string
+  }
+  footer: {
+    about: {
+      title: string
+      description: string
+    }
+    contact: {
+      title: string
+      email: string
+      wechat: string
+    }
+    links: {
+      title: string
+      feedback: string
+      privacy: string
+    }
+    copyright: string
+  }
+  usageGuide: {
+    title: string
+    subtitle: string
+    warning: string
+    parkingRules: {
+      title: string
+      subtitle: string
+      forbiddenAreas: {
+        title: string
+        areas: string[]
+      }
+      penalties: {
+        title: string
+        items: string[]
+      }
+      allowedAreas: string
+    }
+    chargingStations: {
+      title: string
+      sectionTitle: string
+      mobileNote: string
+      details: {
+        price: string
+        copied: string
+      }
+    }
+    chargingMasters: {
+      title: string
+      subtitle: string
+      error: string
+    }
+    safetyTips: {
+      title: string
+      tips: Array<{
+        title: string
+        description: string
+      }>
+    }
+  }
+  lawsSafety: {
+    title: string
+    subtitle: string
+    campusRules: {
+      title: string
+      entry: {
+        title: string
+        description: string
+      }
+      riding: {
+        title: string
+        description: string
+      }
+      charging: {
+        title: string
+        description: string
+      }
+      violations: {
+        title: string
+        description: string
+      }
+    }
+    cityRegulations: {
+      title: string
+      registration: {
+        title: string
+        description: string
+      }
+      helmet: {
+        title: string
+        description: string
+      }
+      restrictedAreas: {
+        title: string
+        description: string
+      }
+    }
   }
 }
 

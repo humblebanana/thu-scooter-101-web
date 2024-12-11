@@ -25,6 +25,15 @@ interface PurchaseChannel {
   priceRange: string;
 }
 
+// 在文件顶部添加类型定义
+interface RegistrationStep {
+  step: string;
+}
+
+interface RegistrationNotice {
+  notice: string;
+}
+
 async function getScooters(language: string): Promise<Scooter[]> {
   const response = await fetch('/api/scooters')
   const data = await response.json()
@@ -38,7 +47,7 @@ async function getPurchaseChannels(language: string): Promise<PurchaseChannel[]>
 }
 
 export default function BuyingGuide() {
-  const { t, language } = useLanguage();
+  const { t, tArray, language } = useLanguage();
   const [scooters, setScooters] = useState<Scooter[]>([]);
   const [purchaseChannels, setPurchaseChannels] = useState<PurchaseChannel[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -163,7 +172,7 @@ export default function BuyingGuide() {
             {t('buyingGuide.registration.process.title')}
           </h3>
           <ol className="list-decimal list-inside space-y-2 sm:space-y-4 text-sm sm:text-base">
-            {t('buyingGuide.registration.process.steps').map((step, index) => (
+            {tArray('buyingGuide.registration.process.steps').map((step: string, index: number) => (
               <li key={index} className="flex items-start">
                 <span className="font-bold mr-1 sm:mr-2 shrink-0">{index + 1}.</span>
                 <span className="break-words">{step}</span>
@@ -176,7 +185,7 @@ export default function BuyingGuide() {
             {t('buyingGuide.registration.notices.title')}
           </h3>
           <ul className="space-y-2 text-sm sm:text-base">
-            {t('buyingGuide.registration.notices.items').map((item, index) => (
+            {tArray('buyingGuide.registration.notices.items').map((item: string, index: number) => (
               <li key={index} className="flex items-start">
                 <span className="mr-2 mt-1 shrink-0">
                   {index === 0 ? <MapPin className="w-4 h-4 sm:w-5 sm:h-5" /> :

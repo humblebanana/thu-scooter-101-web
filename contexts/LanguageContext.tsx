@@ -38,8 +38,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
 export function useLanguage() {
   const context = useContext(LanguageContext)
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useLanguage must be used within a LanguageProvider')
   }
-  return context
+  
+  const tArray = (key: string): string[] => {
+    const value = context.t(key)
+    return Array.isArray(value) ? value : []
+  }
+
+  return {
+    ...context,
+    tArray,
+  }
 }
