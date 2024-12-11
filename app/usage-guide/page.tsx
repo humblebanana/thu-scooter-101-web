@@ -124,7 +124,7 @@ export default function UsageGuide() {
         const data = await response.json();
         setParkingAreas(data[language]);
       } catch (e) {
-        const errorMessage = e instanceof Error ? e.message : '获取停车区域数据失败';
+        const errorMessage = e instanceof Error ? e.message : '获取停车区��数据失败';
         setError(errorMessage);
         console.error('获取停车区域数据失败:', e);
       }
@@ -321,7 +321,7 @@ export default function UsageGuide() {
             {t('usageGuide.chargingMasters.subtitle')}
           </p>
           {error ? (
-            <p className="text-red-500">{t('usageGuide.chargingMasters.error', { error })}</p>
+            <p className="text-red-500">{t('usageGuide.chargingMasters.error')}</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {chargingMasters.map((master) => (

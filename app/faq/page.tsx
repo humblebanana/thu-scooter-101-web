@@ -40,7 +40,7 @@ export default function FAQ() {
         <section className="space-y-3 sm:space-y-6">
           {error ? (
             <p className="text-red-500 text-sm sm:text-base">
-              {t('faq.error', { message: error })}
+              {t('faq.error')}
             </p>
           ) : faqItems.length === 0 ? (
             <p className="text-sm sm:text-base">{t('faq.loading')}</p>
