@@ -62,9 +62,9 @@ export default function AppleStyleChat() {
   const ThinkingAnimation = () => {
     return (
       <div className="flex items-center space-x-2 text-gray-400 h-6">
-        <span className="animate-bounce">思</span>
-        <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>考</span>
-        <span className="animate-bounce" style={{ animationDelay: '0.4s' }}>中</span>
+        <span className="animate-bounce">.</span>
+        <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
+        <span className="animate-bounce" style={{ animationDelay: '0.4s' }}>.</span>
         <span className="animate-bounce" style={{ animationDelay: '0.6s' }}>.</span>
         <span className="animate-bounce" style={{ animationDelay: '0.7s' }}>.</span>
         <span className="animate-bounce" style={{ animationDelay: '0.8s' }}>.</span>
