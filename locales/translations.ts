@@ -186,6 +186,43 @@ export const translations: Translations = {
           }
         ]
       }
+    },
+    repairMaintenance: {
+      title: "维修与保养",
+      subtitle: "获取维修点信息和保养建议，延长您的电动车使用寿命",
+      repairStations: {
+        title: "维修点推荐",
+        seniorReviews: "学长姐评价"
+      },
+      maintenanceTips: {
+        title: "保养建议",
+        dailyCheck: {
+          title: "日常检查",
+          description: "每次骑行前检查刹车是否灵敏、轮胎气压是否正常（建议保持在2.5-2.8bar）。特别是在雨天骑行前，一定要测试刹车性能。"
+        },
+        batteryUsage: {
+          title: "电池使用建议",
+          description: "电量保持在20%-80%之间最佳，避免经常性充满或耗尽。冬季尤其注意：电量低于20%时及时充电，防止低温���致电池损坏。夏季避免阳光直射，可用遮阳伞等遮挡。"
+        },
+        rainProtection: {
+          title: "防雨",
+          description: "雨天记得给车座套上防水套，特别注意电池仓和充电器要做好防水。长期露天停放建议购买防晒防雨的车衣。"
+        },
+        regularMaintenance: {
+          title: "定期保养",
+          description: "每年至少做一次全面检修，包括更换刹车片、调整链条松紧度、检查电机等。遇到异响或操控不适要及时去维修点检查。定期给链条上油可以延长使用寿命。"
+        },
+        winterUsage: {
+          title: "冬季使用注意",
+          description: "冬季温度低，要特别注意：电池容易受低温影响，电量锐减，请最好电量安排。路面结冰时谨慎骑行，保持低速；长时间不用时将电池取下室内保管；做好防寒保暖，戴手套骑行。"
+        }
+      }
+    },
+    faq: {
+      title: "常见问题",
+      subtitle: "找到关于电动车购买、使用和维护的常见问题解答",
+      loading: "正在加载FAQ数据...",
+      error: "错误: {{message}}"
     }
   },
   en: {
@@ -373,6 +410,43 @@ export const translations: Translations = {
           }
         ]
       }
+    },
+    repairMaintenance: {
+      title: "Repair & Maintenance",
+      subtitle: "Get repair information and maintenance tips to extend your e-bike's lifespan",
+      repairStations: {
+        title: "Recommended Repair Stations",
+        seniorReviews: "Senior Reviews"
+      },
+      maintenanceTips: {
+        title: "Maintenance Tips",
+        dailyCheck: {
+          title: "Daily Check",
+          description: "Check brakes and tire pressure (recommended 2.5-2.8bar) before each ride. Especially test brake performance before riding in rain."
+        },
+        batteryUsage: {
+          title: "Battery Usage Tips",
+          description: "Keep battery level between 20%-80%, avoid frequent full charges or depletions. In winter: charge when below 20% to prevent cold damage. In summer: avoid direct sunlight, use umbrella for shade."
+        },
+        rainProtection: {
+          title: "Rain Protection",
+          description: "Use waterproof cover for seat in rain, protect battery compartment and charger. For long-term outdoor parking, consider getting a weather-resistant bike cover."
+        },
+        regularMaintenance: {
+          title: "Regular Maintenance",
+          description: "Do comprehensive maintenance at least once a year, including brake pad replacement, chain tension adjustment, and motor check. Visit repair station if abnormal noise or control issues occur. Regular chain oiling extends lifespan."
+        },
+        winterUsage: {
+          title: "Winter Usage Notes",
+          description: "Special attention in cold weather: Battery capacity reduces significantly, plan charging accordingly. Ride carefully on icy roads, maintain low speed; store battery indoors when not in use; keep warm, wear gloves while riding."
+        }
+      }
+    },
+    faq: {
+      title: "FAQ",
+      subtitle: "Find answers to common questions about e-bike purchase, usage, and maintenance",
+      loading: "Loading FAQ data...",
+      error: "Error: {{message}}"
     }
   }
 } 

@@ -1,57 +1,116 @@
-[
-  {
-    "id": 1,
-    "question": "学校对使用电动车的态度是什么？",
-    "answer": "清华大学近年来对于电动车出行的规定日趋严谨，学校并不鼓励学生购买并使用电动车，虽然购买并使用不会直接导致处罚，但是不按规定使用将会有许多的处罚，请大家明确衡量自己的需求"
-  },
-  {
-    "id": 2,
-    "question": "如何选择适合我的电动车？",
-    "answer": "学弟学妹们在选车时，建议主要考虑这几点：1）预算方面，一般2000-3000元的车型性价比较高；2）续航里程建议选择至少40公里以上的，因为从清华东门到五道口往返就需要7、8公里；3）车重最好不要超过50kg，方便推行和搬运；4）推荐选择知名品牌，比如雅迪、爱玛等，售后有保障。具体可以看看我们整理的购买指南，里面有更详细的选购技巧和推荐车型。"
-  },
-  {
-    "id": 3,
-    "question": "电动车电池的使用寿命是多久？",
-    "answer": "作为过来人，建议大家对电池特别上心。一般来说，好好保养的电池能用2-3年。几个实用小建议：1）充电时间控制在6-8小时，建议晚上11点后再插电，早上上课前拔掉；2）电量最好控制在20%-80%之间，不要等没电再充；3）雨天记得把电池取下来带回宿舍；4）夏天尽量避免暴晒，冬天可以买个防寒罩。按这些方法做，电池寿命能明显延长，省下的钱可以多吃几顿火锅！"
-  },
-  {
-    "id": 4,
-    "question": "电动车需要上牌吗？",
-    "answer": "根据北京市的规定，符合新国标的电动自行车需要上牌。您可以在我们的'法规与安全'页面查看详细的上牌流程和要求。"
-  },
-  {
-    "id": 5,
-    "question": "冬天骑电动车有什么注意事项？",
-    "answer": "冬天骑电动车需要注意保暖、减少电池暴露在低温环境中、定期检查轮胎气压等。详细的冬季骑行建议可以在'使用指南'页面查看。"
-  },
-  {
-    "id": 6,
-    "question": "如何正确给电动车充电？",
-    "answer": "正确充电可以延长电池寿命。建议使用原装充电器，避免过充或过放，充电时间不要过长。"
-  },
-  {
-    "id": 7,
-    "question": "电动车丢失了怎么办？",
-    "answer": "如果电动车丢失，首先要及时向校园保卫处和当地警察报案。建议您在购买电动车后记录车辆编号，并考虑安装GPS追踪器。更多防盗建议可以在'法规与安全'页面查看。"
-  },
-  {
-    "id": 8,
-    "question": "在校园内哪里可以给电动车充电？",
-    "answer": "学弟学妹们注意啦！校内除了家属区以外，目前已经没有充电桩了。充电主要有两种方式：1）找校内的充电师傅帮忙充电；2）去校外的充电站充电。关于校外充电站的具体位置、价格和使用体验，我们在'使用指南'页面的充电站位置部分做了详细的整理，包括了地图导航和评分，建议大家收藏参考！"
-  },
-  {
-    "id": 9,
-    "question": "电动车需要定期保养吗？",
-    "answer": "是的，定期保养可以延长电动车的使用寿命。建议每3-6个月进行一次全面检查，包括轮胎、刹车、电池等部件。详细的保养建议可以在维修与保养页面查看。"
-  },
-  {
-    "id": 10,
-    "question": "如何处理电动车故障？",
-    "answer": "对于简单故障，可以参考我们的维修与保养页面进行自行处理。如遇复杂问题，建议联系专业维修点。您可以在维修与保养页面找到推荐的维修点信息。"
-  },
-  {
-    "id": 11,
-    "question": "在校园内骑行电动车有哪些注意事项？",
-    "answer": "作为骑了三年电动车的学长，给大家几个重要提醒：1）限速要严格遵守，特别是教学楼周边和食堂附近，建议控制在12km/h以下；2）一定要戴头盔，虽然看起来不太美观，但安全最重要；3）下雨天路滑，建议降速50%骑行；4）几个危险路段要特别注意：清华路转弯处、大礼堂环岛、荷塘路段。5）停车建议：教学楼附近请停在规定区域，超出划线区域容易被贴罚单。6）校外最好禁止载人！虽然看起来没什么，但一旦被帽子叔叔看到会记录违规。大家遵守这些规则。"
-  }
-]
+{
+  "zh": [
+    {
+      "id": 1,
+      "question": "学校对使用电动车的态度是什么？",
+      "answer": "清华大学近年来对于电动车出行的规定日趋严谨，学校并不鼓励学生购买并使用电动车，虽然购买并使用不会直接导致处罚，但是不按规定使用将会有许多的处罚，请大家明确衡量自己的需求"
+    },
+    {
+      "id": 2,
+      "question": "如何选择适合我的电动车？",
+      "answer": "学弟学妹们在选车时，建议主要考虑这几点：1）预算方面，一般2000-3000元的车型性价比较高；2）续航里程建议选择至少40公里以上的，因为从清华东门到五道口往返就需要7、8公里；3）车重最好不要超过50kg，方便推行和搬运；4）推荐选择知名品牌，比如雅迪、爱玛等，售后有保障。具体可以看看我们整理的购买指南，里面有更详细的选购技巧和推荐车型。"
+    },
+    {
+      "id": 3,
+      "question": "电动车电池的使用寿命是多久？",
+      "answer": "作为过来人，建议大家对电池特别上心。一般来说，好好保养的电池能用2-3年。几个实用小建议：1）充电时间控制在6-8小时，建议晚上11点后再插电，早上上课前拔掉；2）电量最好控制在20%-80%之间，不要等没电再充；3）雨天记得把电池取下来带回宿舍；4）夏天尽量避免暴晒，冬天可以买个防寒罩。按这些方法做，电池寿命能明显延长，省下的钱可以多吃几顿火锅！"
+    },
+    {
+      "id": 4,
+      "question": "电动车需要上牌吗？",
+      "answer": "根据北京市的规定，符合新国标的电动自行车需要上牌。您可以在我们的'法规与安全'页面查看详细的上牌流程和要求。"
+    },
+    {
+      "id": 5,
+      "question": "冬天骑电动车有什么注意事项？",
+      "answer": "冬天骑电动车需要注意保暖、减少电池暴露在低温环境中、定期检查轮胎气压等。详细的冬季骑行建议可以在'使用指南'页面查看。"
+    },
+    {
+      "id": 6,
+      "question": "如何正确给电动车充电？",
+      "answer": "正确充电可以延长电池寿命。建议使用原装充电器，避免过充或过放，充电时间不要过长。"
+    },
+    {
+      "id": 7,
+      "question": "电动车丢失了怎么办？",
+      "answer": "如果电动车丢失，首先要及时向校园保卫处和当地警察报案。建议您在购买电动车后记录车辆编号，并考虑安装GPS追踪器。更多防盗建议可以在'法规与安全'页面查看。"
+    },
+    {
+      "id": 8,
+      "question": "在校园内哪里可以给电动车充电？",
+      "answer": "学弟学妹们注意啦！校内除了家属区以外，目前已经没有充电桩了。充电主要有两种方式：1）找校内的充电师傅帮忙充电；2）去校外的充电站充电。关于校外充电站的具体位置、价格和使用体验，我们在'使用指南'页面的充电站位置部分做了详细的整理，包括了地图导航和评分，建议大家收藏参考！"
+    },
+    {
+      "id": 9,
+      "question": "电动车需要定期保养吗？",
+      "answer": "是的，定期保养可以延长电动车的使用寿命。建议每3-6个月进行一次全面检查，包括轮胎、刹车、电池等部件。详细的保养建议可以在维修与保养页面查看。"
+    },
+    {
+      "id": 10,
+      "question": "如何处理电动车故障？",
+      "answer": "对于简单故障，可以参考我们的维修与保养页面进行自行处理。如遇复杂问题，建议联系专业维修点。您可以在维修与保养页面找到推荐的维修点信息。"
+    },
+    {
+      "id": 11,
+      "question": "在校园内骑行电动车有哪些注意事项？",
+      "answer": "作为骑了三年电动车的学长，给大家几个重要提醒：1）限速要严格遵守，特别是教学楼周边和食堂附近，建议控制在12km/h以下；2）一定要戴头盔，虽然看起来不太美观，但安全最重要；3）下雨天路滑，建议降速50%骑行；4）几个危险路段要特别注意：清华路转弯处、大礼堂环岛、荷塘路段。5）停车建议：教学楼附近请停在规定区域，超出划线区域容易被贴罚单。6）校外最好禁止载人！虽然看起来没什么，但一旦被帽子叔叔看到会记录违规。大家遵守这些规则。"
+    }
+  ],
+  "en": [
+    {
+      "id": 1,
+      "question": "What is the university's attitude towards e-bikes?",
+      "answer": "Tsinghua University has become increasingly strict with e-bike regulations in recent years. While the school doesn't encourage students to purchase and use e-bikes, ownership itself won't lead to penalties. However, violations of regulations will result in various punishments. Please carefully consider your needs."
+    },
+    {
+      "id": 2,
+      "question": "How do I choose a suitable e-bike?",
+      "answer": "When choosing an e-bike, consider these key points: 1) Budget-wise, models in the 2000-3000 yuan range offer good value; 2) Choose a range of at least 40km, as a round trip from Tsinghua East Gate to Wudaokou is about 7-8km; 3) Weight should not exceed 50kg for easy handling; 4) Recommend well-known brands like Yadea and AIMA for better after-sales service. Check our buying guide for detailed tips and recommended models."
+    },
+    {
+      "id": 3,
+      "question": "How long do e-bike batteries last?",
+      "answer": "From experience, a well-maintained battery can last 2-3 years. Practical tips: 1) Charge for 6-8 hours, preferably after 11 PM and unplug before morning classes; 2) Keep battery level between 20%-80%, don't wait until empty; 3) Remove battery during rain; 4) Avoid direct sunlight in summer, use insulation cover in winter. Following these methods can significantly extend battery life!"
+    },
+    {
+      "id": 4,
+      "question": "Do e-bikes need registration?",
+      "answer": "According to Beijing regulations, e-bikes meeting the new national standard must be registered. Check our 'Laws & Safety' page for detailed registration procedures and requirements."
+    },
+    {
+      "id": 5,
+      "question": "What precautions should I take when riding in winter?",
+      "answer": "Winter riding requires attention to warmth, minimizing battery exposure to low temperatures, and regular tire pressure checks. See detailed winter riding tips in our 'Usage Guide' page."
+    },
+    {
+      "id": 6,
+      "question": "How do I properly charge my e-bike?",
+      "answer": "Proper charging extends battery life. Use the original charger, avoid over-charging or deep discharge, and don't charge for excessive periods."
+    },
+    {
+      "id": 7,
+      "question": "What should I do if my e-bike is stolen?",
+      "answer": "If your e-bike is stolen, immediately report to campus security and local police. Record your vehicle number upon purchase and consider installing a GPS tracker. Find more anti-theft tips on our 'Laws & Safety' page."
+    },
+    {
+      "id": 8,
+      "question": "Where can I charge my e-bike on campus?",
+      "answer": "Important notice! Currently, there are no charging stations on campus except in faculty residential areas. Two main charging options: 1) Find campus charging service providers; 2) Use off-campus charging stations. Check our 'Usage Guide' for detailed locations, prices, and user reviews of off-campus charging stations, including maps and ratings!"
+    },
+    {
+      "id": 9,
+      "question": "Does my e-bike need regular maintenance?",
+      "answer": "Yes, regular maintenance extends e-bike lifespan. Recommend full inspection every 3-6 months, including tires, brakes, and battery. See detailed maintenance tips on our Repair & Maintenance page."
+    },
+    {
+      "id": 10,
+      "question": "How do I handle e-bike malfunctions?",
+      "answer": "For simple issues, refer to our Repair & Maintenance page for self-help. For complex problems, contact professional repair shops listed on our Repair & Maintenance page."
+    },
+    {
+      "id": 11,
+      "question": "What are the key points for riding on campus?",
+      "answer": "As a senior with three years of e-bike experience, here are important reminders: 1) Strictly follow speed limits, especially near academic buildings and canteens (keep under 12km/h); 2) Always wear a helmet despite appearance concerns; 3) Reduce speed by 50% in rain; 4) Watch out for dangerous areas: Tsinghua Road turns, Great Hall roundabout, Lotus Road section; 5) Park only in designated areas near academic buildings to avoid fines; 6) No passengers allowed off-campus! Security guards will record violations."
+    }
+  ]
+}

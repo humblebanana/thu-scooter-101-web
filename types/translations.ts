@@ -86,6 +86,43 @@ export interface TranslationType {
       }
     }
   }
+  repairMaintenance: {
+    title: string
+    subtitle: string
+    repairStations: {
+      title: string
+      seniorReviews: string
+    }
+    maintenanceTips: {
+      title: string
+      dailyCheck: {
+        title: string
+        description: string
+      }
+      batteryUsage: {
+        title: string
+        description: string
+      }
+      rainProtection: {
+        title: string
+        description: string
+      }
+      regularMaintenance: {
+        title: string
+        description: string
+      }
+      winterUsage: {
+        title: string
+        description: string
+      }
+    }
+  }
+  faq: {
+    title: string
+    subtitle: string
+    loading: string
+    error: string
+  }
 }
 
 export interface Translations {
