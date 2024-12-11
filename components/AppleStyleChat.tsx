@@ -62,12 +62,12 @@ export default function AppleStyleChat() {
   const ThinkingAnimation = () => {
     return (
       <div className="flex items-center space-x-2 text-gray-400 h-6">
-        <span className="animate-bounce">.</span>
-        <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
-        <span className="animate-bounce" style={{ animationDelay: '0.4s' }}>.</span>
-        <span className="animate-bounce" style={{ animationDelay: '0.6s' }}>.</span>
-        <span className="animate-bounce" style={{ animationDelay: '0.7s' }}>.</span>
-        <span className="animate-bounce" style={{ animationDelay: '0.8s' }}>.</span>
+        <span className="animate-bounce font-bold">.</span>
+        <span className="animate-bounce font-bold" style={{ animationDelay: '0.2s' }}>.</span>
+        <span className="animate-bounce font-bold" style={{ animationDelay: '0.4s' }}>.</span>
+        <span className="animate-bounce font-bold" style={{ animationDelay: '0.6s' }}>.</span>
+        <span className="animate-bounce font-bold" style={{ animationDelay: '0.7s' }}>.</span>
+        <span className="animate-bounce font-bold" style={{ animationDelay: '0.8s' }}>.</span>
       </div>
     );
   };
